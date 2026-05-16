@@ -1,6 +1,5 @@
 /*
-  Community page — showcases customer projects, events, and builds.
-  PRD Section 5.5
+  Community page — light-body theme (PRD v1.2.0).
 */
 import SectionHeading from "@/components/ui/SectionHeading";
 import Card from "@/components/ui/Card";
@@ -32,62 +31,60 @@ export default function CommunityPage() {
           title="Community"
           subtitle="Real builds, real customers, real craftsmanship. This is what Retrofit Creations is all about."
         />
-        <Button variant="primary" size="sm" href="/contact">
-          Share Your Build →
-        </Button>
+        <Button variant="primary" size="sm" href="/contact">Share Your Build →</Button>
       </div>
 
       {/* Filter tabs */}
       <div className="flex flex-wrap gap-2 mb-8">
-        {["All", "Showcase", "Featured Builds", "Events"].map((tab) => (
+        {["All", "Showcase", "Featured Builds", "Events"].map((tab, i) => (
           <button
             key={tab}
-            className="px-4 py-2 rounded-full text-sm font-heading font-semibold uppercase tracking-wider border transition-colors
-              border-brand-blue/20 text-zinc-400 hover:border-brand-blue/50 hover:text-brand-blue first:bg-brand-blue first:text-white first:border-brand-blue"
+            className={`px-4 py-2 rounded-full text-sm font-heading font-semibold uppercase tracking-wider border transition-colors
+              ${i === 0
+                ? "bg-brand-blue text-white border-brand-blue"
+                : "bg-white text-gray-600 border-[#E8E8E8] hover:border-brand-blue/40 hover:text-brand-blue"
+              }`}
           >
             {tab}
           </button>
         ))}
       </div>
 
-      {/* Masonry-style grid (CSS columns) */}
+      {/* Masonry grid */}
       <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
         {POSTS.map((post) => (
           <div key={post.id} className="break-inside-avoid">
             <Card className="p-5 flex flex-col gap-3">
-              {/* Photo placeholder */}
               <div
-                className="w-full bg-zinc-900 rounded border border-brand-blue/10 flex items-center justify-center"
+                className="w-full bg-gray-100 rounded border border-[#E8E8E8] flex items-center justify-center"
                 style={{ height: `${140 + (post.id % 3) * 60}px` }}
               >
-                <span className="text-zinc-600 text-xs font-heading uppercase tracking-wider">
+                <span className="text-gray-400 text-xs font-heading uppercase tracking-wider">
                   {post.type === "event" ? "Event Photo" : "Project Photo"}
                 </span>
               </div>
               <div className="flex items-center justify-between">
                 <Badge variant={badgeVariant(post.type)}>{post.type}</Badge>
-                <span className="text-zinc-500 text-xs font-body">{post.author}</span>
+                <span className="text-gray-500 text-xs font-body">{post.author}</span>
               </div>
-              <h3 className="font-heading font-semibold uppercase tracking-wide text-brand-white text-sm">
+              <h3 className="font-heading font-semibold uppercase tracking-wide text-black text-sm">
                 {post.title}
               </h3>
-              <p className="text-zinc-400 text-sm leading-relaxed font-body">{post.description}</p>
+              <p className="text-[#555555] text-sm leading-relaxed font-body">{post.description}</p>
             </Card>
           </div>
         ))}
       </div>
 
       {/* Submit CTA */}
-      <div className="mt-16 text-center p-10 bg-brand-blue/5 border border-brand-blue/20 rounded-xl">
-        <h3 className="font-heading text-2xl font-bold uppercase tracking-widest text-brand-white mb-3">
+      <div className="mt-16 text-center p-10 bg-brand-blue/5 border border-brand-blue/15 rounded-xl">
+        <h3 className="font-heading text-2xl font-bold uppercase tracking-widest text-black mb-3">
           Got a Build to Show Off?
         </h3>
-        <p className="text-zinc-400 mb-6 font-body max-w-lg mx-auto">
+        <p className="text-[#555555] mb-6 font-body max-w-lg mx-auto">
           Share your project with the community. Submit photos and a description — if we feature it, you&apos;ll get credit and a shoutout.
         </p>
-        <Button variant="primary" size="lg" href="/contact">
-          Submit Your Project
-        </Button>
+        <Button variant="primary" size="lg" href="/contact">Submit Your Project</Button>
       </div>
     </div>
   );

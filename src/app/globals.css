@@ -1,18 +1,22 @@
 @import "tailwindcss";
 
 /*
-  Tailwind v4 uses CSS-based configuration via @theme.
-  All brand tokens live here — no tailwind.config.ts needed.
-  Fonts are injected as CSS variables by next/font/google in layout.tsx,
-  then referenced here so Tailwind generates font-heading / font-body utilities.
+  Tailwind v4 CSS-based configuration via @theme.
+  Theme: Light Body, Dark Navigation (PRD v1.2.0)
+  - Content areas: white (#FFFFFF) with dark text (#000000)
+  - Cards: light gray (#F8F8F8) with #E8E8E8 borders
+  - Header + Footer only: black backgrounds with white text
+  - Accent: #0062FF always (adjust opacity only for variants)
 */
 @theme {
-  /* Brand colors — always start from #0062FF and adjust opacity for variants */
+  /* Brand colors */
   --color-brand-black: #000000;
   --color-brand-white: #ffffff;
   --color-brand-blue: #0062ff;
+  --color-brand-surface: #f8f8f8;
+  --color-brand-border: #e8e8e8;
 
-  /* Font families — CSS vars are set on <html> by next/font in layout.tsx */
+  /* Font families — CSS vars set on <html> by next/font in layout.tsx */
   --font-heading: var(--font-oswald), sans-serif;
   --font-body: var(--font-inter), system-ui, sans-serif;
 }
@@ -20,53 +24,57 @@
 /* ─── Base styles ──────────────────────────────────────────────────── */
 html {
   scroll-behavior: smooth;
-  background-color: #000000;
-  color: #ffffff;
+  background-color: #ffffff;
+  color: #000000;
 }
 
 body {
-  background-color: #000000;
-  color: #ffffff;
+  background-color: #ffffff;
+  color: #000000;
   font-family: var(--font-inter), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Prevent white flash on navigation — keep everything black */
 * {
   box-sizing: border-box;
 }
 
-/* ─── Custom scrollbar (dark theme) ──────────────────────────────── */
+/* ─── Scrollbar (light/neutral — default browser behavior) ─────────── */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #111111;
+  background: #f0f0f0;
 }
 ::-webkit-scrollbar-thumb {
-  background: #0062ff55;
+  background: #cccccc;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #0062ff;
 }
 
-/* ─── CSS custom properties for brand colors ─────────────────────── */
+/* ─── CSS custom properties ──────────────────────────────────────────── */
 :root {
   --brand-black: #000000;
   --brand-white: #ffffff;
   --brand-blue: #0062ff;
+  --brand-surface: #f8f8f8;
+  --brand-border: #e8e8e8;
+  --brand-text-primary: #000000;
+  --brand-text-secondary: #555555;
+  --brand-text-tertiary: #888888;
   --brand-blue-10: rgba(0, 98, 255, 0.1);
   --brand-blue-20: rgba(0, 98, 255, 0.2);
   --brand-blue-30: rgba(0, 98, 255, 0.3);
-  --brand-blue-50: rgba(0, 98, 255, 0.5);
 }
 
-/* ─── Heading defaults ───────────────────────────────────────────── */
+/* ─── Heading defaults ───────────────────────────────────────────────── */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-oswald), sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  color: #000000;
 }

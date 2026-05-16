@@ -1,6 +1,7 @@
 /*
-  About Us page — PRD Section 5.7
-  Tells the Retrofit Creations origin story, mission, values.
+  About Us page — light-body theme (PRD v1.2.0).
+  Hero: kept dark for dramatic branding effect (acceptable per PRD).
+  All body sections: white/light backgrounds.
 */
 import SectionHeading from "@/components/ui/SectionHeading";
 import Button from "@/components/ui/Button";
@@ -15,26 +16,26 @@ const VALUES = [
 export default function AboutPage() {
   return (
     <div>
-      {/* Hero */}
-      <section className="relative py-24 bg-zinc-950 overflow-hidden">
+      {/* Hero — dark, acceptable exception for brand impact */}
+      <section className="relative py-24 bg-black overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_30%_50%,rgba(0,98,255,0.07),transparent)]" />
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-brand-blue font-heading text-sm uppercase tracking-[0.2em] mb-4">San Diego, CA</p>
-          <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-widest text-brand-white leading-tight mb-6">
+          <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-widest text-white leading-tight mb-6">
             Built Different.
             <br />
             <span className="text-brand-blue">Made to Stand Out.</span>
           </h1>
-          <p className="text-zinc-400 text-xl leading-relaxed font-body max-w-2xl">
+          <p className="text-gray-300 text-xl leading-relaxed font-body max-w-2xl">
             Retrofit Creations is a custom fabrication operation run by people who are obsessed with cars, craftsmanship, and getting the details exactly right.
           </p>
         </div>
       </section>
 
-      {/* Origin Story */}
+      {/* Origin Story — white bg */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
         <SectionHeading title="Our Story" className="mb-8" />
-        <div className="space-y-6 text-zinc-400 leading-relaxed font-body text-lg">
+        <div className="space-y-6 text-[#555555] leading-relaxed font-body text-lg">
           <p>
             Retrofit Creations started in a San Diego garage with a single laser engraver, a 3D printer, and a problem to solve: there was a specific part needed for a personal build that didn&apos;t exist in any catalog. So we made it.
           </p>
@@ -47,8 +48,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Values */}
-      <section className="py-20 bg-zinc-950">
+      {/* Values — light gray bg */}
+      <section className="py-20 bg-[#F8F8F8]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading title="What We Stand For" centered className="mb-12" />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
@@ -56,10 +57,10 @@ export default function AboutPage() {
               <div key={v.label} className="flex gap-4">
                 <div className="w-1 bg-brand-blue rounded-full flex-shrink-0 self-stretch" />
                 <div>
-                  <h3 className="font-heading font-bold text-lg uppercase tracking-wide text-brand-white mb-2">
+                  <h3 className="font-heading font-bold text-lg uppercase tracking-wide text-black mb-2">
                     {v.label}
                   </h3>
-                  <p className="text-zinc-400 leading-relaxed font-body">{v.description}</p>
+                  <p className="text-[#555555] leading-relaxed font-body">{v.description}</p>
                 </div>
               </div>
             ))}
@@ -67,16 +68,16 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Workshop */}
+      {/* Workshop — white bg */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
             <SectionHeading title="The Workshop" className="mb-6" />
-            <div className="space-y-4 text-zinc-400 leading-relaxed font-body">
+            <div className="space-y-4 text-[#555555] leading-relaxed font-body">
               <p>The shop runs a mix of industrial and hobbyist-grade equipment, chosen for reliability and output quality:</p>
               <ul className="space-y-2 text-sm">
                 {["CO₂ laser engraver — 60W, full-bed format", "FDM 3D printer — multi-material, large format", "Resin 3D printer — engineering-grade precision", "CNC router — wood, plastics, soft metals", "Hand tools, heat guns, post-processing station"].map((item) => (
-                  <li key={item} className="flex items-center gap-3">
+                  <li key={item} className="flex items-center gap-3 text-gray-700">
                     <span className="w-1.5 h-1.5 bg-brand-blue rounded-full flex-shrink-0" />
                     {item}
                   </li>
@@ -85,25 +86,25 @@ export default function AboutPage() {
             </div>
           </div>
           {/* Workshop photo placeholder */}
-          <div className="aspect-video bg-zinc-900 rounded-xl border border-brand-blue/15 flex items-center justify-center">
+          <div className="aspect-video bg-gray-100 rounded-xl border border-[#E8E8E8] flex items-center justify-center">
             <div className="text-center">
-              <div className="w-16 h-16 border border-brand-blue/20 rounded-full flex items-center justify-center mx-auto mb-3">
+              <div className="w-16 h-16 border border-gray-200 rounded-full flex items-center justify-center mx-auto mb-3">
                 <span className="text-2xl">⚙</span>
               </div>
-              <span className="text-zinc-600 text-sm font-heading uppercase tracking-wider">Workshop Photos</span>
-              <p className="text-zinc-700 text-xs mt-1">Coming Soon</p>
+              <span className="text-gray-400 text-sm font-heading uppercase tracking-wider">Workshop Photos</span>
+              <p className="text-gray-400 text-xs mt-1">Coming Soon</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-16 bg-brand-blue/10 border-y border-brand-blue/20">
+      {/* CTA — blue-tinted strip */}
+      <section className="py-16 bg-brand-blue/5 border-y border-brand-blue/15">
         <div className="max-w-3xl mx-auto px-4 text-center">
-          <h2 className="font-heading text-3xl font-bold uppercase tracking-widest text-brand-white mb-4">
+          <h2 className="font-heading text-3xl font-bold uppercase tracking-widest text-black mb-4">
             Ready to Build Something?
           </h2>
-          <p className="text-zinc-400 mb-8 font-body">
+          <p className="text-[#555555] mb-8 font-body">
             Tell us what you have in mind. We&apos;ll figure out how to make it.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

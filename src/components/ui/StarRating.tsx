@@ -1,8 +1,8 @@
 /*
-  StarRating — displays a 1–5 star rating with filled/unfilled stars.
+  StarRating — 1–5 star display (light-body theme, PRD v1.2.0).
 
-  Filled stars use brand blue; unfilled use a muted zinc.
-  Sizes: sm (reviews list), md (product cards), lg (testimonial cards).
+  Filled stars: amber/yellow — universally readable on both white and light gray backgrounds.
+  Unfilled stars: light gray — clearly visible without being distracting.
 */
 type Size = "sm" | "md" | "lg";
 
@@ -23,7 +23,6 @@ export default function StarRating({
   size = "md",
   className = "",
 }: StarRatingProps) {
-  /* Clamp rating to 1–5 */
   const clampedRating = Math.max(1, Math.min(5, Math.round(rating)));
 
   return (
@@ -35,8 +34,9 @@ export default function StarRating({
       {Array.from({ length: 5 }, (_, i) => (
         <svg
           key={i}
+          /* Amber for filled (readable on light bg), light gray for empty */
           className={`${sizeClasses[size]} ${
-            i < clampedRating ? "text-brand-blue" : "text-zinc-700"
+            i < clampedRating ? "text-amber-400" : "text-gray-300"
           }`}
           fill="currentColor"
           viewBox="0 0 20 20"

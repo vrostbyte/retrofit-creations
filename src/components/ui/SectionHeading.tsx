@@ -1,12 +1,8 @@
 /*
-  SectionHeading — reusable section title with optional subtitle and decorative accent.
+  SectionHeading — reusable section title (light-body theme, PRD v1.2.0).
 
-  The blue accent line under the title reinforces the brand's electric blue identity.
-  Used consistently across all page sections to create visual hierarchy.
-
-  Usage:
-    <SectionHeading title="Featured Products" subtitle="Handcrafted for car enthusiasts" />
-    <SectionHeading title="Our Services" centered />
+  Black heading text on white background. Blue accent line unchanged.
+  Subtitle uses secondary text color (#555555).
 */
 interface SectionHeadingProps {
   title: string;
@@ -23,15 +19,15 @@ export default function SectionHeading({
 }: SectionHeadingProps) {
   return (
     <div className={`${centered ? "text-center" : ""} ${className}`}>
-      <h2 className="font-heading text-3xl md:text-4xl font-bold uppercase tracking-widest text-brand-white">
+      <h2 className="font-heading text-3xl md:text-4xl font-bold uppercase tracking-widest text-black">
         {title}
       </h2>
-      {/* Blue accent line — the visual signature of all section headings */}
+      {/* Blue accent line — brand signature */}
       <div
         className={`mt-3 h-0.5 w-16 bg-brand-blue ${centered ? "mx-auto" : ""}`}
       />
       {subtitle && (
-        <p className="mt-4 text-zinc-400 text-base md:text-lg max-w-2xl leading-relaxed font-body">
+        <p className="mt-4 text-[#555555] text-base md:text-lg max-w-2xl leading-relaxed font-body">
           {subtitle}
         </p>
       )}

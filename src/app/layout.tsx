@@ -64,7 +64,8 @@ export default function RootLayout({
       lang="en"
       className={`${oswald.variable} ${inter.variable}`}
     >
-      <body className="min-h-screen flex flex-col bg-brand-black text-brand-white font-body antialiased">
+      {/* Light body theme (PRD v1.2.0) — header/footer are the only black elements */}
+      <body className="min-h-screen flex flex-col bg-white text-black font-body antialiased">
         <Header />
         {/* Pages render here — flex-1 makes the content fill available space */}
         <main className="flex-1">{children}</main>

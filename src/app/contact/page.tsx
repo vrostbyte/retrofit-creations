@@ -1,7 +1,6 @@
 /*
-  Contact / Custom Quote page — PRD Section 5.9
-  Full quote request form with all fields from the PRD.
-  Frontend validation only in Phase 1 — form submission wired in Phase 2.
+  Contact / Custom Quote page — light-body theme (PRD v1.2.0).
+  White background, light gray card inputs, blue focus rings.
 */
 "use client";
 
@@ -42,21 +41,12 @@ interface FormData {
   preferredContact: "email" | "phone" | "text";
 }
 
-interface FormErrors {
-  [key: string]: string;
-}
+interface FormErrors { [key: string]: string; }
 
 export default function ContactPage() {
   const [form, setForm] = useState<FormData>({
-    name: "",
-    email: "",
-    phone: "",
-    serviceType: "",
-    quantity: "",
-    budgetRange: "",
-    deadline: "",
-    description: "",
-    preferredContact: "email",
+    name: "", email: "", phone: "", serviceType: "", quantity: "",
+    budgetRange: "", deadline: "", description: "", preferredContact: "email",
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitted, setSubmitted] = useState(false);
@@ -64,7 +54,6 @@ export default function ContactPage() {
   const setField = (field: keyof FormData, value: string) =>
     setForm((prev) => ({ ...prev, [field]: value }));
 
-  /* Basic frontend validation — API submission wired in Phase 2 */
   const validate = (): FormErrors => {
     const errs: FormErrors = {};
     if (!form.name.trim()) errs.name = "Name is required";
@@ -78,27 +67,23 @@ export default function ContactPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const errs = validate();
-    if (Object.keys(errs).length > 0) {
-      setErrors(errs);
-      return;
-    }
-    /* Phase 2: POST to /api/quotes here */
+    if (Object.keys(errs).length > 0) { setErrors(errs); return; }
     setSubmitted(true);
   };
 
   if (submitted) {
     return (
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
-        <div className="w-16 h-16 rounded-full bg-brand-blue/20 border border-brand-blue/40 flex items-center justify-center mx-auto mb-6">
+        <div className="w-16 h-16 rounded-full bg-brand-blue/10 border border-brand-blue/20 flex items-center justify-center mx-auto mb-6">
           <svg className="w-8 h-8 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h1 className="font-heading text-3xl font-bold uppercase tracking-widest text-brand-white mb-4">
+        <h1 className="font-heading text-3xl font-bold uppercase tracking-widest text-black mb-4">
           Quote Request Received!
         </h1>
-        <p className="text-zinc-400 font-body mb-6 leading-relaxed">
-          Thanks, {form.name}! We&apos;ve received your request and will get back to you within <strong className="text-brand-white">24–48 hours</strong> via {form.preferredContact}.
+        <p className="text-[#555555] font-body mb-6 leading-relaxed">
+          Thanks, {form.name}! We&apos;ve received your request and will get back to you within <strong className="text-black">24–48 hours</strong> via {form.preferredContact}.
         </p>
         <Button variant="secondary" href="/">Back to Home</Button>
       </div>
@@ -114,96 +99,40 @@ export default function ContactPage() {
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-        {/* ── Quote Form (2/3 width) ──────────────────────────── */}
+        {/* Quote Form */}
         <form onSubmit={handleSubmit} className="lg:col-span-2 flex flex-col gap-6" noValidate>
-          {/* Personal info */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <Input
-              label="Your Name"
-              name="name"
-              value={form.name}
-              onChange={(e) => setField("name", e.target.value)}
-              error={errors.name}
-              placeholder="Hailie Smith"
-              required
-            />
-            <Input
-              label="Email Address"
-              name="email"
-              type="email"
-              value={form.email}
-              onChange={(e) => setField("email", e.target.value)}
-              error={errors.email}
-              placeholder="hailie@example.com"
-              required
-            />
+            <Input label="Your Name" name="name" value={form.name} onChange={(e) => setField("name", e.target.value)} error={errors.name} placeholder="Hailie Smith" required />
+            <Input label="Email Address" name="email" type="email" value={form.email} onChange={(e) => setField("email", e.target.value)} error={errors.email} placeholder="hailie@example.com" required />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <Input
-              label="Phone (Optional)"
-              name="phone"
-              type="tel"
-              value={form.phone}
-              onChange={(e) => setField("phone", e.target.value)}
-              placeholder="(619) 555-0100"
-            />
-            <Input
-              label="Quantity"
-              name="quantity"
-              type="number"
-              value={form.quantity}
-              onChange={(e) => setField("quantity", e.target.value)}
-              placeholder="1"
-              min={1}
-            />
+            <Input label="Phone (Optional)" name="phone" type="tel" value={form.phone} onChange={(e) => setField("phone", e.target.value)} placeholder="(619) 555-0100" />
+            <Input label="Quantity" name="quantity" type="number" value={form.quantity} onChange={(e) => setField("quantity", e.target.value)} placeholder="1" min={1} />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <Input
-              label="Service Type"
-              name="serviceType"
-              type="select"
-              options={SERVICE_OPTIONS}
-              value={form.serviceType}
-              onChange={(e) => setField("serviceType", e.target.value)}
-              error={errors.serviceType}
-              required
-            />
-            <Input
-              label="Budget Range"
-              name="budgetRange"
-              type="select"
-              options={BUDGET_OPTIONS}
-              value={form.budgetRange}
-              onChange={(e) => setField("budgetRange", e.target.value)}
-            />
+            <Input label="Service Type" name="serviceType" type="select" options={SERVICE_OPTIONS} value={form.serviceType} onChange={(e) => setField("serviceType", e.target.value)} error={errors.serviceType} required />
+            <Input label="Budget Range" name="budgetRange" type="select" options={BUDGET_OPTIONS} value={form.budgetRange} onChange={(e) => setField("budgetRange", e.target.value)} />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <Input
-              label="Needed By (Optional)"
-              name="deadline"
-              type="date"
-              value={form.deadline}
-              onChange={(e) => setField("deadline", e.target.value)}
-            />
-            {/* File upload — Phase 2 wires to Supabase Storage */}
+            <Input label="Needed By (Optional)" name="deadline" type="date" value={form.deadline} onChange={(e) => setField("deadline", e.target.value)} />
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-heading font-medium uppercase tracking-wider text-zinc-300">
-                Reference Images <span className="text-zinc-500 normal-case tracking-normal font-body font-normal">(optional)</span>
+              <label className="text-sm font-heading font-medium uppercase tracking-wider text-gray-700">
+                Reference Images <span className="text-gray-400 normal-case tracking-normal font-body font-normal">(optional)</span>
               </label>
               <input
                 type="file"
                 name="files"
                 multiple
                 accept="image/*,.pdf"
-                className="w-full text-sm text-zinc-400 border border-dashed border-brand-blue/30 rounded-md p-4 cursor-pointer
+                className="w-full text-sm text-gray-600 border border-dashed border-[#E8E8E8] rounded-md p-4 cursor-pointer bg-white
                   file:mr-4 file:py-2 file:px-4 file:rounded file:border-0
                   file:text-sm file:font-heading file:font-semibold file:uppercase file:tracking-wider
-                  file:bg-brand-blue/20 file:text-brand-blue file:cursor-pointer hover:file:bg-brand-blue/30"
+                  file:bg-brand-blue/10 file:text-brand-blue file:cursor-pointer hover:file:bg-brand-blue/20"
               />
-              <p className="text-xs text-zinc-600 font-body">JPG, PNG, PDF. Sketches, inspiration photos, measurements welcome.</p>
+              <p className="text-xs text-gray-400 font-body">JPG, PNG, PDF — sketches, inspiration, measurements.</p>
             </div>
           </div>
 
@@ -215,13 +144,13 @@ export default function ContactPage() {
             value={form.description}
             onChange={(e) => setField("description", e.target.value)}
             error={errors.description}
-            placeholder="Describe what you want made. The more detail the better — materials, dimensions, finish, intended use, vehicle year/make/model if applicable."
+            placeholder="Describe what you want made — materials, dimensions, finish, intended use, vehicle year/make/model if applicable."
             required
           />
 
           {/* Preferred contact method */}
           <div>
-            <p className="text-sm font-heading font-medium uppercase tracking-wider text-zinc-300 mb-3">
+            <p className="text-sm font-heading font-medium uppercase tracking-wider text-gray-700 mb-3">
               Preferred Contact Method <span className="text-brand-blue">*</span>
             </p>
             <div className="flex gap-6">
@@ -235,7 +164,7 @@ export default function ContactPage() {
                     onChange={() => setField("preferredContact", method)}
                     className="w-4 h-4 accent-brand-blue"
                   />
-                  <span className="font-heading text-sm font-semibold uppercase tracking-wider text-zinc-300 group-hover:text-brand-blue transition-colors capitalize">
+                  <span className="font-heading text-sm font-semibold uppercase tracking-wider text-gray-700 group-hover:text-brand-blue transition-colors capitalize">
                     {method}
                   </span>
                 </label>
@@ -243,52 +172,48 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <Button type="submit" variant="primary" size="lg">
-            Submit Quote Request
-          </Button>
+          <Button type="submit" variant="primary" size="lg">Submit Quote Request</Button>
         </form>
 
-        {/* ── Business Info Sidebar ───────────────────────────── */}
+        {/* Business Info Sidebar */}
         <aside className="flex flex-col gap-6">
-          <div className="p-6 bg-zinc-900 border border-brand-blue/15 rounded-xl">
-            <h3 className="font-heading font-bold text-base uppercase tracking-widest text-brand-white mb-5">
+          <div className="p-6 bg-[#F8F8F8] border border-[#E8E8E8] rounded-xl">
+            <h3 className="font-heading font-bold text-base uppercase tracking-widest text-black mb-5">
               Contact Info
             </h3>
             <div className="flex flex-col gap-4 text-sm font-body">
               <div>
-                <p className="text-zinc-500 uppercase tracking-wider text-xs font-heading mb-1">Location</p>
-                <p className="text-zinc-300">San Diego, CA</p>
-                <p className="text-zinc-500 text-xs">Ships worldwide</p>
+                <p className="text-gray-500 uppercase tracking-wider text-xs font-heading mb-1">Location</p>
+                <p className="text-gray-800">San Diego, CA</p>
+                <p className="text-gray-500 text-xs">Ships worldwide</p>
               </div>
               <div>
-                <p className="text-zinc-500 uppercase tracking-wider text-xs font-heading mb-1">Email</p>
+                <p className="text-gray-500 uppercase tracking-wider text-xs font-heading mb-1">Email</p>
                 <a href="mailto:hello@retrofitcreations.com" className="text-brand-blue hover:underline">
                   hello@retrofitcreations.com
                 </a>
               </div>
               <div>
-                <p className="text-zinc-500 uppercase tracking-wider text-xs font-heading mb-1">Response Time</p>
-                <p className="text-zinc-300">Within 24–48 hours</p>
-                <p className="text-zinc-500 text-xs">Mon–Sat, 8am–8pm PT</p>
+                <p className="text-gray-500 uppercase tracking-wider text-xs font-heading mb-1">Response Time</p>
+                <p className="text-gray-800">Within 24–48 hours</p>
+                <p className="text-gray-500 text-xs">Mon–Sat, 8am–8pm PT</p>
               </div>
               <div>
-                <p className="text-zinc-500 uppercase tracking-wider text-xs font-heading mb-1">Social</p>
+                <p className="text-gray-500 uppercase tracking-wider text-xs font-heading mb-1">Social</p>
                 <div className="flex flex-col gap-1">
                   {["Instagram", "Facebook", "TikTok"].map((s) => (
-                    <a key={s} href="#" className="text-zinc-400 hover:text-brand-blue transition-colors">
-                      {s} (coming soon)
-                    </a>
+                    <a key={s} href="#" className="text-gray-500 hover:text-brand-blue transition-colors">{s} (coming soon)</a>
                   ))}
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="p-5 bg-brand-blue/5 border border-brand-blue/20 rounded-xl">
-            <p className="font-heading font-semibold text-sm uppercase tracking-wider text-brand-white mb-2">
+          <div className="p-5 bg-brand-blue/5 border border-brand-blue/15 rounded-xl">
+            <p className="font-heading font-semibold text-sm uppercase tracking-wider text-black mb-2">
               Rush Orders
             </p>
-            <p className="text-zinc-400 text-sm font-body leading-relaxed">
+            <p className="text-[#555555] text-sm font-body leading-relaxed">
               Need it fast? Mention your deadline in the description and we&apos;ll do our best to accommodate. Rush fees may apply.
             </p>
           </div>

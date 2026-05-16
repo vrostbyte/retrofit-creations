@@ -1,13 +1,8 @@
 /*
-  Input — form field component supporting text inputs, textareas, selects, and file uploads.
+  Input — form field component (light-body theme, PRD v1.2.0).
 
-  All fields share: dark background, white text, blue focus ring.
-  Error state renders a red border and error message below.
-
-  Usage:
-    <Input label="Your Name" name="name" required />
-    <Input label="Message" name="message" type="textarea" rows={4} />
-    <Input label="Service" name="service" type="select" options={[...]} />
+  White background, dark text (#000), gray border (#E8E8E8), blue focus ring.
+  Error state: red border + error message below.
 */
 "use client";
 
@@ -46,14 +41,14 @@ interface SelectProps extends BaseProps {
 
 type InputProps = TextInputProps | TextareaProps | SelectProps;
 
-/* Shared classes for all field types */
+/* Shared base — white bg, dark text, gray border, blue focus ring */
 const fieldBase =
-  "w-full bg-zinc-900 text-brand-white border border-brand-blue/20 rounded-md px-4 py-3 " +
-  "placeholder-zinc-500 " +
+  "w-full bg-white text-black border border-[#E8E8E8] rounded-md px-4 py-3 " +
+  "placeholder-gray-400 " +
   "focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue " +
   "transition-colors duration-200";
 
-const fieldError = "border-red-500 focus:border-red-500 focus:ring-red-500";
+const fieldError = "border-red-400 focus:border-red-500 focus:ring-red-500";
 
 export default function Input(props: InputProps) {
   const { label, name, error, className = "", required } = props;
@@ -100,7 +95,6 @@ export default function Input(props: InputProps) {
       );
     }
 
-    /* File upload gets special styling — dark dashed dropzone feel */
     if (props.type === "file") {
       return (
         <input
@@ -112,13 +106,13 @@ export default function Input(props: InputProps) {
           accept={props.accept}
           multiple={props.multiple}
           className={
-            "w-full text-sm text-zinc-400 " +
+            "w-full text-sm text-gray-600 " +
             "file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 " +
             "file:text-sm file:font-heading file:font-semibold file:uppercase file:tracking-wider " +
-            "file:bg-brand-blue/20 file:text-brand-blue file:cursor-pointer " +
-            "hover:file:bg-brand-blue/30 " +
-            "border border-dashed border-brand-blue/30 rounded-md p-4 cursor-pointer " +
-            `${error ? "border-red-500" : ""} ${className}`
+            "file:bg-brand-blue/10 file:text-brand-blue file:cursor-pointer " +
+            "hover:file:bg-brand-blue/20 " +
+            "border border-dashed border-[#E8E8E8] rounded-md p-4 cursor-pointer bg-white " +
+            `${error ? "border-red-400" : ""} ${className}`
           }
           aria-invalid={!!error}
           aria-describedby={error ? `${name}-error` : undefined}
@@ -149,7 +143,7 @@ export default function Input(props: InputProps) {
       {label && (
         <label
           htmlFor={name}
-          className="text-sm font-heading font-medium uppercase tracking-wider text-zinc-300"
+          className="text-sm font-heading font-medium uppercase tracking-wider text-gray-700"
         >
           {label}
           {required && <span className="text-brand-blue ml-1">*</span>}
@@ -157,7 +151,7 @@ export default function Input(props: InputProps) {
       )}
       {renderField()}
       {error && (
-        <p id={`${name}-error`} role="alert" className="text-sm text-red-400">
+        <p id={`${name}-error`} role="alert" className="text-sm text-red-600">
           {error}
         </p>
       )}

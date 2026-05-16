@@ -1,14 +1,7 @@
 /*
-  Homepage — the first impression. Establishes brand, drives to shop/quote/community.
-
-  Sections (per PRD 5.2):
-    1. Hero — dark industrial background, logo, headline, 3 CTAs
-    2. Featured Categories — 6 product category cards
-    3. Services Overview — 4 highlight cards
-    4. Community Showcase — 3-4 project cards
-    5. Testimonials Preview — 2-3 testimonials
-    6. About Preview
-    7. Custom Quote CTA banner
+  Homepage — light-body theme (PRD v1.2.0).
+  Hero section: kept dark (dramatic effect, one acceptable dark content section).
+  All other sections: white/light backgrounds with black text.
 */
 import Image from "next/image";
 import Link from "next/link";
@@ -18,7 +11,6 @@ import Badge from "@/components/ui/Badge";
 import SectionHeading from "@/components/ui/SectionHeading";
 import StarRating from "@/components/ui/StarRating";
 
-/* Hardcoded placeholder data — will be replaced with Supabase queries in Phase 2 */
 const categories = [
   { slug: "automotive-parts", label: "Custom Automotive Parts", icon: "🔧", description: "Brackets, trim, knobs, and bespoke components for any build" },
   { slug: "3d-printed-parts", label: "3D Printed Parts", icon: "⚙️", description: "FDM & resin prints engineered for fit, function, and form" },
@@ -43,52 +35,27 @@ const communityPosts = [
 ];
 
 const testimonials = [
-  {
-    id: 1,
-    quote: "Hailie built a custom dash bracket for my '69 Camaro that fit perfectly on the first print. Insane quality for the price. Will never go anywhere else.",
-    author: "Mike T.",
-    rating: 5,
-    project: "3D Printed Parts",
-  },
-  {
-    id: 2,
-    quote: "Ordered a laser engraved keychain as a gift and it blew everyone away. The detail was unreal. Fast turnaround too — had it in 4 days.",
-    author: "Jessica M.",
-    rating: 5,
-    project: "Laser Engraving",
-  },
-  {
-    id: 3,
-    quote: "Got a custom Zyn tin made with my car club logo. It was the hit of the meetup. Already ordered 20 more for the whole crew.",
-    author: "Carlos D.",
-    rating: 5,
-    project: "Custom Zyn Tins",
-  },
+  { id: 1, quote: "Hailie built a custom dash bracket for my '69 Camaro that fit perfectly on the first print. Insane quality for the price. Will never go anywhere else.", author: "Mike T.", rating: 5, project: "3D Printed Parts" },
+  { id: 2, quote: "Ordered a laser engraved keychain as a gift and it blew everyone away. The detail was unreal. Fast turnaround too — had it in 4 days.", author: "Jessica M.", rating: 5, project: "Laser Engraving" },
+  { id: 3, quote: "Got a custom Zyn tin made with my car club logo. It was the hit of the meetup. Already ordered 20 more for the whole crew.", author: "Carlos D.", rating: 5, project: "Custom Zyn Tins" },
 ];
 
 export default function HomePage() {
   return (
     <div className="flex flex-col">
 
-      {/* ── 1. Hero ───────────────────────────────────────────────── */}
-      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
-        {/* Industrial grid background pattern */}
-        <div className="absolute inset-0 bg-brand-black">
-          {/* Subtle radial glow behind logo */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_40%,rgba(0,98,255,0.08),transparent)]" />
-          {/* Grid texture overlay */}
-          <div
-            className="absolute inset-0 opacity-[0.04]"
-            style={{
-              backgroundImage:
-                "linear-gradient(rgba(0,98,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,98,255,1) 1px, transparent 1px)",
-              backgroundSize: "48px 48px",
-            }}
-          />
-        </div>
-
+      {/* ── 1. Hero — kept dark (acceptable exception per PRD v1.2.0) ── */}
+      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-black">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_40%,rgba(0,98,255,0.08),transparent)]" />
+        <div
+          className="absolute inset-0 opacity-[0.04]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(0,98,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,98,255,1) 1px, transparent 1px)",
+            backgroundSize: "48px 48px",
+          }}
+        />
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
-          {/* Logo */}
           <div className="flex justify-center mb-8">
             <Image
               src="/images/RC-Engraving-Logo-transparent.png"
@@ -99,35 +66,23 @@ export default function HomePage() {
               priority
             />
           </div>
-
-          {/* Headline */}
-          <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold uppercase tracking-widest text-brand-white mb-4 leading-tight">
+          <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold uppercase tracking-widest text-white mb-4 leading-tight">
             Built Different.
             <br />
             <span className="text-brand-blue">Made to Stand Out.</span>
           </h1>
-
-          {/* Subheadline */}
-          <p className="font-body text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+          <p className="font-body text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed">
             Custom fabrication, laser engraving, 3D printing, and CNC work — crafted by hand in San Diego, CA for car enthusiasts and makers who settle for nothing less.
           </p>
-
-          {/* Three CTA buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="primary" size="lg" href="/products">
-              Shop Products
-            </Button>
-            <Button variant="secondary" size="lg" href="/contact">
-              Request Custom Work
-            </Button>
-            <Button variant="ghost" size="lg" href="/community">
-              Join the Community
-            </Button>
+            <Button variant="primary" size="lg" href="/products">Shop Products</Button>
+            <Button variant="secondary" size="lg" href="/contact">Request Custom Work</Button>
+            <Button variant="ghost" size="lg" href="/community">Join the Community</Button>
           </div>
         </div>
       </section>
 
-      {/* ── 2. Featured Categories ────────────────────────────────── */}
+      {/* ── 2. Featured Categories — white bg ────────────────────── */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
         <SectionHeading
           title="Shop by Category"
@@ -138,10 +93,10 @@ export default function HomePage() {
           {categories.map((cat) => (
             <Card key={cat.slug} href={`/products?category=${cat.slug}`} className="p-6 group">
               <div className="text-3xl mb-4">{cat.icon}</div>
-              <h3 className="font-heading font-bold text-lg uppercase tracking-wide text-brand-white mb-2 group-hover:text-brand-blue transition-colors">
+              <h3 className="font-heading font-bold text-lg uppercase tracking-wide text-black mb-2 group-hover:text-brand-blue transition-colors">
                 {cat.label}
               </h3>
-              <p className="text-zinc-400 text-sm leading-relaxed font-body">{cat.description}</p>
+              <p className="text-[#555555] text-sm leading-relaxed font-body">{cat.description}</p>
               <div className="mt-4 text-brand-blue text-sm font-heading font-semibold uppercase tracking-wider flex items-center gap-1">
                 Browse <span>→</span>
               </div>
@@ -150,8 +105,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── 3. Services Overview ─────────────────────────────────── */}
-      <section className="py-20 bg-zinc-950">
+      {/* ── 3. Services Overview — light gray bg ─────────────────── */}
+      <section className="py-20 bg-[#F8F8F8]">
         <div className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <SectionHeading
             title="What We Do"
@@ -163,12 +118,12 @@ export default function HomePage() {
               <Link
                 key={svc.slug}
                 href={`/services#${svc.slug}`}
-                className="group p-6 border border-brand-blue/15 rounded-lg hover:border-brand-blue/50 hover:bg-brand-blue/5 transition-all duration-300"
+                className="group p-6 border border-[#E8E8E8] rounded-lg bg-white hover:border-brand-blue/30 hover:shadow-[0_4px_20px_rgba(0,98,255,0.08)] transition-all duration-300"
               >
-                <h3 className="font-heading font-bold uppercase tracking-wide text-brand-white mb-2 group-hover:text-brand-blue transition-colors">
+                <h3 className="font-heading font-bold uppercase tracking-wide text-black mb-2 group-hover:text-brand-blue transition-colors">
                   {svc.label}
                 </h3>
-                <p className="text-zinc-400 text-sm leading-relaxed font-body">{svc.description}</p>
+                <p className="text-[#555555] text-sm leading-relaxed font-body">{svc.description}</p>
               </Link>
             ))}
           </div>
@@ -178,7 +133,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── 4. Community Showcase ────────────────────────────────── */}
+      {/* ── 4. Community Showcase — white bg ─────────────────────── */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12">
           <SectionHeading
@@ -190,43 +145,38 @@ export default function HomePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {communityPosts.map((post) => (
             <Card key={post.id} className="p-5 flex flex-col gap-3">
-              {/* Placeholder image area */}
-              <div className="w-full h-40 bg-zinc-900 rounded flex items-center justify-center border border-brand-blue/10">
-                <span className="text-zinc-600 text-xs font-heading uppercase tracking-wider">Photo Coming Soon</span>
+              <div className="w-full h-40 bg-gray-100 rounded flex items-center justify-center border border-[#E8E8E8]">
+                <span className="text-gray-400 text-xs font-heading uppercase tracking-wider">Photo Coming Soon</span>
               </div>
               <div className="flex items-center justify-between">
-                <Badge variant={post.type === "featured" ? "default" : "outline"}>
-                  {post.type}
-                </Badge>
-                <span className="text-xs text-zinc-500 font-body">{post.author}</span>
+                <Badge variant={post.type === "featured" ? "default" : "outline"}>{post.type}</Badge>
+                <span className="text-xs text-gray-500 font-body">{post.author}</span>
               </div>
-              <h4 className="font-heading font-semibold uppercase tracking-wide text-brand-white text-sm">
+              <h4 className="font-heading font-semibold uppercase tracking-wide text-black text-sm">
                 {post.title}
               </h4>
-              <p className="text-zinc-400 text-xs leading-relaxed font-body line-clamp-2">{post.description}</p>
+              <p className="text-[#555555] text-xs leading-relaxed font-body line-clamp-2">{post.description}</p>
             </Card>
           ))}
         </div>
       </section>
 
-      {/* ── 5. Testimonials Preview ──────────────────────────────── */}
-      <section className="py-20 bg-zinc-950">
+      {/* ── 5. Testimonials — light gray bg ──────────────────────── */}
+      <section className="py-20 bg-[#F8F8F8]">
         <div className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12">
-            <SectionHeading
-              title="What Customers Say"
-            />
+            <SectionHeading title="What Customers Say" />
             <Button variant="ghost" size="sm" href="/testimonials">Read All Reviews →</Button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {testimonials.map((t) => (
               <Card key={t.id} className="p-6 flex flex-col gap-4">
                 <StarRating rating={t.rating} size="md" />
-                <blockquote className="text-zinc-300 text-sm leading-relaxed font-body italic">
+                <blockquote className="text-gray-700 text-sm leading-relaxed font-body italic flex-1">
                   &ldquo;{t.quote}&rdquo;
                 </blockquote>
-                <div className="flex items-center justify-between mt-auto pt-2 border-t border-brand-blue/10">
-                  <span className="font-heading font-semibold text-sm uppercase tracking-wide text-brand-white">
+                <div className="flex items-center justify-between mt-auto pt-2 border-t border-[#E8E8E8]">
+                  <span className="font-heading font-semibold text-sm uppercase tracking-wide text-black">
                     {t.author}
                   </span>
                   <Badge variant="outline">{t.project}</Badge>
@@ -237,32 +187,30 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── 6. About Preview ─────────────────────────────────────── */}
+      {/* ── 6. About Preview — white bg ──────────────────────────── */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
         <div className="max-w-3xl">
           <SectionHeading title="Our Story" className="mb-6" />
-          <p className="text-zinc-400 text-lg leading-relaxed font-body mb-6">
+          <p className="text-[#555555] text-lg leading-relaxed font-body mb-6">
             Retrofit Creations started in a San Diego garage with a laser engraver, a 3D printer, and a passion for custom car culture. What began as making one-off parts for personal builds turned into a full fabrication operation serving enthusiasts across the country.
           </p>
-          <p className="text-zinc-400 leading-relaxed font-body mb-8">
+          <p className="text-[#555555] leading-relaxed font-body mb-8">
             Every piece is made to order. No mass production, no cookie-cutter designs. Just precise, thoughtful fabrication for people who care about the details.
           </p>
           <Button variant="secondary" href="/about">Learn More About Us</Button>
         </div>
       </section>
 
-      {/* ── 7. Custom Quote CTA Banner ───────────────────────────── */}
-      <section className="py-16 bg-brand-blue/10 border-y border-brand-blue/20">
+      {/* ── 7. Custom Quote CTA — blue-tinted strip ──────────────── */}
+      <section className="py-16 bg-brand-blue/5 border-y border-brand-blue/15">
         <div className="px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto text-center">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold uppercase tracking-widest text-brand-white mb-4">
+          <h2 className="font-heading text-3xl md:text-4xl font-bold uppercase tracking-widest text-black mb-4">
             Have a Custom Project in Mind?
           </h2>
-          <p className="text-zinc-400 text-lg mb-8 font-body">
+          <p className="text-[#555555] text-lg mb-8 font-body">
             Tell us what you&apos;re building. We&apos;ll make it happen.
           </p>
-          <Button variant="primary" size="lg" href="/contact">
-            Get a Free Quote
-          </Button>
+          <Button variant="primary" size="lg" href="/contact">Get a Free Quote</Button>
         </div>
       </section>
     </div>

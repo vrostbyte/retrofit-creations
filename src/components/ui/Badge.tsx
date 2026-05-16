@@ -1,11 +1,12 @@
 /*
   Badge — small label for categories, statuses, and project types.
+  Light-body theme (PRD v1.2.0) — all variants readable on #F8F8F8 cards.
 
   Variants:
-    • default  — solid blue (primary categories)
-    • outline  — blue border, transparent bg (secondary tags)
-    • success  — green (completed, shipped)
-    • warning  — amber (pending, in-review)
+    • default  — blue bg at low opacity, blue text (primary categories)
+    • outline  — blue border, blue text, transparent bg
+    • success  — green tones (completed, shipped)
+    • warning  — amber tones (pending, in-review)
 */
 type BadgeVariant = "default" | "outline" | "success" | "warning";
 
@@ -16,10 +17,10 @@ interface BadgeProps {
 }
 
 const variantClasses: Record<BadgeVariant, string> = {
-  default: "bg-brand-blue/20 text-brand-blue border border-brand-blue/40",
-  outline: "bg-transparent text-brand-blue border border-brand-blue/50",
-  success: "bg-green-500/20 text-green-400 border border-green-500/40",
-  warning: "bg-amber-500/20 text-amber-400 border border-amber-500/40",
+  default: "bg-brand-blue/10 text-brand-blue border border-brand-blue/30",
+  outline: "bg-transparent text-brand-blue border border-brand-blue/40",
+  success: "bg-green-50 text-green-700 border border-green-200",
+  warning: "bg-amber-50 text-amber-700 border border-amber-200",
 };
 
 export default function Badge({

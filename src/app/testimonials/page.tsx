@@ -1,6 +1,5 @@
 /*
-  Testimonials page — PRD Section 5.8
-  Grid of customer reviews with star ratings, filter by project type, and a review CTA.
+  Testimonials page — light-body theme (PRD v1.2.0).
 */
 "use client";
 
@@ -40,7 +39,7 @@ export default function TestimonialsPage() {
         className="mb-10"
       />
 
-      {/* Filter by project type */}
+      {/* Filter chips */}
       <div className="flex flex-wrap gap-2 justify-center mb-10">
         {PROJECT_TYPES.map((type) => (
           <button
@@ -49,7 +48,7 @@ export default function TestimonialsPage() {
             className={`px-4 py-2 rounded-full text-sm font-heading font-semibold uppercase tracking-wider border transition-all duration-200
               ${activeFilter === type
                 ? "bg-brand-blue text-white border-brand-blue"
-                : "bg-transparent text-zinc-400 border-brand-blue/20 hover:border-brand-blue/50 hover:text-brand-blue"
+                : "bg-white text-gray-600 border-[#E8E8E8] hover:border-brand-blue/40 hover:text-brand-blue"
               }`}
           >
             {type}
@@ -59,11 +58,11 @@ export default function TestimonialsPage() {
 
       {/* Overall rating summary */}
       <div className="text-center mb-10">
-        <div className="inline-flex items-center gap-3 bg-brand-blue/5 border border-brand-blue/20 rounded-xl px-6 py-3">
-          <span className="font-heading font-bold text-4xl text-brand-white">5.0</span>
+        <div className="inline-flex items-center gap-3 bg-[#F8F8F8] border border-[#E8E8E8] rounded-xl px-6 py-3">
+          <span className="font-heading font-bold text-4xl text-black">5.0</span>
           <div className="text-left">
             <StarRating rating={5} size="lg" />
-            <p className="text-zinc-400 text-xs mt-1 font-body">Based on {TESTIMONIALS.length} reviews</p>
+            <p className="text-gray-500 text-xs mt-1 font-body">Based on {TESTIMONIALS.length} reviews</p>
           </div>
         </div>
       </div>
@@ -73,16 +72,15 @@ export default function TestimonialsPage() {
         {filtered.map((t) => (
           <Card key={t.id} className="p-6 flex flex-col gap-4">
             <StarRating rating={t.rating} size="md" />
-            <blockquote className="text-zinc-300 leading-relaxed font-body italic flex-1">
+            <blockquote className="text-gray-700 leading-relaxed font-body italic flex-1">
               &ldquo;{t.quote}&rdquo;
             </blockquote>
-            <div className="flex items-center gap-3 pt-3 border-t border-brand-blue/10">
-              {/* Avatar circle */}
-              <div className="w-9 h-9 rounded-full bg-brand-blue/20 border border-brand-blue/30 flex items-center justify-center flex-shrink-0">
+            <div className="flex items-center gap-3 pt-3 border-t border-[#E8E8E8]">
+              <div className="w-9 h-9 rounded-full bg-brand-blue/10 border border-brand-blue/20 flex items-center justify-center flex-shrink-0">
                 <span className="font-heading font-bold text-xs text-brand-blue">{t.initials}</span>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="font-heading font-semibold text-sm uppercase tracking-wide text-brand-white truncate">{t.author}</p>
+                <p className="font-heading font-semibold text-sm uppercase tracking-wide text-black truncate">{t.author}</p>
               </div>
               <Badge variant="outline">{t.project}</Badge>
             </div>
@@ -91,22 +89,20 @@ export default function TestimonialsPage() {
       </div>
 
       {filtered.length === 0 && (
-        <div className="text-center py-16 text-zinc-500">
+        <div className="text-center py-16 text-gray-500">
           <p className="font-heading uppercase tracking-widest">No reviews in this category yet.</p>
         </div>
       )}
 
       {/* Leave a review CTA */}
-      <div className="mt-16 text-center p-10 bg-brand-blue/5 border border-brand-blue/20 rounded-xl">
-        <h3 className="font-heading text-2xl font-bold uppercase tracking-widest text-brand-white mb-3">
+      <div className="mt-16 text-center p-10 bg-brand-blue/5 border border-brand-blue/15 rounded-xl">
+        <h3 className="font-heading text-2xl font-bold uppercase tracking-widest text-black mb-3">
           Had a Great Experience?
         </h3>
-        <p className="text-zinc-400 mb-6 font-body">
+        <p className="text-[#555555] mb-6 font-body">
           Your review helps other enthusiasts find quality fabrication. It means a lot to us.
         </p>
-        <Button variant="primary" size="lg" href="/contact">
-          Leave a Review
-        </Button>
+        <Button variant="primary" size="lg" href="/contact">Leave a Review</Button>
       </div>
     </div>
   );

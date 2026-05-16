@@ -21,26 +21,26 @@ export default function AddToCartSection({ isCustomizable }: AddToCartSectionPro
     <div className="flex flex-col gap-4">
       {/* Quantity selector */}
       <div>
-        <label className="block text-sm font-heading font-semibold uppercase tracking-widest text-zinc-400 mb-2">
+        <label className="block text-sm font-heading font-semibold uppercase tracking-widest text-gray-600 mb-2">
           Quantity
         </label>
         <div className="flex items-center gap-3">
           <button
             onClick={() => setQuantity((q) => Math.max(1, q - 1))}
             aria-label="Decrease quantity"
-            className="w-10 h-10 rounded border border-brand-blue/20 text-zinc-300 hover:border-brand-blue hover:text-brand-blue
-              flex items-center justify-center transition-colors text-lg font-medium"
+            className="w-10 h-10 rounded border border-[#E8E8E8] text-gray-600 hover:border-brand-blue hover:text-brand-blue
+              flex items-center justify-center transition-colors text-lg font-medium bg-white"
           >
             −
           </button>
-          <span className="w-10 text-center font-heading font-bold text-brand-white text-lg" aria-live="polite">
+          <span className="w-10 text-center font-heading font-bold text-black text-lg" aria-live="polite">
             {quantity}
           </span>
           <button
             onClick={() => setQuantity((q) => q + 1)}
             aria-label="Increase quantity"
-            className="w-10 h-10 rounded border border-brand-blue/20 text-zinc-300 hover:border-brand-blue hover:text-brand-blue
-              flex items-center justify-center transition-colors text-lg font-medium"
+            className="w-10 h-10 rounded border border-[#E8E8E8] text-gray-600 hover:border-brand-blue hover:text-brand-blue
+              flex items-center justify-center transition-colors text-lg font-medium bg-white"
           >
             +
           </button>

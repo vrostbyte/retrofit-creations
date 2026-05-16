@@ -1,6 +1,6 @@
 # RETROFIT CREATIONS — Product Requirements Document (PRD)
 
-> **Version:** 1.1.0
+> **Version:** 1.2.0
 > **Last Updated:** 2026-05-16
 > **Status:** ACTIVE — This is the single source of truth for the Retrofit Creations website project.
 > **Authors:** Project Lead + Hailie (Business Owner)
@@ -109,15 +109,23 @@ The brand sits at the intersection of a custom garage, a CNC machine shop, and a
 
 ### 3.2 Color Palette
 
+**Theme: Light Body, Dark Navigation** — Content areas are light/white for outdoor readability. Header and footer stay dark black to preserve brand identity.
+
 | Role | Color | Hex | Usage |
 |------|-------|-----|-------|
-| **Primary Background** | Black | `#000000` | Main backgrounds, dark sections, header/footer |
-| **Primary Text** | White | `#FFFFFF` | Body text, headings on dark backgrounds |
-| **Accent / CTA** | Electric Blue | `#0062FF` | Buttons, links, highlights, borders, glow effects |
-| **Accent Light** | Blue (reduced alpha) | `#0062FF` at lower opacity | Hover states, subtle glows, card borders, secondary highlights |
-| **Accent Dark** | Blue (reduced alpha) | `#0062FF` at lower opacity | Active states, pressed buttons, deeper accents |
+| **Page Background** | White | `#FFFFFF` | Main content backgrounds, product pages, forms |
+| **Surface / Card Background** | Light Gray | `#F8F8F8` | Cards, product tiles, input backgrounds |
+| **Nav & Footer Background** | Black | `#000000` | Sticky header, footer — brand identity anchors |
+| **Primary Text** | Black | `#000000` | Body text, headings on light backgrounds |
+| **Secondary Text** | Dark Gray | `#555555` | Descriptions, metadata, subtitles |
+| **Nav/Footer Text** | White | `#FFFFFF` | Text on dark header/footer |
+| **Accent / CTA** | Electric Blue | `#0062FF` | Buttons, links, highlights, active states |
+| **Accent Light** | Blue (reduced alpha) | `#0062FF` at lower opacity | Hover states, card borders, secondary highlights |
+| **Borders** | Light Gray | `#E8E8E8` | Card borders, dividers, input borders |
 
 > **RULE:** When a lighter or darker blue is needed for accents, hover states, or subtle effects, always start from `#0062FF` and adjust ONLY the alpha/opacity channel. Never use a different blue hue.
+>
+> **THEME RULE:** The ONLY elements with black backgrounds are the sticky header and footer. All content sections, pages, cards, and forms use white or light gray backgrounds with dark text. This maximizes readability for the target audience (older demographic, outdoor/mobile use at car shows).
 
 ### 3.3 Typography
 
@@ -130,15 +138,17 @@ The brand sits at the intersection of a custom garage, a CNC machine shop, and a
 
 ### 3.4 Design Language
 
-- Dark theme throughout — black backgrounds, white text, blue accents
-- Subtle border glows and hover effects using the blue accent at reduced opacity
-- Clean card-based layouts with defined borders
-- Industrial/mechanical visual motifs where appropriate (textures, grid patterns, subtle noise)
-- High-contrast imagery — product photos on dark or neutral backgrounds
+- **Light body, dark nav** — White/light content areas with black header and footer framing the page
+- Clean card-based layouts on light gray (#F8F8F8) backgrounds with subtle borders (#E8E8E8)
+- Blue accent for CTAs, links, active nav states, and hover effects
+- Hover effects: subtle blue border glow on cards (blue at low opacity), smooth transitions
+- High-contrast text: black on white for maximum outdoor/mobile readability
+- Industrial/mechanical visual motifs where appropriate (textures, grid patterns as subtle accents — NOT dark backgrounds)
+- High-quality product imagery on light neutral backgrounds
 - Professional animations/transitions — smooth but fast, nothing slow or distracting
-- Sticky navigation header
-- Logo placement in header (left-aligned)
-- Footer with social links, policies, contact info, and quick navigation
+- Sticky navigation header (black background, white text, blue logo accent)
+- Logo placement in header (left-aligned, on dark background where it pops)
+- Footer (black background) with social links, policies, contact info, and quick navigation in white/gray text
 
 ### 3.5 Imagery Direction
 
@@ -1256,6 +1266,7 @@ Requirements:
 |------|---------|---------|
 | 2026-05-16 | 1.0.0 | Initial PRD created. All sections drafted. |
 | 2026-05-16 | 1.1.0 | Added: San Diego CA location, GitHub repo URL, noreply email, local dev setup (Section 11), .gitignore template, README template, bootstrap sequence. Resolved: fonts (Oswald + Inter), logo files on disk. Updated open items. |
+| 2026-05-16 | 1.2.0 | **THEME CHANGE:** Switched from full dark theme to "Light Body, Dark Nav" — white/light content areas with black header and footer. Reason: target audience (older demographic) + outdoor mobile use at car shows requires high readability. Updated Section 3.2 color palette, Section 3.4 design language. |
 
 ---
 

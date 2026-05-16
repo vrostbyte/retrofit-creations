@@ -1,11 +1,6 @@
 /*
-  Product Detail page — /products/[slug]
-
-  Shows: image gallery, name, price, description, quantity selector,
-  Add to Cart + Customize This buttons, related products.
-
-  Note: In Next.js 16, params is a Promise — must be awaited.
-  This page uses static placeholder data for Phase 1.
+  Product Detail page — light-body theme (PRD v1.2.0).
+  White background, dark text, light gray image placeholders, gray borders.
 */
 import Button from "@/components/ui/Button";
 import Badge from "@/components/ui/Badge";
@@ -14,7 +9,6 @@ import StarRating from "@/components/ui/StarRating";
 import SectionHeading from "@/components/ui/SectionHeading";
 import AddToCartSection from "@/components/products/AddToCartSection";
 
-/* Minimal product lookup — Phase 2 will fetch from Supabase by slug */
 const PRODUCT_DATA: Record<string, {
   name: string;
   price: number;
@@ -50,7 +44,6 @@ const RELATED_PRODUCTS = [
   { slug: "3d-printed-phone-mount-dash", name: "3D Printed Dash Phone Mount — Universal Fit", price: 28.00 },
 ];
 
-/* Next.js 16: params is a Promise — use explicit type until next dev generates global helpers */
 export default async function ProductDetailPage({
   params,
 }: {
@@ -58,7 +51,6 @@ export default async function ProductDetailPage({
 }) {
   const { slug } = await params;
 
-  /* Look up the product — fallback to generic placeholder if slug not in our static set */
   const product = PRODUCT_DATA[slug] ?? {
     name: decodeURIComponent(slug).replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
     price: 35.00,
@@ -72,77 +64,74 @@ export default async function ProductDetailPage({
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* Breadcrumb */}
-      <nav aria-label="Breadcrumb" className="mb-8 text-sm text-zinc-500 font-body">
+      <nav aria-label="Breadcrumb" className="mb-8 text-sm text-gray-500 font-body">
         <ol className="flex items-center gap-2">
           <li><a href="/products" className="hover:text-brand-blue transition-colors">Products</a></li>
           <li aria-hidden>/</li>
-          <li className="text-zinc-300 truncate max-w-[200px]">{product.name}</li>
+          <li className="text-gray-700 truncate max-w-[200px]">{product.name}</li>
         </ol>
       </nav>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        {/* ── Left: Image Gallery ─────────────────────────────── */}
+        {/* Image Gallery */}
         <div className="flex flex-col gap-4">
-          {/* Main image */}
-          <div className="w-full aspect-square bg-zinc-900 rounded-lg border border-brand-blue/15 flex items-center justify-center">
+          <div className="w-full aspect-square bg-gray-100 rounded-lg border border-[#E8E8E8] flex items-center justify-center">
             <div className="text-center">
-              <div className="w-16 h-16 border border-brand-blue/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                <svg className="w-8 h-8 text-zinc-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="w-16 h-16 border border-gray-200 rounded-full flex items-center justify-center mx-auto mb-3">
+                <svg className="w-8 h-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </div>
-              <span className="text-zinc-600 text-sm font-heading uppercase tracking-wider">Product Photo</span>
-              <p className="text-zinc-700 text-xs mt-1">Coming Soon</p>
+              <span className="text-gray-400 text-sm font-heading uppercase tracking-wider">Product Photo</span>
+              <p className="text-gray-400 text-xs mt-1">Coming Soon</p>
             </div>
           </div>
-          {/* Thumbnail strip */}
           <div className="flex gap-3">
             {[0, 1, 2].map((i) => (
-              <div key={i} className="w-20 h-20 bg-zinc-900 rounded border border-brand-blue/10 flex-shrink-0" />
+              <div key={i} className="w-20 h-20 bg-gray-100 rounded border border-[#E8E8E8] flex-shrink-0" />
             ))}
           </div>
         </div>
 
-        {/* ── Right: Product Info ──────────────────────────────── */}
+        {/* Product Info */}
         <div className="flex flex-col gap-6">
           <div>
             <Badge variant="outline" className="mb-3">{product.category}</Badge>
-            <h1 className="font-heading text-2xl md:text-3xl font-bold uppercase tracking-wide text-brand-white leading-tight mb-3">
+            <h1 className="font-heading text-2xl md:text-3xl font-bold uppercase tracking-wide text-black leading-tight mb-3">
               {product.name}
             </h1>
             <div className="flex items-center gap-3 mb-4">
               <StarRating rating={product.rating} size="md" />
-              <span className="text-zinc-400 text-sm font-body">{product.reviews} review{product.reviews !== 1 ? "s" : ""}</span>
+              <span className="text-gray-500 text-sm font-body">{product.reviews} review{product.reviews !== 1 ? "s" : ""}</span>
             </div>
-            <div className="text-3xl font-heading font-bold text-brand-white">
+            <div className="text-3xl font-heading font-bold text-black">
               ${product.price.toFixed(2)}
             </div>
           </div>
 
-          <div className="h-px bg-brand-blue/15" />
+          <div className="h-px bg-[#E8E8E8]" />
 
           <div>
-            <h2 className="font-heading text-sm font-semibold uppercase tracking-widest text-zinc-400 mb-2">Description</h2>
-            <p className="text-zinc-300 leading-relaxed font-body">{product.description}</p>
+            <h2 className="font-heading text-sm font-semibold uppercase tracking-widest text-gray-500 mb-2">Description</h2>
+            <p className="text-gray-700 leading-relaxed font-body">{product.description}</p>
           </div>
 
           {product.isCustomizable && (
-            <div className="p-4 bg-brand-blue/5 border border-brand-blue/20 rounded-lg">
+            <div className="p-4 bg-brand-blue/5 border border-brand-blue/15 rounded-lg">
               <p className="text-sm text-brand-blue font-heading font-semibold uppercase tracking-wider mb-1">
                 Customizable
               </p>
-              <p className="text-zinc-400 text-sm font-body">
+              <p className="text-gray-600 text-sm font-body">
                 This item can be personalized. Click &quot;Customize This&quot; to specify your options, or contact us to discuss your vision.
               </p>
             </div>
           )}
 
-          {/* Quantity + Add to Cart — client component for interactivity */}
           <AddToCartSection isCustomizable={product.isCustomizable} />
 
-          <div className="h-px bg-brand-blue/15" />
+          <div className="h-px bg-[#E8E8E8]" />
 
-          <div className="text-sm text-zinc-500 font-body space-y-1">
+          <div className="text-sm text-gray-500 font-body space-y-1">
             <p>✓ Made to order — ships within 5-10 business days</p>
             <p>✓ Ships worldwide from San Diego, CA</p>
             <p>✓ Questions? <a href="/contact" className="text-brand-blue hover:underline">Contact us</a></p>
@@ -150,19 +139,19 @@ export default async function ProductDetailPage({
         </div>
       </div>
 
-      {/* ── Related Products ──────────────────────────────────── */}
+      {/* Related Products */}
       <div className="mt-20">
         <SectionHeading title="Related Products" className="mb-8" />
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {RELATED_PRODUCTS.filter((r) => r.slug !== slug).slice(0, 3).map((rel) => (
             <Card key={rel.slug} href={`/products/${rel.slug}`} className="p-4 flex flex-col gap-3">
-              <div className="w-full h-32 bg-zinc-900 rounded border border-brand-blue/10 flex items-center justify-center">
-                <span className="text-zinc-600 text-xs font-heading uppercase">Photo</span>
+              <div className="w-full h-32 bg-gray-100 rounded border border-[#E8E8E8] flex items-center justify-center">
+                <span className="text-gray-400 text-xs font-heading uppercase">Photo</span>
               </div>
-              <h3 className="font-heading font-semibold uppercase tracking-wide text-brand-white text-sm leading-snug">
+              <h3 className="font-heading font-semibold uppercase tracking-wide text-black text-sm leading-snug">
                 {rel.name}
               </h3>
-              <span className="font-heading font-bold text-brand-white">${rel.price.toFixed(2)}</span>
+              <span className="font-heading font-bold text-black">${rel.price.toFixed(2)}</span>
             </Card>
           ))}
         </div>

@@ -1,6 +1,6 @@
 /*
-  Login page — /account/login
-  UI shell for Phase 1. Supabase Auth wired in Phase 2.
+  Login page — light-body theme (PRD v1.2.0).
+  White card on white background — defined with a border and subtle shadow.
 */
 "use client";
 
@@ -15,68 +15,43 @@ export default function LoginPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    /* Phase 2: call Supabase Auth signInWithPassword */
     alert("Auth will be wired in Phase 2. Form captured: " + email);
   };
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center px-4">
+    <div className="min-h-[80vh] flex items-center justify-center px-4 bg-[#F8F8F8]">
       <div className="w-full max-w-md">
-        {/* Card */}
-        <div className="bg-zinc-900 border border-brand-blue/20 rounded-xl p-8 shadow-[0_0_40px_rgba(0,98,255,0.08)]">
-          <h1 className="font-heading text-2xl font-bold uppercase tracking-widest text-brand-white text-center mb-2">
+        <div className="bg-white border border-[#E8E8E8] rounded-xl p-8 shadow-sm">
+          <h1 className="font-heading text-2xl font-bold uppercase tracking-widest text-black text-center mb-2">
             Sign In
           </h1>
-          <p className="text-zinc-500 text-sm text-center font-body mb-8">
+          <p className="text-gray-500 text-sm text-center font-body mb-8">
             Welcome back to Retrofit Creations
           </p>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-            <Input
-              label="Email Address"
-              name="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
-              required
-            />
+            <Input label="Email Address" name="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" required />
             <div className="flex flex-col gap-1.5">
-              <Input
-                label="Password"
-                name="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                required
-              />
-              <Link
-                href="/account/forgot-password"
-                className="text-xs text-brand-blue hover:underline text-right font-body"
-              >
+              <Input label="Password" name="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" required />
+              <Link href="/account/forgot-password" className="text-xs text-brand-blue hover:underline text-right font-body">
                 Forgot password?
               </Link>
             </div>
-
-            <Button type="submit" variant="primary" size="lg">
-              Sign In
-            </Button>
+            <Button type="submit" variant="primary" size="lg">Sign In</Button>
           </form>
 
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-brand-blue/15" />
+              <div className="w-full border-t border-[#E8E8E8]" />
             </div>
-            <div className="relative flex justify-center text-xs text-zinc-500 uppercase tracking-widest font-heading">
-              <span className="bg-zinc-900 px-3">or</span>
+            <div className="relative flex justify-center text-xs text-gray-400 uppercase tracking-widest font-heading">
+              <span className="bg-white px-3">or</span>
             </div>
           </div>
 
-          {/* Google OAuth — placeholder for Phase 3 */}
           <button
             type="button"
-            className="w-full flex items-center justify-center gap-3 py-3 border border-brand-blue/20 rounded-md text-sm font-heading font-semibold uppercase tracking-wider text-zinc-300 hover:border-brand-blue/50 hover:text-brand-blue transition-colors"
+            className="w-full flex items-center justify-center gap-3 py-3 border border-[#E8E8E8] rounded-md text-sm font-heading font-semibold uppercase tracking-wider text-gray-600 hover:border-brand-blue/40 hover:text-brand-blue transition-colors bg-white"
             onClick={() => alert("Google OAuth coming in Phase 3")}
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24">
@@ -88,11 +63,9 @@ export default function LoginPage() {
             Continue with Google
           </button>
 
-          <p className="text-center text-sm text-zinc-500 font-body mt-6">
+          <p className="text-center text-sm text-gray-500 font-body mt-6">
             Don&apos;t have an account?{" "}
-            <Link href="/account/signup" className="text-brand-blue hover:underline font-semibold">
-              Create one
-            </Link>
+            <Link href="/account/signup" className="text-brand-blue hover:underline font-semibold">Create one</Link>
           </p>
         </div>
       </div>
