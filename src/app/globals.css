@@ -1,26 +1,72 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+  Tailwind v4 uses CSS-based configuration via @theme.
+  All brand tokens live here — no tailwind.config.ts needed.
+  Fonts are injected as CSS variables by next/font/google in layout.tsx,
+  then referenced here so Tailwind generates font-heading / font-body utilities.
+*/
+@theme {
+  /* Brand colors — always start from #0062FF and adjust opacity for variants */
+  --color-brand-black: #000000;
+  --color-brand-white: #ffffff;
+  --color-brand-blue: #0062ff;
+
+  /* Font families — CSS vars are set on <html> by next/font in layout.tsx */
+  --font-heading: var(--font-oswald), sans-serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ─── Base styles ──────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  background-color: #000000;
+  color: #ffffff;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #000000;
+  color: #ffffff;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Prevent white flash on navigation — keep everything black */
+* {
+  box-sizing: border-box;
+}
+
+/* ─── Custom scrollbar (dark theme) ──────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #111111;
+}
+::-webkit-scrollbar-thumb {
+  background: #0062ff55;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #0062ff;
+}
+
+/* ─── CSS custom properties for brand colors ─────────────────────── */
+:root {
+  --brand-black: #000000;
+  --brand-white: #ffffff;
+  --brand-blue: #0062ff;
+  --brand-blue-10: rgba(0, 98, 255, 0.1);
+  --brand-blue-20: rgba(0, 98, 255, 0.2);
+  --brand-blue-30: rgba(0, 98, 255, 0.3);
+  --brand-blue-50: rgba(0, 98, 255, 0.5);
+}
+
+/* ─── Heading defaults ───────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-oswald), sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }

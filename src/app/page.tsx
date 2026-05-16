@@ -1,65 +1,270 @@
-import Image from "next/image";
+/*
+  Homepage — the first impression. Establishes brand, drives to shop/quote/community.
 
-export default function Home() {
+  Sections (per PRD 5.2):
+    1. Hero — dark industrial background, logo, headline, 3 CTAs
+    2. Featured Categories — 6 product category cards
+    3. Services Overview — 4 highlight cards
+    4. Community Showcase — 3-4 project cards
+    5. Testimonials Preview — 2-3 testimonials
+    6. About Preview
+    7. Custom Quote CTA banner
+*/
+import Image from "next/image";
+import Link from "next/link";
+import Button from "@/components/ui/Button";
+import Card from "@/components/ui/Card";
+import Badge from "@/components/ui/Badge";
+import SectionHeading from "@/components/ui/SectionHeading";
+import StarRating from "@/components/ui/StarRating";
+
+/* Hardcoded placeholder data — will be replaced with Supabase queries in Phase 2 */
+const categories = [
+  { slug: "automotive-parts", label: "Custom Automotive Parts", icon: "🔧", description: "Brackets, trim, knobs, and bespoke components for any build" },
+  { slug: "3d-printed-parts", label: "3D Printed Parts", icon: "⚙️", description: "FDM & resin prints engineered for fit, function, and form" },
+  { slug: "laser-engraved", label: "Laser Engraved Items", icon: "✦", description: "Precision engraving on wood, metal, leather, acrylic, and more" },
+  { slug: "personalized-gifts", label: "Personalized Gifts", icon: "🎁", description: "One-of-a-kind gifts for enthusiasts, collectors, and creators" },
+  { slug: "event-vendor", label: "Event / Vendor Items", icon: "🏁", description: "Custom pieces for car shows, markets, and special events" },
+  { slug: "zyn-tins", label: "Custom Zyn Tins", icon: "⬡", description: "Personalized and custom-designed Zyn tins" },
+];
+
+const services = [
+  { slug: "laser-engraving", label: "Laser Engraving", description: "Custom text, logos, and artwork on virtually any material" },
+  { slug: "3d-printing", label: "3D Printing", description: "Functional prototypes and custom parts, FDM & resin" },
+  { slug: "cnc-carving", label: "CNC Carving", description: "Precision carving in wood, plastics, soft metals, and composites" },
+  { slug: "custom-auto", label: "Custom Auto Parts", description: "Replacement and bespoke trim for any vehicle, any year" },
+];
+
+const communityPosts = [
+  { id: 1, title: "Custom 3D Printed Dash — '69 Camaro", author: "Mike T.", type: "showcase", description: "Full custom dash bracket set, printed in matte black PETG to match the interior. Perfect fitment." },
+  { id: 2, title: "Laser Engraved Center Console — Ford Bronco", author: "Sarah K.", type: "showcase", description: "Intricate geometric pattern engraved on the factory console lid. Looks incredible in person." },
+  { id: 3, title: "2025 San Diego Auto Show Booth", author: "Retrofit Creations", type: "event", description: "Huge turnout at our booth! Met so many amazing builders and enthusiasts from across SoCal." },
+  { id: 4, title: "Custom Keychain Set — Porsche 911", author: "James R.", type: "featured", description: "Matching set of laser engraved keychains for a Porsche club member. They were a hit at the meetup." },
+];
+
+const testimonials = [
+  {
+    id: 1,
+    quote: "Hailie built a custom dash bracket for my '69 Camaro that fit perfectly on the first print. Insane quality for the price. Will never go anywhere else.",
+    author: "Mike T.",
+    rating: 5,
+    project: "3D Printed Parts",
+  },
+  {
+    id: 2,
+    quote: "Ordered a laser engraved keychain as a gift and it blew everyone away. The detail was unreal. Fast turnaround too — had it in 4 days.",
+    author: "Jessica M.",
+    rating: 5,
+    project: "Laser Engraving",
+  },
+  {
+    id: 3,
+    quote: "Got a custom Zyn tin made with my car club logo. It was the hit of the meetup. Already ordered 20 more for the whole crew.",
+    author: "Carlos D.",
+    rating: 5,
+    project: "Custom Zyn Tins",
+  },
+];
+
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="flex flex-col">
+
+      {/* ── 1. Hero ───────────────────────────────────────────────── */}
+      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
+        {/* Industrial grid background pattern */}
+        <div className="absolute inset-0 bg-brand-black">
+          {/* Subtle radial glow behind logo */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_40%,rgba(0,98,255,0.08),transparent)]" />
+          {/* Grid texture overlay */}
+          <div
+            className="absolute inset-0 opacity-[0.04]"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(0,98,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,98,255,1) 1px, transparent 1px)",
+              backgroundSize: "48px 48px",
+            }}
+          />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
+          {/* Logo */}
+          <div className="flex justify-center mb-8">
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+              src="/images/RC-Engraving-Logo-transparent.png"
+              alt="Retrofit Creations"
+              width={280}
+              height={100}
+              className="w-48 sm:w-64 md:w-72 h-auto object-contain drop-shadow-[0_0_30px_rgba(0,98,255,0.3)]"
+              priority
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </div>
+
+          {/* Headline */}
+          <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold uppercase tracking-widest text-brand-white mb-4 leading-tight">
+            Built Different.
+            <br />
+            <span className="text-brand-blue">Made to Stand Out.</span>
+          </h1>
+
+          {/* Subheadline */}
+          <p className="font-body text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+            Custom fabrication, laser engraving, 3D printing, and CNC work — crafted by hand in San Diego, CA for car enthusiasts and makers who settle for nothing less.
+          </p>
+
+          {/* Three CTA buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button variant="primary" size="lg" href="/products">
+              Shop Products
+            </Button>
+            <Button variant="secondary" size="lg" href="/contact">
+              Request Custom Work
+            </Button>
+            <Button variant="ghost" size="lg" href="/community">
+              Join the Community
+            </Button>
+          </div>
         </div>
-      </main>
+      </section>
+
+      {/* ── 2. Featured Categories ────────────────────────────────── */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        <SectionHeading
+          title="Shop by Category"
+          subtitle="From custom automotive parts to personalized gifts — if you can imagine it, we can make it."
+          className="mb-12"
+        />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {categories.map((cat) => (
+            <Card key={cat.slug} href={`/products?category=${cat.slug}`} className="p-6 group">
+              <div className="text-3xl mb-4">{cat.icon}</div>
+              <h3 className="font-heading font-bold text-lg uppercase tracking-wide text-brand-white mb-2 group-hover:text-brand-blue transition-colors">
+                {cat.label}
+              </h3>
+              <p className="text-zinc-400 text-sm leading-relaxed font-body">{cat.description}</p>
+              <div className="mt-4 text-brand-blue text-sm font-heading font-semibold uppercase tracking-wider flex items-center gap-1">
+                Browse <span>→</span>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* ── 3. Services Overview ─────────────────────────────────── */}
+      <section className="py-20 bg-zinc-950">
+        <div className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+          <SectionHeading
+            title="What We Do"
+            subtitle="Precision craft meets custom design. Every piece made to order."
+            className="mb-12"
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {services.map((svc) => (
+              <Link
+                key={svc.slug}
+                href={`/services#${svc.slug}`}
+                className="group p-6 border border-brand-blue/15 rounded-lg hover:border-brand-blue/50 hover:bg-brand-blue/5 transition-all duration-300"
+              >
+                <h3 className="font-heading font-bold uppercase tracking-wide text-brand-white mb-2 group-hover:text-brand-blue transition-colors">
+                  {svc.label}
+                </h3>
+                <p className="text-zinc-400 text-sm leading-relaxed font-body">{svc.description}</p>
+              </Link>
+            ))}
+          </div>
+          <div className="mt-8 text-center">
+            <Button variant="secondary" href="/services">View All Services</Button>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 4. Community Showcase ────────────────────────────────── */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12">
+          <SectionHeading
+            title="Community Showcase"
+            subtitle="Real builds. Real customers. Real craftsmanship."
+          />
+          <Button variant="ghost" size="sm" href="/community">See All →</Button>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {communityPosts.map((post) => (
+            <Card key={post.id} className="p-5 flex flex-col gap-3">
+              {/* Placeholder image area */}
+              <div className="w-full h-40 bg-zinc-900 rounded flex items-center justify-center border border-brand-blue/10">
+                <span className="text-zinc-600 text-xs font-heading uppercase tracking-wider">Photo Coming Soon</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <Badge variant={post.type === "featured" ? "default" : "outline"}>
+                  {post.type}
+                </Badge>
+                <span className="text-xs text-zinc-500 font-body">{post.author}</span>
+              </div>
+              <h4 className="font-heading font-semibold uppercase tracking-wide text-brand-white text-sm">
+                {post.title}
+              </h4>
+              <p className="text-zinc-400 text-xs leading-relaxed font-body line-clamp-2">{post.description}</p>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* ── 5. Testimonials Preview ──────────────────────────────── */}
+      <section className="py-20 bg-zinc-950">
+        <div className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12">
+            <SectionHeading
+              title="What Customers Say"
+            />
+            <Button variant="ghost" size="sm" href="/testimonials">Read All Reviews →</Button>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {testimonials.map((t) => (
+              <Card key={t.id} className="p-6 flex flex-col gap-4">
+                <StarRating rating={t.rating} size="md" />
+                <blockquote className="text-zinc-300 text-sm leading-relaxed font-body italic">
+                  &ldquo;{t.quote}&rdquo;
+                </blockquote>
+                <div className="flex items-center justify-between mt-auto pt-2 border-t border-brand-blue/10">
+                  <span className="font-heading font-semibold text-sm uppercase tracking-wide text-brand-white">
+                    {t.author}
+                  </span>
+                  <Badge variant="outline">{t.project}</Badge>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 6. About Preview ─────────────────────────────────────── */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        <div className="max-w-3xl">
+          <SectionHeading title="Our Story" className="mb-6" />
+          <p className="text-zinc-400 text-lg leading-relaxed font-body mb-6">
+            Retrofit Creations started in a San Diego garage with a laser engraver, a 3D printer, and a passion for custom car culture. What began as making one-off parts for personal builds turned into a full fabrication operation serving enthusiasts across the country.
+          </p>
+          <p className="text-zinc-400 leading-relaxed font-body mb-8">
+            Every piece is made to order. No mass production, no cookie-cutter designs. Just precise, thoughtful fabrication for people who care about the details.
+          </p>
+          <Button variant="secondary" href="/about">Learn More About Us</Button>
+        </div>
+      </section>
+
+      {/* ── 7. Custom Quote CTA Banner ───────────────────────────── */}
+      <section className="py-16 bg-brand-blue/10 border-y border-brand-blue/20">
+        <div className="px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto text-center">
+          <h2 className="font-heading text-3xl md:text-4xl font-bold uppercase tracking-widest text-brand-white mb-4">
+            Have a Custom Project in Mind?
+          </h2>
+          <p className="text-zinc-400 text-lg mb-8 font-body">
+            Tell us what you&apos;re building. We&apos;ll make it happen.
+          </p>
+          <Button variant="primary" size="lg" href="/contact">
+            Get a Free Quote
+          </Button>
+        </div>
+      </section>
     </div>
   );
 }
