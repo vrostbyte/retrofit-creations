@@ -71,7 +71,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       >
         {/* Drawer header */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-brand-blue/20">
-          <span className="font-heading font-bold text-brand-white uppercase tracking-widest text-lg">
+          <span className="font-heading font-bold text-white uppercase tracking-widest text-lg">
             Menu
           </span>
           <button

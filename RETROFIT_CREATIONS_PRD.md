@@ -1,6 +1,6 @@
 # RETROFIT CREATIONS — Product Requirements Document (PRD)
 
-> **Version:** 1.2.0
+> **Version:** 1.2.1
 > **Last Updated:** 2026-05-16
 > **Status:** ACTIVE — This is the single source of truth for the Retrofit Creations website project.
 > **Authors:** Project Lead + Hailie (Business Owner)
@@ -152,9 +152,11 @@ The brand sits at the intersection of a custom garage, a CNC machine shop, and a
 
 ### 3.5 Imagery Direction
 
-**Logo Files (on disk):**
-- `public/images/RC-Engraving-Logo.png` — Logo with background (use for dark bg sections where contrast is needed)
-- `public/images/RC-Engraving-Logo-transparent.png` — Transparent background (use for header, overlays, email templates)
+**Logo Files (on disk) — USAGE RULES:**
+- `public/images/RC-Engraving-Logo.png` — Logo with its own background. **USE ON DARK BACKGROUNDS** (header nav, footer, mobile menu). The logo artwork is dark, so it needs the built-in background to be visible against black.
+- `public/images/RC-Engraving-Logo-transparent.png` — Transparent background, dark logo artwork. **USE ON LIGHT BACKGROUNDS** (hero section, about page, content areas). The dark logo shows clearly on white/light surfaces.
+
+> **CRITICAL RULE:** NEVER use the transparent logo on a dark background — the dark logo artwork becomes invisible. NEVER use the non-transparent logo on a light background unless the built-in background complements the design.
 
 > **NOTE:** Current logos reference "RC Engraving." If Hailie has or creates a broader "Retrofit Creations" logo in the future, add it to `public/images/` and update references. For now, use what we have.
 
@@ -351,11 +353,11 @@ Contact              Bulk Orders
 **Purpose:** First impression. Establish brand credibility. Drive visitors to shop, request custom work, or join the community.
 
 **Hero Section:**
-- Full-width dark industrial background (textured or with subtle animated particles/grid)
-- Retrofit Creations logo (prominently displayed)
-- Headline: **"Built Different. Made to Stand Out."**
-- Subheadline: Brief brand positioning (1-2 sentences about custom fabrication + precision)
-- Three CTA buttons:
+- Full-width **light background** (white or very light gray) with subtle darker grid pattern overlay for industrial texture
+- Retrofit Creations logo (prominently displayed — use `RC-Engraving-Logo-transparent.png` since hero background is light)
+- Headline: **"Built Different. Made to Stand Out."** in black text
+- Subheadline: Brief brand positioning (1-2 sentences about custom fabrication + precision) in dark gray text
+- Three CTA buttons — **all three must use the SAME style** (blue `#0062FF` background, white text). Differentiate with a small white icon at the start of each button label if desired, but color/shape/size must be identical across all three:
   - `Shop Products` → `/products`
   - `Request Custom Work` → `/contact`
   - `Join the Community` → `/community`
@@ -1267,6 +1269,7 @@ Requirements:
 | 2026-05-16 | 1.0.0 | Initial PRD created. All sections drafted. |
 | 2026-05-16 | 1.1.0 | Added: San Diego CA location, GitHub repo URL, noreply email, local dev setup (Section 11), .gitignore template, README template, bootstrap sequence. Resolved: fonts (Oswald + Inter), logo files on disk. Updated open items. |
 | 2026-05-16 | 1.2.0 | **THEME CHANGE:** Switched from full dark theme to "Light Body, Dark Nav" — white/light content areas with black header and footer. Reason: target audience (older demographic) + outdoor mobile use at car shows requires high readability. Updated Section 3.2 color palette, Section 3.4 design language. |
+| 2026-05-16 | 1.2.1 | **FIXES:** Hero must be light (not dark). Logo usage rules added — non-transparent for dark bg, transparent for light bg. Hero CTA buttons must all be identical style. Footer column headers must be white/light text. Added mandatory accessibility/contrast review rule to CLAUDE.md. |
 
 ---
 

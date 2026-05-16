@@ -16,17 +16,24 @@ const VALUES = [
 export default function AboutPage() {
   return (
     <div>
-      {/* Hero — dark, acceptable exception for brand impact */}
-      <section className="relative py-24 bg-black overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_30%_50%,rgba(0,98,255,0.07),transparent)]" />
+      {/* Hero — Light Theme (PRD v1.2.1) */}
+      <section className="relative py-24 bg-[#F8F8F8] border-b border-[#E8E8E8] overflow-hidden">
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage:
+              "linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)",
+            backgroundSize: "48px 48px",
+          }}
+        />
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-brand-blue font-heading text-sm uppercase tracking-[0.2em] mb-4">San Diego, CA</p>
-          <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-widest text-white leading-tight mb-6">
+          <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-widest text-black leading-tight mb-6">
             Built Different.
             <br />
             <span className="text-brand-blue">Made to Stand Out.</span>
           </h1>
-          <p className="text-gray-300 text-xl leading-relaxed font-body max-w-2xl">
+          <p className="text-[#555] text-xl leading-relaxed font-body max-w-2xl">
             Retrofit Creations is a custom fabrication operation run by people who are obsessed with cars, craftsmanship, and getting the details exactly right.
           </p>
         </div>

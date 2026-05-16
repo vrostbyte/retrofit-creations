@@ -45,7 +45,7 @@ const legalLinks = [
 function FooterColumn({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <h3 className="font-heading font-semibold text-sm uppercase tracking-widest text-brand-white mb-4">
+      <h3 className="font-heading font-semibold text-sm uppercase tracking-widest text-white mb-4">
         {title}
       </h3>
       {children}
@@ -58,7 +58,7 @@ function FooterLink({ href, label }: { href: string; label: string }) {
     <li>
       <Link
         href={href}
-        className="text-sm text-zinc-400 hover:text-brand-blue transition-colors duration-200"
+        className="text-sm text-[#999] hover:text-brand-blue transition-colors duration-200"
       >
         {label}
       </Link>
@@ -112,10 +112,10 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-brand-blue/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <p className="text-xs text-zinc-500">
+          <p className="text-xs text-[#777]">
             © {year} Retrofit Creations LLC. All rights reserved.
           </p>
-          <p className="text-xs text-zinc-600">
+          <p className="text-xs text-[#555]">
             San Diego, CA · Built Different. Made to Stand Out.
           </p>
         </div>

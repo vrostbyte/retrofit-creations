@@ -44,14 +44,13 @@ export default function HomePage() {
   return (
     <div className="flex flex-col">
 
-      {/* ── 1. Hero — kept dark (acceptable exception per PRD v1.2.0) ── */}
-      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-black">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_40%,rgba(0,98,255,0.08),transparent)]" />
+      {/* ── 1. Hero — Light Theme (PRD v1.2.1) ── */}
+      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-[#F8F8F8] border-b border-[#E8E8E8]">
         <div
-          className="absolute inset-0 opacity-[0.04]"
+          className="absolute inset-0 opacity-[0.03]"
           style={{
             backgroundImage:
-              "linear-gradient(rgba(0,98,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,98,255,1) 1px, transparent 1px)",
+              "linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)",
             backgroundSize: "48px 48px",
           }}
         />
@@ -62,22 +61,37 @@ export default function HomePage() {
               alt="Retrofit Creations"
               width={280}
               height={100}
-              className="w-48 sm:w-64 md:w-72 h-auto object-contain drop-shadow-[0_0_30px_rgba(0,98,255,0.3)]"
+              className="w-48 sm:w-64 md:w-72 h-auto object-contain"
               priority
             />
           </div>
-          <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold uppercase tracking-widest text-white mb-4 leading-tight">
+          <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold uppercase tracking-widest text-black mb-4 leading-tight">
             Built Different.
             <br />
             <span className="text-brand-blue">Made to Stand Out.</span>
           </h1>
-          <p className="font-body text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+          <p className="font-body text-lg sm:text-xl text-[#555] max-w-2xl mx-auto mb-10 leading-relaxed">
             Custom fabrication, laser engraving, 3D printing, and CNC work — crafted by hand in San Diego, CA for car enthusiasts and makers who settle for nothing less.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="primary" size="lg" href="/products">Shop Products</Button>
-            <Button variant="secondary" size="lg" href="/contact">Request Custom Work</Button>
-            <Button variant="ghost" size="lg" href="/community">Join the Community</Button>
+            <Button variant="primary" size="lg" href="/products" className="w-full sm:w-auto">
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              </svg>
+              Shop Products
+            </Button>
+            <Button variant="primary" size="lg" href="/contact" className="w-full sm:w-auto">
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+              </svg>
+              Request Custom Work
+            </Button>
+            <Button variant="primary" size="lg" href="/community" className="w-full sm:w-auto">
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              Join the Community
+            </Button>
           </div>
         </div>
       </section>

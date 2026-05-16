@@ -53,11 +53,11 @@ export default function Header() {
             {/* ── Logo ─────────────────────────────────────────── */}
             <Link href="/" className="flex-shrink-0" aria-label="Retrofit Creations — Home">
               <Image
-                src="/images/RC-Engraving-Logo-transparent.png"
+                src="/images/RC-Engraving-Logo.png"
                 alt="Retrofit Creations"
                 width={140}
                 height={48}
-                className="h-10 w-auto object-contain"
+                className="h-12 w-auto object-contain"
                 priority
               />
             </Link>

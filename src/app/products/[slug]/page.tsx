@@ -2,7 +2,7 @@
   Product Detail page — light-body theme (PRD v1.2.0).
   White background, dark text, light gray image placeholders, gray borders.
 */
-import Button from "@/components/ui/Button";
+import Link from "next/link";
 import Badge from "@/components/ui/Badge";
 import Card from "@/components/ui/Card";
 import StarRating from "@/components/ui/StarRating";
@@ -66,7 +66,7 @@ export default async function ProductDetailPage({
       {/* Breadcrumb */}
       <nav aria-label="Breadcrumb" className="mb-8 text-sm text-gray-500 font-body">
         <ol className="flex items-center gap-2">
-          <li><a href="/products" className="hover:text-brand-blue transition-colors">Products</a></li>
+          <li><Link href="/products" className="hover:text-brand-blue transition-colors">Products</Link></li>
           <li aria-hidden>/</li>
           <li className="text-gray-700 truncate max-w-[200px]">{product.name}</li>
         </ol>
@@ -134,7 +134,7 @@ export default async function ProductDetailPage({
           <div className="text-sm text-gray-500 font-body space-y-1">
             <p>✓ Made to order — ships within 5-10 business days</p>
             <p>✓ Ships worldwide from San Diego, CA</p>
-            <p>✓ Questions? <a href="/contact" className="text-brand-blue hover:underline">Contact us</a></p>
+            <p>✓ Questions? <Link href="/contact" className="text-brand-blue hover:underline">Contact us</Link></p>
           </div>
         </div>
       </div>

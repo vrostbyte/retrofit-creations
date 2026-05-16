@@ -47,6 +47,23 @@
 - Include ARIA labels and semantic HTML
 - NEVER commit `.env` files — use `.env.example` as template
 
+## Accessibility — Contrast Review (MANDATORY)
+
+**After ANY visual/styling change, you MUST review every text element against its background:**
+- Light text on light backgrounds = FAIL
+- Dark text on dark backgrounds = FAIL
+- Every heading, label, paragraph, link, and icon must have sufficient contrast with its immediate parent background
+- Check: header (dark bg → white text), footer (dark bg → white text), cards (light bg → dark text), hero, buttons, badges, inputs
+- If a section has a dark background, ALL text and icons in that section must be white or light
+- If a section has a light background, ALL text and icons must be dark
+- **Do not skip this step.** Run through every page visually after changes.
+
+## Logo Usage Rules
+
+- **Dark backgrounds (header, footer, mobile menu):** Use `RC-Engraving-Logo.png` (non-transparent, has its own background)
+- **Light backgrounds (hero, about, content areas):** Use `RC-Engraving-Logo-transparent.png` (transparent bg, dark logo visible on light)
+- **NEVER** use the transparent logo on a dark background — the logo artwork is dark and becomes invisible
+
 ## Commands
 
 - `npm run dev` — Start dev server (port 3000)
