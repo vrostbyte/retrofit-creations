@@ -52,10 +52,10 @@ export default function Header() {
 
             {/* ── Logo ─────────────────────────────────────────── */}
             {/*
-              Sized w-28 on mobile (112px) and w-40 on desktop (160px).
-              Height auto-scales via h-auto + object-contain so aspect ratio
-              is preserved. Use the non-transparent RC-Engraving-Logo.png
-              because the header background is black (logo artwork is dark).
+              Constrain by HEIGHT so a tall/square logo never blows out the
+              navbar. Width scales proportionally via w-auto + object-contain.
+              h-10 (40px) mobile, h-14 (56px) desktop — fits inside h-16/h-20
+              header with comfortable padding above and below.
             */}
             <Link href="/" className="flex-shrink-0" aria-label="Retrofit Creations — Home">
               <Image
@@ -63,7 +63,7 @@ export default function Header() {
                 alt="Retrofit Creations"
                 width={320}
                 height={110}
-                className="w-28 md:w-40 h-auto object-contain"
+                className="h-10 md:h-14 w-auto object-contain"
                 priority
               />
             </Link>
