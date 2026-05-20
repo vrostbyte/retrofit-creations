@@ -1,7 +1,7 @@
 # RETROFIT CREATIONS — Product Requirements Document (PRD)
 
-> **Version:** 1.2.1
-> **Last Updated:** 2026-05-16
+> **Version:** 1.4.0
+> **Last Updated:** 2026-05-19
 > **Status:** ACTIVE — This is the single source of truth for the Retrofit Creations website project.
 > **Authors:** Project Lead + Hailie (Business Owner)
 
@@ -336,10 +336,10 @@ NEXT_PUBLIC_SITE_URL=https://retrofitcreations.com
 ```
 Quick Links          Services              Connect              Legal
 ─────────────        ─────────────         ─────────────        ─────────────
-Home                 Laser Engraving       Instagram            Privacy Policy
-Products             3D Printing           Facebook             Terms of Service
-Services             CNC Carving           TikTok               Shipping Policy
-Community            Prototyping           YouTube              Return Policy
+Home                 Laser Engraving       Instagram            Terms of Service
+Products             3D Printing           Facebook             Shipping & Returns
+Services             CNC Carving           TikTok               Privacy Policy
+Community            Prototyping           YouTube
 About Us             Custom Auto           Email Us
 Contact              Bulk Orders
 
@@ -356,7 +356,7 @@ Contact              Bulk Orders
 - Full-width **light background** (white or very light gray) with subtle darker grid pattern overlay for industrial texture
 - Retrofit Creations logo (prominently displayed — use `RC-Engraving-Logo-transparent.png` since hero background is light)
 - Headline: **"Built Different. Made to Stand Out."** in black text
-- Subheadline: Brief brand positioning (1-2 sentences about custom fabrication + precision) in dark gray text
+- Subheadline: **"Custom fabrication, laser engraving, 3D printing, and CNC work crafted by hand in San Diego, CA, for car enthusiasts by car enthusiasts."** in dark gray text
 - Three CTA buttons — **all three must use the SAME style** (blue `#0062FF` background, white text). Differentiate with a small white icon at the start of each button label if desired, but color/shape/size must be identical across all three:
   - `Shop Products` → `/products`
   - `Request Custom Work` → `/contact`
@@ -432,7 +432,7 @@ Contact              Bulk Orders
 **Service Cards (one for each):**
 
 1. **Laser Engraving** — Custom text, logos, artwork on wood, metal, leather, acrylic, and more
-2. **3D Printing** — FDM and resin printing for functional parts, prototypes, and custom designs
+2. **3D Printing** — Functional prototypes and custom parts
 3. **CNC Carving** — Precision carving in wood, plastics, soft metals, and composites
 4. **Product Prototyping** — Rapid prototyping for inventors, startups, and hobbyists
 5. **Custom Automotive Trim/Accessories** — Replacement and bespoke trim pieces for any vehicle
@@ -960,26 +960,36 @@ CREATE TABLE wishlist_items (
 
 ## 10. DEVELOPMENT PHASES
 
-### Phase 1: Foundation + Static Frontend (Weeks 1-2)
+### Phase 1: Foundation + Static Frontend ✅ COMPLETE
 
 **Goal:** Get the site looking great with all pages built as static/hardcoded content.
 
-- [ ] **Bootstrap project in `~/Projects/Hailie/`** — see Section 11.3 for full sequence (preserve existing logo files!)
-- [ ] Initialize Next.js project with TypeScript + Tailwind CSS
-- [ ] Configure Tailwind with brand colors, fonts, dark theme
-- [ ] Build reusable UI components (Button, Card, Input, Modal, Badge)
-- [ ] Build layout components (Header with sticky nav, Footer, MobileMenu)
-- [ ] Build Homepage with all sections (hardcoded content)
-- [ ] Build Products page with grid layout and category filter (hardcoded products)
-- [ ] Build Product Detail page template
-- [ ] Build Services page with service cards
-- [ ] Build Community page with gallery layout
-- [ ] Build About Us page
-- [ ] Build Testimonials page
-- [ ] Build Contact / Custom Quote page with form (frontend validation only)
-- [ ] Build Account pages (Login, Signup, Dashboard — UI only)
-- [ ] Deploy to Vercel from GitHub
-- [ ] Configure domains in Vercel
+- [x] **Bootstrap project in `~/Projects/Hailie/`** — see Section 11.3 for full sequence (preserve existing logo files!)
+- [x] Initialize Next.js project with TypeScript + Tailwind CSS
+- [x] Configure Tailwind with brand colors, fonts, light body/dark nav theme
+- [x] Build reusable UI components (Button, Card, Input, Modal, Badge)
+- [x] Build layout components (Header with sticky nav, Footer, MobileMenu)
+- [x] Build Homepage with all sections (hardcoded content)
+- [x] Build Products page with grid layout and category filter (hardcoded products)
+- [x] Build Product Detail page template
+- [x] Build Services page with service cards
+- [x] Build Community page with gallery layout
+- [x] Build About Us page
+- [x] Build Testimonials page
+- [x] Build Contact / Custom Quote page with form (frontend validation only)
+- [x] Build Account pages (Login, Signup, Dashboard — UI only)
+- [x] Deploy to Vercel from GitHub
+- [ ] Configure domains in Vercel (pending)
+- [x] Theme reskin: light body, dark nav
+- [x] Hero section: light bg, transparent logo, matching CTA buttons
+- [x] Logo visibility: non-transparent on dark surfaces, transparent on light
+- [x] Accessibility/contrast audit
+
+**Remaining Phase 1 polish (before Phase 2):**
+- [ ] Fix footer column headers — still dark text on dark background, must be white
+- [ ] Increase header nav logo size — currently too small
+- [ ] Move favicon files to correct Next.js locations
+- [ ] Verify Vercel deployment reflects all latest changes
 
 ### Phase 2: Backend + Core Integrations (Weeks 3-4)
 
@@ -1046,17 +1056,22 @@ CREATE TABLE wishlist_items (
 | **GitHub Repo** | `https://github.com/vrostbyte/retrofit-creations` |
 | **GitHub Noreply** | `189171963+vrostbyte@users.noreply.github.com` |
 
-### 11.2 Initial Repo State
+### 11.2 Current Repo State
 
-The repo at `https://github.com/vrostbyte/retrofit-creations` is currently **empty** — no README, no `.gitignore`, no code. The local project folder at `~/Projects/Hailie/` already has logo assets in place:
+The repo at `https://github.com/vrostbyte/retrofit-creations` contains the complete Phase 1 static frontend. The local project folder is at `~/Projects/Hailie/`.
 
-```
-~/Projects/Hailie/
-└── public/
-    └── images/
-        ├── RC-Engraving-Logo.png
-        └── RC-Engraving-Logo-transparent.png
-```
+**Favicon files** are currently in the project root and need to be moved to their correct Next.js locations:
+
+| File | Move To | Purpose |
+|------|---------|---------|
+| `favicon.ico` | `src/app/favicon.ico` | Browser tab icon (Next.js auto-detects here) |
+| `apple-touch-icon.png` | `public/apple-touch-icon.png` | iOS home screen icon |
+| `android-chrome-192x192.png` | `public/android-chrome-192x192.png` | Android home screen icon |
+| `android-chrome-512x512.png` | `public/android-chrome-512x512.png` | Android splash screen icon |
+| `favicon-16x16.png` | `public/favicon-16x16.png` | Small favicon variant |
+| `favicon-32x32.png` | `public/favicon-32x32.png` | Standard favicon variant |
+| `site.webmanifest` | `public/site.webmanifest` | PWA manifest |
+| `favicon_io.zip` | **DELETE** | Source archive, not needed in repo |
 
 ### 11.3 Bootstrap Sequence (First CLI Prompt)
 
@@ -1248,17 +1263,27 @@ Requirements:
 | Logo file (SVG/PNG) | ✅ On disk | `public/images/RC-Engraving-Logo.png` + transparent variant. Note: branded as "RC Engraving" — may want a broader "Retrofit Creations" logo later. SVG version would be ideal for scalability. |
 | Heading font selection | ✅ Resolved | Oswald (Google Fonts) — can revisit later |
 | Body font selection | ✅ Resolved | Inter (Google Fonts) — can revisit later |
+| Theme selection | ✅ Resolved | Light body, dark nav. See Section 3.2. |
+| Phase 1 static frontend | ✅ Complete | All 11 routes built, pushed to GitHub |
+| Footer column headers contrast | 🔴 Bug | Still dark text on dark bg — must be white. Gemini fix didn't apply. |
+| Header nav logo size | 🔴 Fix needed | Currently too small — increase to ~w-40 or w-44 |
+| Favicon placement | 🔴 Fix needed | Files in project root, need to move to correct Next.js paths |
+| Vercel domain config | ⏳ To do | Connect retrofitcreations.com and redirect retrofitcreationsllc.com |
 | Product photography | ⏳ Hailie to provide | Will use placeholders until real photos are ready |
-| Shipping rates/policy | ⏳ Hailie has it somewhere | She'll provide when she finds it |
-| Return/refund policy | ⏳ Hailie has it somewhere | She'll provide when she finds it |
+| Shipping rates/policy | ✅ Provided | Full Shipping & Return Policy document received. To be added to /shipping-policy page. |
+| Return/refund policy | ✅ Provided | Included in Shipping & Return Policy document. Custom items non-refundable, 30-day returns on non-custom. |
 | Tax collection setup | ⏳ To define | Square handles tax calculation, but need to configure |
 | Real service turnaround times | ⏳ Hailie to provide | Placeholders in Phase 1, real data before launch |
-| Square account setup | ⏳ To do | Need Developer account + application created |
+| Square account setup | ✅ Created | Account: retrofitcreationsllc@gmail.com. Still need Developer Portal sandbox credentials — see SQUARE_SETUP_GUIDE.md Step 2-4. |
 | Supabase project creation | ⏳ To do | Need project URL + keys |
 | Resend account setup | ⏳ To do | Need API key + verified domain |
-| Privacy Policy content | ⏳ To write | Legal requirement for e-commerce |
-| Terms of Service content | ⏳ To write | Legal requirement for e-commerce |
+| Supabase MCP for Claude Code | ⏳ Install after Supabase project exists | `claude mcp add --transport http supabase https://mcp.supabase.com/mcp` |
+| Privacy Policy content | ⏳ To write | Legal requirement for e-commerce. Not yet provided. |
+| Terms of Service content | ✅ Provided | Two documents: "Terms & Conditions of Sale (Global)" + "Terms of Service Clauses". To be added to /terms page. |
 | Broader "Retrofit Creations" logo | ⏳ Optional | Current logo says "RC Engraving" — may want full brand logo |
+| Domain transfer from SquareSpace | 🔴 Blocked | Hailie can't transfer retrofitcreations.com from SquareSpace — says "no connected website." May need to unlock domain or contact SquareSpace support. Alternative: point DNS A/CNAME records to Vercel instead of transferring. |
+| Zyn tin product configurator | ⏳ Phase 2/3 | 9 color options, ~60 pre-existing designs, plus custom option. Needs product variant system in database. |
+| Product photography | ⏳ Hailie working on it | Starting with Zyn cans and laser engraving items. Not Hailie's strong suit — may need tips/guidance. |
 
 ---
 
@@ -1270,6 +1295,8 @@ Requirements:
 | 2026-05-16 | 1.1.0 | Added: San Diego CA location, GitHub repo URL, noreply email, local dev setup (Section 11), .gitignore template, README template, bootstrap sequence. Resolved: fonts (Oswald + Inter), logo files on disk. Updated open items. |
 | 2026-05-16 | 1.2.0 | **THEME CHANGE:** Switched from full dark theme to "Light Body, Dark Nav" — white/light content areas with black header and footer. Reason: target audience (older demographic) + outdoor mobile use at car shows requires high readability. Updated Section 3.2 color palette, Section 3.4 design language. |
 | 2026-05-16 | 1.2.1 | **FIXES:** Hero must be light (not dark). Logo usage rules added — non-transparent for dark bg, transparent for light bg. Hero CTA buttons must all be identical style. Footer column headers must be white/light text. Added mandatory accessibility/contrast review rule to CLAUDE.md. |
+| 2026-05-17 | 1.3.0 | **Phase 1 COMPLETE.** Marked all Phase 1 items done. Updated repo state (no longer empty). Added favicon file placement guide. Documented remaining polish bugs (footer headers, nav logo size). Added Supabase MCP install reminder. Prep for Phase 2. |
+| 2026-05-19 | 1.4.0 | **Hailie feedback batch.** Hero subheadline updated to exact copy. 3D Printing desc: removed "FDM and resin." Category icons must be uniform RFC Blue. Services icons must match homepage. About: "resin printer" → "3D printer", remove "with your name on it", hide Workshop section. Legal docs received: Terms & Conditions, Terms of Service, Shipping & Return Policy. Square account created. Domain transfer issue noted. Zyn tin configurator scoped for Phase 2/3. |
 
 ---
 

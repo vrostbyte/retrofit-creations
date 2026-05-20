@@ -10,7 +10,7 @@ const VALUES = [
   { label: "Craftsmanship", description: "Every piece is made with care. We check tolerances, test fits, and won't ship anything we wouldn't use ourselves." },
   { label: "Precision", description: "Laser accuracy isn't a phrase — it's our baseline. From the first micron of the engraver to the final calibration of the printer." },
   { label: "Community", description: "We're car people. We show up to the meets, we know the clubs, and we build for the culture — not just the commerce." },
-  { label: "Made to Order", description: "No inventory of generic parts. Every piece is made specifically for you, to your spec, with your name on it." },
+  { label: "Made to Order", description: "No inventory of generic parts. Every piece is made specifically for you, to your spec." },
 ];
 
 export default function AboutPage() {
@@ -50,7 +50,7 @@ export default function AboutPage() {
             The part worked. The fit was perfect. Word got out. A few builds later, what started as a one-time solution had become something real — a fabrication operation where car enthusiasts could get exactly what they needed, made to order, without settling for an off-the-shelf compromise.
           </p>
           <p>
-            Today, Retrofit Creations serves customers across the country. The equipment has grown — the CNC, the resin printer, the bigger laser. But the philosophy hasn&apos;t changed: every piece is made with the same care we&apos;d put into our own builds.
+            Today, Retrofit Creations serves customers across the country. The equipment has grown — the CNC, the 3D printer, the bigger laser. But the philosophy hasn&apos;t changed: every piece is made with the same care we&apos;d put into our own builds.
           </p>
         </div>
       </section>
@@ -75,7 +75,12 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Workshop — white bg */}
+      {/*
+        TODO: Re-enable Workshop section when Hailie has photos/videos of
+        the production process. Hidden per owner request — the current
+        space is a small office and not photo-ready yet.
+      */}
+      {/*
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
@@ -92,7 +97,6 @@ export default function AboutPage() {
               </ul>
             </div>
           </div>
-          {/* Workshop photo placeholder */}
           <div className="aspect-video bg-gray-100 rounded-xl border border-[#E8E8E8] flex items-center justify-center">
             <div className="text-center">
               <div className="w-16 h-16 border border-gray-200 rounded-full flex items-center justify-center mx-auto mb-3">
@@ -104,6 +108,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      */}
 
       {/* CTA — blue-tinted strip */}
       <section className="py-16 bg-brand-blue/5 border-y border-brand-blue/15">

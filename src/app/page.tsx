@@ -11,18 +11,76 @@ import Badge from "@/components/ui/Badge";
 import SectionHeading from "@/components/ui/SectionHeading";
 import StarRating from "@/components/ui/StarRating";
 
-const categories = [
-  { slug: "automotive-parts", label: "Custom Automotive Parts", icon: "🔧", description: "Brackets, trim, knobs, and bespoke components for any build" },
-  { slug: "3d-printed-parts", label: "3D Printed Parts", icon: "⚙️", description: "FDM & resin prints engineered for fit, function, and form" },
-  { slug: "laser-engraved", label: "Laser Engraved Items", icon: "✦", description: "Precision engraving on wood, metal, leather, acrylic, and more" },
-  { slug: "personalized-gifts", label: "Personalized Gifts", icon: "🎁", description: "One-of-a-kind gifts for enthusiasts, collectors, and creators" },
-  { slug: "event-vendor", label: "Event / Vendor Items", icon: "🏁", description: "Custom pieces for car shows, markets, and special events" },
-  { slug: "zyn-tins", label: "Custom Zyn Tins", icon: "⬡", description: "Personalized and custom-designed Zyn tins" },
+/*
+  Single shared icon renderer for every category card. All icons are
+  Heroicons-style outline SVGs, identical in size, stroke width, and color
+  (#0062FF / brand-blue) so the grid reads as one consistent set.
+  iconKey on each category picks which path to draw.
+*/
+type IconKey = "wrench" | "cube" | "sparkles" | "gift" | "calendar" | "tin";
+
+function CategoryIcon({ name }: { name: IconKey }) {
+  const common = {
+    className: "w-10 h-10 text-brand-blue",
+    fill: "none" as const,
+    viewBox: "0 0 24 24",
+    stroke: "currentColor",
+    strokeWidth: 1.5,
+    "aria-hidden": true,
+  };
+  switch (name) {
+    case "wrench":
+      return (
+        <svg {...common}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 0 0 4.486-6.336l-3.276 3.277a3.004 3.004 0 0 1-2.25-2.25l3.276-3.276a4.5 4.5 0 0 0-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437 1.745-1.437" />
+        </svg>
+      );
+    case "cube":
+      return (
+        <svg {...common}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+        </svg>
+      );
+    case "sparkles":
+      return (
+        <svg {...common}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
+        </svg>
+      );
+    case "gift":
+      return (
+        <svg {...common}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+        </svg>
+      );
+    case "calendar":
+      return (
+        <svg {...common}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+        </svg>
+      );
+    case "tin":
+      /* Stacked-disks icon reads visually as a tin/puck */
+      return (
+        <svg {...common}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
+        </svg>
+      );
+  }
+}
+
+const categories: { slug: string; label: string; iconKey: IconKey; description: string }[] = [
+  { slug: "automotive-parts", label: "Custom Automotive Parts", iconKey: "wrench", description: "Brackets, trim, knobs, and bespoke components for any build" },
+  { slug: "3d-printed-parts", label: "3D Printed Parts", iconKey: "cube", description: "Functional prototypes and custom parts engineered for fit, function, and form" },
+  { slug: "laser-engraved", label: "Laser Engraved Items", iconKey: "sparkles", description: "Precision engraving on wood, metal, leather, acrylic, and more" },
+  { slug: "personalized-gifts", label: "Personalized Gifts", iconKey: "gift", description: "One-of-a-kind gifts for enthusiasts, collectors, and creators" },
+  { slug: "event-vendor", label: "Event / Vendor Items", iconKey: "calendar", description: "Custom pieces for car shows, markets, and special events" },
+  { slug: "zyn-tins", label: "Custom Zyn Tins", iconKey: "tin", description: "Personalized and custom-designed Zyn tins" },
 ];
 
 const services = [
   { slug: "laser-engraving", label: "Laser Engraving", description: "Custom text, logos, and artwork on virtually any material" },
-  { slug: "3d-printing", label: "3D Printing", description: "Functional prototypes and custom parts, FDM & resin" },
+  { slug: "3d-printing", label: "3D Printing", description: "Functional prototypes and custom parts" },
   { slug: "cnc-carving", label: "CNC Carving", description: "Precision carving in wood, plastics, soft metals, and composites" },
   { slug: "custom-auto", label: "Custom Auto Parts", description: "Replacement and bespoke trim for any vehicle, any year" },
 ];
@@ -71,7 +129,7 @@ export default function HomePage() {
             <span className="text-brand-blue">Made to Stand Out.</span>
           </h1>
           <p className="font-body text-lg sm:text-xl text-[#555] max-w-2xl mx-auto mb-10 leading-relaxed">
-            Custom fabrication, laser engraving, 3D printing, and CNC work — crafted by hand in San Diego, CA for car enthusiasts and makers who settle for nothing less.
+            Custom fabrication, laser engraving, 3D printing, and CNC work crafted by hand in San Diego, CA, for car enthusiasts by car enthusiasts.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="primary" size="lg" href="/products" className="w-full sm:w-auto">
@@ -106,7 +164,9 @@ export default function HomePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {categories.map((cat) => (
             <Card key={cat.slug} href={`/products?category=${cat.slug}`} className="p-6 group">
-              <div className="text-3xl mb-4">{cat.icon}</div>
+              <div className="mb-4">
+                <CategoryIcon name={cat.iconKey} />
+              </div>
               <h3 className="font-heading font-bold text-lg uppercase tracking-wide text-black mb-2 group-hover:text-brand-blue transition-colors">
                 {cat.label}
               </h3>

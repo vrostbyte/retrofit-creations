@@ -51,13 +51,19 @@ export default function Header() {
           <div className="flex items-center justify-between h-16 lg:h-20">
 
             {/* ── Logo ─────────────────────────────────────────── */}
+            {/*
+              Sized w-28 on mobile (112px) and w-40 on desktop (160px).
+              Height auto-scales via h-auto + object-contain so aspect ratio
+              is preserved. Use the non-transparent RC-Engraving-Logo.png
+              because the header background is black (logo artwork is dark).
+            */}
             <Link href="/" className="flex-shrink-0" aria-label="Retrofit Creations — Home">
               <Image
                 src="/images/RC-Engraving-Logo.png"
                 alt="Retrofit Creations"
-                width={140}
-                height={48}
-                className="h-12 w-auto object-contain"
+                width={320}
+                height={110}
+                className="w-28 md:w-40 h-auto object-contain"
                 priority
               />
             </Link>

@@ -48,6 +48,20 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
   },
+  /*
+    Favicons: favicon.ico lives at src/app/favicon.ico and is auto-detected
+    by Next.js. The PNG variants live in /public and are referenced below
+    for browsers that prefer sized PNGs. Apple touch icon and the PWA
+    manifest are also wired up here.
+  */
+  icons: {
+    icon: [
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
+  manifest: "/site.webmanifest",
 };
 
 export default function RootLayout({

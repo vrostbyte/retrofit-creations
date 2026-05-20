@@ -35,17 +35,31 @@ const socialLinks = [
   { href: "mailto:hello@retrofitcreations.com", label: "Email Us", icon: "email" },
 ];
 
+/*
+  Legal column — only links to pages that actually exist:
+    /terms — Terms of Service (built)
+    /shipping-returns — Shipping & Returns Policy (built)
+    Privacy Policy is a placeholder href="#" until that document is written.
+  Removed: standalone /shipping and /returns links (now combined as one).
+*/
 const legalLinks = [
-  { href: "/privacy", label: "Privacy Policy" },
   { href: "/terms", label: "Terms of Service" },
-  { href: "/shipping", label: "Shipping Policy" },
-  { href: "/returns", label: "Return Policy" },
+  { href: "/shipping-returns", label: "Shipping & Returns" },
+  { href: "#", label: "Privacy Policy" },
 ];
 
 function FooterColumn({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <h3 className="font-heading font-semibold text-sm uppercase tracking-widest text-white mb-4">
+      {/*
+        Explicit white color + inline style fallback so the column header is
+        always visible on the black footer background, even if a global CSS
+        rule (or future theme change) tries to repaint headings dark.
+      */}
+      <h3
+        className="font-heading font-semibold text-sm uppercase tracking-widest text-white mb-4"
+        style={{ color: "#ffffff" }}
+      >
         {title}
       </h3>
       {children}
@@ -58,7 +72,7 @@ function FooterLink({ href, label }: { href: string; label: string }) {
     <li>
       <Link
         href={href}
-        className="text-sm text-[#999] hover:text-brand-blue transition-colors duration-200"
+        className="text-sm text-gray-400 hover:text-brand-blue transition-colors duration-200"
       >
         {label}
       </Link>
@@ -112,10 +126,10 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-brand-blue/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <p className="text-xs text-[#777]">
+          <p className="text-xs text-gray-500">
             © {year} Retrofit Creations LLC. All rights reserved.
           </p>
-          <p className="text-xs text-[#555]">
+          <p className="text-xs text-gray-500">
             San Diego, CA · Built Different. Made to Stand Out.
           </p>
         </div>
