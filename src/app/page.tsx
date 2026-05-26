@@ -10,6 +10,8 @@ import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import SectionHeading from "@/components/ui/SectionHeading";
 import StarRating from "@/components/ui/StarRating";
+import { createClient } from "@/lib/supabase/server";
+import type { Testimonial, CommunityPost } from "@/types/database";
 
 /*
   Single shared icon renderer for every category card. All icons are
@@ -85,20 +87,28 @@ const services = [
   { slug: "custom-auto", label: "Custom Auto Parts", description: "Replacement and bespoke trim for any vehicle, any year" },
 ];
 
-const communityPosts = [
-  { id: 1, title: "Custom 3D Printed Dash — '69 Camaro", author: "Mike T.", type: "showcase", description: "Full custom dash bracket set, printed in matte black PETG to match the interior. Perfect fitment." },
-  { id: 2, title: "Laser Engraved Center Console — Ford Bronco", author: "Sarah K.", type: "showcase", description: "Intricate geometric pattern engraved on the factory console lid. Looks incredible in person." },
-  { id: 3, title: "2025 San Diego Auto Show Booth", author: "Retrofit Creations", type: "event", description: "Huge turnout at our booth! Met so many amazing builders and enthusiasts from across SoCal." },
-  { id: 4, title: "Custom Keychain Set — Porsche 911", author: "James R.", type: "featured", description: "Matching set of laser engraved keychains for a Porsche club member. They were a hit at the meetup." },
-];
+export default async function HomePage() {
+  const supabase = await createClient();
 
-const testimonials = [
-  { id: 1, quote: "Hailie built a custom dash bracket for my '69 Camaro that fit perfectly on the first print. Insane quality for the price. Will never go anywhere else.", author: "Mike T.", rating: 5, project: "3D Printed Parts" },
-  { id: 2, quote: "Ordered a laser engraved keychain as a gift and it blew everyone away. The detail was unreal. Fast turnaround too — had it in 4 days.", author: "Jessica M.", rating: 5, project: "Laser Engraving" },
-  { id: 3, quote: "Got a custom Zyn tin made with my car club logo. It was the hit of the meetup. Already ordered 20 more for the whole crew.", author: "Carlos D.", rating: 5, project: "Custom Zyn Tins" },
-];
+  // Fetch featured community posts and testimonials for the homepage preview
+  const [communityResult, testimonialsResult] = await Promise.all([
+    supabase
+      .from("community_posts")
+      .select("*")
+      .eq("is_approved", true)
+      .order("is_featured", { ascending: false })
+      .limit(4),
+    supabase
+      .from("testimonials")
+      .select("*")
+      .eq("is_approved", true)
+      .eq("is_featured", true)
+      .limit(3),
+  ]);
 
-export default function HomePage() {
+  const communityPosts = (communityResult.data ?? []) as CommunityPost[];
+  const testimonials = (testimonialsResult.data ?? []) as Testimonial[];
+
   return (
     <div className="flex flex-col">
 
@@ -219,12 +229,22 @@ export default function HomePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {communityPosts.map((post) => (
             <Card key={post.id} className="p-5 flex flex-col gap-3">
-              <div className="w-full h-40 bg-gray-100 rounded flex items-center justify-center border border-[#E8E8E8]">
-                <span className="text-gray-400 text-xs font-heading uppercase tracking-wider">Photo Coming Soon</span>
-              </div>
+              {post.photos[0] ? (
+                <div className="w-full h-40 rounded overflow-hidden border border-[#E8E8E8]">
+                  <img
+                    src={post.photos[0]}
+                    alt={post.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ) : (
+                <div className="w-full h-40 bg-gray-100 rounded flex items-center justify-center border border-[#E8E8E8]">
+                  <span className="text-gray-400 text-xs font-heading uppercase tracking-wider">Photo Coming Soon</span>
+                </div>
+              )}
               <div className="flex items-center justify-between">
-                <Badge variant={post.type === "featured" ? "default" : "outline"}>{post.type}</Badge>
-                <span className="text-xs text-gray-500 font-body">{post.author}</span>
+                <Badge variant={post.post_type === "featured" ? "default" : "outline"}>{post.post_type}</Badge>
+                <span className="text-xs text-gray-500 font-body">{post.submitted_by_name}</span>
               </div>
               <h4 className="font-heading font-semibold uppercase tracking-wide text-black text-sm">
                 {post.title}
@@ -247,13 +267,13 @@ export default function HomePage() {
               <Card key={t.id} className="p-6 flex flex-col gap-4">
                 <StarRating rating={t.rating} size="md" />
                 <blockquote className="text-gray-700 text-sm leading-relaxed font-body italic flex-1">
-                  &ldquo;{t.quote}&rdquo;
+                  &ldquo;{t.review_text}&rdquo;
                 </blockquote>
                 <div className="flex items-center justify-between mt-auto pt-2 border-t border-[#E8E8E8]">
                   <span className="font-heading font-semibold text-sm uppercase tracking-wide text-black">
-                    {t.author}
+                    {t.customer_name}
                   </span>
-                  <Badge variant="outline">{t.project}</Badge>
+                  {t.project_type && <Badge variant="outline">{t.project_type}</Badge>}
                 </div>
               </Card>
             ))}

@@ -1,0 +1,2329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retrofit Creations — Product Photography Guide & Checklist</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ─── CSS Variables & Themes ───────────────────────────────────────── */
+    :root {
+      --brand-blue: #0062ff;
+      --brand-blue-hover: #004ecc;
+      --brand-blue-light: rgba(0, 98, 255, 0.08);
+      --brand-blue-light-hover: rgba(0, 98, 255, 0.15);
+      
+      /* Light Theme (Default) */
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8f8f8;
+      --bg-tertiary: #f0f0f0;
+      --border-color: #e8e8e8;
+      --text-primary: #000000;
+      --text-secondary: #4b5563;
+      --text-tertiary: #9ca3af;
+      --card-bg: #ffffff;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      
+      --tag-high-bg: #fee2e2;
+      --tag-high-text: #991b1b;
+      --tag-med-bg: #fef3c7;
+      --tag-med-text: #92400e;
+      --tag-low-bg: #d1fae5;
+      --tag-low-text: #065f46;
+      
+      --font-heading: 'Oswald', sans-serif;
+      --font-body: 'Inter', system-ui, sans-serif;
+      
+      --transition-fast: 0.15s ease;
+      --transition-normal: 0.25s ease;
+    }
+
+    [data-theme="dark"] {
+      /* Dark Theme */
+      --bg-primary: #0a0f1d;
+      --bg-secondary: #121826;
+      --bg-tertiary: #1b2336;
+      --border-color: #232d42;
+      --text-primary: #f9fafb;
+      --text-secondary: #9ca3af;
+      --text-tertiary: #6b7280;
+      --card-bg: #161f30;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+      
+      --tag-high-bg: rgba(239, 68, 68, 0.2);
+      --tag-high-text: #fca5a5;
+      --tag-med-bg: rgba(245, 158, 11, 0.2);
+      --tag-med-text: #fcd34d;
+      --tag-low-bg: rgba(16, 185, 129, 0.2);
+      --tag-low-text: #6ee7b7;
+    }
+
+    /* ─── Global Reset & Scrollbars ────────────────────────────────────── */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      transition: background-color var(--transition-normal), color var(--transition-normal);
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-secondary);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--text-tertiary);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--brand-blue);
+    }
+
+    /* ─── Typography & Headings ────────────────────────────────────────── */
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-heading);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    p {
+      line-height: 1.6;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    a {
+      color: var(--brand-blue);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    a:hover {
+      color: var(--brand-blue-hover);
+      text-decoration: underline;
+    }
+
+    /* ─── Navigation Header ────────────────────────────────────────────── */
+    header {
+      background-color: #000000; /* Header stays black as per Next.js PRD */
+      color: #ffffff;
+      padding: 1.25rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-logo {
+      background: var(--brand-blue);
+      color: #ffffff;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.25rem;
+      width: 2.2rem;
+      height: 2.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      letter-spacing: 0;
+    }
+
+    .brand-title {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: #ffffff;
+      text-transform: uppercase;
+    }
+
+    .brand-title span {
+      color: var(--brand-blue);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      background: none;
+      border: 1px solid #333333;
+      cursor: pointer;
+      color: #ffffff;
+      width: 2.2rem;
+      height: 2.2rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition-fast);
+    }
+
+    .theme-toggle:hover {
+      background-color: #222222;
+      border-color: var(--brand-blue);
+      color: var(--brand-blue);
+    }
+
+    .theme-toggle svg {
+      width: 1.2rem;
+      height: 1.2rem;
+      fill: currentColor;
+    }
+
+    /* ─── Layout & Sidebar ─────────────────────────────────────────────── */
+    .main-container {
+      display: flex;
+      flex: 1;
+      position: relative;
+    }
+
+    .sidebar {
+      width: 280px;
+      background-color: var(--bg-secondary);
+      border-right: 1px solid var(--border-color);
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      position: sticky;
+      top: 67px;
+      height: calc(100vh - 67px);
+      overflow-y: auto;
+      transition: background-color var(--transition-normal), border-color var(--transition-normal);
+    }
+
+    .nav-menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .nav-item button {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 0.85rem 1rem;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      transition: all var(--transition-fast);
+    }
+
+    .nav-item button svg {
+      width: 1.15rem;
+      height: 1.15rem;
+      transition: stroke var(--transition-fast);
+      stroke: var(--text-secondary);
+      stroke-width: 2px;
+      fill: none;
+    }
+
+    .nav-item button:hover {
+      background-color: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+
+    .nav-item.active button {
+      background-color: var(--brand-blue);
+      color: #ffffff;
+    }
+
+    .nav-item.active button svg {
+      stroke: #ffffff;
+    }
+
+    /* Progress Widget in Sidebar */
+    .progress-widget {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: auto;
+    }
+
+    .progress-title {
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 8px;
+      background-color: var(--bg-tertiary);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background-color: var(--brand-blue);
+      border-radius: 4px;
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .progress-stats {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Content Area */
+    .content-area {
+      flex: 1;
+      padding: 2.5rem 3rem;
+      max-width: 1100px;
+      overflow-y: auto;
+    }
+
+    /* ─── Dashboard Tab ────────────────────────────────────────────────── */
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.3s ease-in-out forwards;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-banner {
+      background: linear-gradient(135deg, #001f54 0%, #0062ff 100%);
+      color: #ffffff;
+      padding: 3rem;
+      border-radius: 16px;
+      margin-bottom: 2.5rem;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-banner::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -10%;
+      width: 350px;
+      height: 350px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+      pointer-events: none;
+    }
+
+    .hero-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 1.5rem;
+      font-weight: 300;
+      max-width: 600px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      font-size: 0.9rem;
+      background-color: rgba(0, 0, 0, 0.25);
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      width: fit-content;
+      backdrop-filter: blur(4px);
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .hero-meta-item svg {
+      width: 1rem;
+      height: 1rem;
+      stroke: var(--brand-blue);
+      stroke-width: 2px;
+      fill: none;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .stat-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-value {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.1;
+    }
+
+    .stat-desc {
+      font-size: 0.8rem;
+      color: var(--text-tertiary);
+      margin-top: 0.5rem;
+      margin-bottom: 0;
+    }
+
+    .stat-accent {
+      position: absolute;
+      right: 1.5rem;
+      bottom: 1rem;
+      opacity: 0.1;
+      color: var(--brand-blue);
+    }
+
+    .stat-accent svg {
+      width: 3rem;
+      height: 3rem;
+    }
+
+    /* ─── Content Panels / Cards ──────────────────────────────────────── */
+    .section-title {
+      font-size: 1.6rem;
+      border-bottom: 2px solid var(--brand-blue);
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.25rem;
+      margin-top: 0.5rem;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-sm);
+      transition: background-color var(--transition-normal), border-color var(--transition-normal);
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .card-title svg {
+      width: 1.4rem;
+      height: 1.4rem;
+      stroke: var(--brand-blue);
+      fill: none;
+      stroke-width: 2px;
+    }
+
+    /* ─── Photography Tips Section ───────────────────────────────────── */
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .tip-box {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: transform var(--transition-fast);
+    }
+
+    .tip-box:hover {
+      transform: translateY(-2px);
+    }
+
+    .tip-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .tip-num {
+      width: 1.75rem;
+      height: 1.75rem;
+      background-color: var(--brand-blue);
+      color: #ffffff;
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tip-box-title {
+      font-size: 1.15rem;
+      margin: 0;
+    }
+
+    .tip-desc {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+      flex: 1;
+    }
+
+    /* Interactive Diagrams */
+    .diagram-container {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+
+    .specs-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .specs-table th, .specs-table td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .specs-table th {
+      font-family: var(--font-heading);
+      background-color: var(--bg-secondary);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── Interactive Checklist Section ──────────────────────────────── */
+    .checklist-controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+    }
+
+    .filter-btn {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 0.5rem 0.85rem;
+      border-radius: 6px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all var(--transition-fast);
+    }
+
+    .filter-btn:hover {
+      background-color: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+
+    .filter-btn.active {
+      background-color: var(--brand-blue);
+      border-color: var(--brand-blue);
+      color: #ffffff;
+    }
+
+    .search-wrapper {
+      position: relative;
+      max-width: 300px;
+      width: 100%;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.5rem 1rem 0.5rem 2.2rem;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background-color: var(--card-bg);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color var(--transition-fast);
+    }
+
+    .search-input:focus {
+      border-color: var(--brand-blue);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0.95rem;
+      height: 0.95rem;
+      stroke: var(--text-tertiary);
+      fill: none;
+      stroke-width: 2px;
+      pointer-events: none;
+    }
+
+    .checklist-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .checklist-row {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      display: grid;
+      grid-template-columns: 40px 1fr 120px 120px 40px;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-fast);
+      position: relative;
+    }
+
+    .checklist-row.completed {
+      border-color: var(--border-color);
+      opacity: 0.75;
+      background-color: var(--bg-secondary);
+    }
+
+    .checklist-row:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-1px);
+    }
+
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .custom-checkbox {
+      width: 1.35rem;
+      height: 1.35rem;
+      border: 2px solid var(--text-tertiary);
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition-fast);
+      position: relative;
+    }
+
+    .custom-checkbox:hover {
+      border-color: var(--brand-blue);
+    }
+
+    .custom-checkbox.checked {
+      background-color: var(--brand-blue);
+      border-color: var(--brand-blue);
+    }
+
+    .custom-checkbox svg {
+      width: 0.95rem;
+      height: 0.95rem;
+      stroke: #ffffff;
+      fill: none;
+      stroke-width: 3px;
+      display: none;
+    }
+
+    .custom-checkbox.checked svg {
+      display: block;
+    }
+
+    .item-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .item-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 0;
+      text-transform: none;
+      letter-spacing: normal;
+      font-family: var(--font-body);
+    }
+
+    .checklist-row.completed .item-title {
+      text-decoration: line-through;
+      color: var(--text-secondary);
+    }
+
+    .item-notes {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .item-priority {
+      justify-self: start;
+    }
+
+    .priority-tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .priority-tag.high { background-color: var(--tag-high-bg); color: var(--tag-high-text); }
+    .priority-tag.medium { background-color: var(--tag-med-bg); color: var(--tag-med-text); }
+    .priority-tag.low { background-color: var(--tag-low-bg); color: var(--tag-low-text); }
+
+    .item-qty {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .item-qty svg {
+      width: 0.95rem;
+      height: 0.95rem;
+      stroke: var(--text-tertiary);
+      fill: none;
+    }
+
+    .row-expand-btn {
+      background: none;
+      border: none;
+      color: var(--text-tertiary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color var(--transition-fast), transform var(--transition-normal);
+    }
+
+    .row-expand-btn:hover {
+      color: var(--text-primary);
+    }
+
+    .row-expand-btn.expanded {
+      transform: rotate(180deg);
+    }
+
+    .row-expand-btn svg {
+      width: 1.25rem;
+      height: 1.25rem;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2px;
+    }
+
+    /* Expandable Row Content */
+    .row-details {
+      grid-column: 1 / -1;
+      border-top: 1px dashed var(--border-color);
+      padding-top: 1rem;
+      margin-top: 0.5rem;
+      display: none;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      animation: slideDown 0.2s ease-out forwards;
+    }
+
+    .row-details.active {
+      display: block;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .details-col-title {
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .details-naming-block {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 0.8rem;
+      color: var(--brand-blue);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.25rem;
+    }
+
+    .details-copy-btn {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: color var(--transition-fast);
+    }
+
+    .details-copy-btn:hover {
+      color: var(--brand-blue);
+    }
+
+    .details-copy-btn svg {
+      width: 0.9rem;
+      height: 0.9rem;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2px;
+    }
+
+    /* Empty search state */
+    .empty-state {
+      padding: 3rem;
+      text-align: center;
+      color: var(--text-secondary);
+      background-color: var(--card-bg);
+      border: 1px dashed var(--border-color);
+      border-radius: 10px;
+      display: none;
+    }
+
+    /* ─── Filename Generator Tab ─────────────────────────────────────── */
+    .generator-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-label {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+    }
+
+    .form-select, .form-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background-color: var(--bg-secondary);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color var(--transition-fast);
+    }
+
+    .form-select:focus, .form-input:focus {
+      border-color: var(--brand-blue);
+    }
+
+    .output-card {
+      background-color: var(--bg-secondary);
+      border: 1px dashed var(--brand-blue);
+      border-radius: 12px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      gap: 1.25rem;
+    }
+
+    .output-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .output-filename {
+      font-family: monospace;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--brand-blue);
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      word-break: break-all;
+      box-shadow: var(--shadow-sm);
+      width: 100%;
+    }
+
+    .copy-btn {
+      background-color: var(--brand-blue);
+      color: #ffffff;
+      border: none;
+      font-family: var(--font-body);
+      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: var(--shadow-sm);
+      transition: background-color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .copy-btn:hover {
+      background-color: var(--brand-blue-hover);
+      transform: translateY(-1px);
+    }
+
+    .copy-btn:active {
+      transform: translateY(0);
+    }
+
+    .copy-btn svg {
+      width: 1.15rem;
+      height: 1.15rem;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2px;
+    }
+
+    .copy-toast {
+      position: absolute;
+      bottom: 2rem;
+      right: 2rem;
+      background-color: #065f46;
+      color: #ffffff;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      box-shadow: var(--shadow-lg);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 1000;
+    }
+
+    .copy-toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* ─── How to Send Tab ────────────────────────────────────────────── */
+    .delivery-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .delivery-card {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .delivery-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 8px;
+      background-color: var(--brand-blue-light);
+      color: var(--brand-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .delivery-icon svg {
+      width: 1.4rem;
+      height: 1.4rem;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2px;
+    }
+
+    .delivery-title {
+      font-size: 1.15rem;
+      margin-top: 0.25rem;
+      margin-bottom: 0;
+    }
+
+    .delivery-desc {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    .code-block {
+      background-color: #000000;
+      color: #3b82f6;
+      font-family: monospace;
+      padding: 1.25rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      overflow-x: auto;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    /* ─── Reset Button & Settings ────────────────────────────────────── */
+    .reset-bar {
+      border-top: 1px solid var(--border-color);
+      padding-top: 1.5rem;
+      margin-top: 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-secondary);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-color);
+      font-family: var(--font-body);
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+
+    .btn-secondary svg {
+      width: 1rem;
+      height: 1rem;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2px;
+    }
+
+    /* ─── Responsive Styles ────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .main-container {
+        flex-direction: column;
+      }
+      
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        top: 0;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        padding: 1.25rem 2rem;
+        gap: 1rem;
+      }
+
+      .nav-menu {
+        flex-direction: row;
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+        gap: 0.5rem;
+      }
+
+      .nav-item button {
+        white-space: nowrap;
+        padding: 0.6rem 0.85rem;
+      }
+
+      .progress-widget {
+        display: none; /* Hide progress widget in sidebar on mobile as we'll duplicate it or show it in dashboard */
+      }
+
+      .content-area {
+        padding: 2rem;
+      }
+
+      .generator-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 1rem 1.5rem;
+      }
+      
+      .brand-title {
+        font-size: 1.1rem;
+      }
+
+      .content-area {
+        padding: 1.5rem 1rem;
+      }
+
+      .hero-banner {
+        padding: 2rem 1.5rem;
+      }
+
+      .hero-title {
+        font-size: 1.8rem;
+      }
+
+      .checklist-row {
+        grid-template-columns: 30px 1fr auto;
+        grid-template-rows: auto auto;
+        gap: 0.5rem;
+        padding: 1rem;
+      }
+
+      .item-priority {
+        grid-column: 2;
+        grid-row: 2;
+        margin-top: 0.25rem;
+      }
+
+      .item-qty {
+        grid-column: 3;
+        grid-row: 1;
+        justify-self: end;
+      }
+
+      .row-expand-btn {
+        grid-column: 3;
+        grid-row: 2;
+        justify-self: end;
+      }
+
+      .details-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body data-theme="light">
+
+  <!-- ─── HEADER ───────────────────────────────────────────────────────── -->
+  <header>
+    <div class="brand">
+      <div class="brand-logo">R</div>
+      <div class="brand-title">Retrofit <span>Creations</span></div>
+    </div>
+    
+    <div class="header-actions">
+      <!-- Dark mode switch -->
+      <button class="theme-toggle" id="themeToggleBtn" aria-label="Toggle Theme">
+        <!-- Sun Icon -->
+        <svg id="sunIcon" style="display:none;" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <!-- Moon Icon -->
+        <svg id="moonIcon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ─── MAIN CONTAINER ────────────────────────────────────────────────── -->
+  <div class="main-container">
+    
+    <!-- ─── SIDEBAR ────────────────────────────────────────────────────── -->
+    <aside class="sidebar">
+      <ul class="nav-menu">
+        <li class="nav-item active" data-tab="dashboard">
+          <button>
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            Dashboard
+          </button>
+        </li>
+        <li class="nav-item" data-tab="tips">
+          <button>
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M15.6 11.6L12 8L8.4 11.6"></path><path d="M12 3v12"></path><path d="M5 20h14"></path></svg>
+            Photography Tips
+          </button>
+        </li>
+        <li class="nav-item" data-tab="checklist">
+          <button>
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+            Image Checklist
+          </button>
+        </li>
+        <li class="nav-item" data-tab="generator">
+          <button>
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+            Naming Tool
+          </button>
+        </li>
+        <li class="nav-item" data-tab="send">
+          <button>
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 16 12 12 8 16"></polyline><line x1="12" y1="12" x2="12" y2="21"></line><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path><polyline points="16 16 12 12 8 16"></polyline></svg>
+            How to Send
+          </button>
+        </li>
+      </ul>
+
+      <!-- Sidebar Progress Widget -->
+      <div class="progress-widget">
+        <div class="progress-title">
+          <span>Overall Progress</span>
+          <span id="sidebarPercent">0%</span>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" id="sidebarBarFill"></div>
+        </div>
+        <div class="progress-stats">
+          <span id="sidebarCheckedCount">0 completed</span>
+          <span id="sidebarTotalCount">0 total</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ─── CONTENT AREA ────────────────────────────────────────────────── -->
+    <main class="content-area">
+
+      <!-- ─── TAB: DASHBOARD ────────────────────────────────────────────── -->
+      <section class="tab-content active" id="dashboardTab">
+        <div class="hero-banner">
+          <h1 class="hero-title">Product Photography Dashboard</h1>
+          <p class="hero-subtitle">Welcome, Hailie! Use this portal to track your photoshoot checklist, view guidelines, and rename your image files correctly for the Retrofit Creations website.</p>
+          <div class="hero-meta">
+            <div class="hero-meta-item">
+              <svg viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              <span>Est. time: 30 mins (Core checklist)</span>
+            </div>
+            <div class="hero-meta-item">
+              <svg viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+              <span>No fancy equipment needed</span>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="section-title">Your Progress Tracker</h2>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Total Progress</div>
+            <div class="stat-value" id="dashPercent">0%</div>
+            <p class="stat-desc">Target: 100% before store launch</p>
+            <div class="stat-accent">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">High Priority Core</div>
+            <div class="stat-value" id="dashHighPercent">0%</div>
+            <p class="stat-desc" id="dashHighCount">0 / 0 completed</p>
+            <div class="stat-accent">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Total Checklist Done</div>
+            <div class="stat-value" id="dashTotalChecked">0</div>
+            <p class="stat-desc" id="dashTotalCountText">out of 0 items</p>
+            <div class="stat-accent">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">
+            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            Quick Start: What to Shoot First
+          </h3>
+          <p>If you only have <strong>30 minutes</strong>, tackle these items first. This provides enough essential media to launch the store with actual, high-quality photos for our most popular items.</p>
+          <div style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
+            <div style="display: flex; gap: 1rem; align-items: flex-start; padding: 1rem; background-color: var(--bg-secondary); border-radius: 8px; border-left: 4px solid var(--brand-blue);">
+              <span style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: bold; color: var(--brand-blue); background: var(--bg-primary); width: 2rem; height: 2rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm); flex-shrink: 0;">1</span>
+              <div>
+                <strong style="display: block; font-size: 0.95rem; margin-bottom: 0.25rem; color: var(--text-primary);">All 9 Zyn Tin Colors (15 mins)</strong>
+                <span style="font-size: 0.85rem; color: var(--text-secondary);">Shoot one closed-tin shot of each color using the exact same camera angle and light setup so they look uniform on the site.</span>
+              </div>
+            </div>
+            <div style="display: flex; gap: 1rem; align-items: flex-start; padding: 1rem; background-color: var(--bg-secondary); border-radius: 8px; border-left: 4px solid var(--brand-blue);">
+              <span style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: bold; color: var(--brand-blue); background: var(--bg-primary); width: 2rem; height: 2rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm); flex-shrink: 0;">2</span>
+              <div>
+                <strong style="display: block; font-size: 0.95rem; margin-bottom: 0.25rem; color: var(--text-primary);">5 Best-Selling Zyn Tin Designs (10 mins)</strong>
+                <span style="font-size: 0.85rem; color: var(--text-secondary);">Select the most impressive or popular engravings and capture clear detail shots showing the laser-etched precision.</span>
+              </div>
+            </div>
+            <div style="display: flex; gap: 1rem; align-items: flex-start; padding: 1rem; background-color: var(--bg-secondary); border-radius: 8px; border-left: 4px solid var(--brand-blue);">
+              <span style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: bold; color: var(--brand-blue); background: var(--bg-primary); width: 2rem; height: 2rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm); flex-shrink: 0;">3</span>
+              <div>
+                <strong style="display: block; font-size: 0.95rem; margin-bottom: 0.25rem; color: var(--text-primary);">2-3 Best-Selling Laser Engraved Keychains (5 mins)</strong>
+                <span style="font-size: 0.85rem; color: var(--text-secondary);">One close-up detail, and one shot resting on a set of car keys to display the real-world scale and feel.</span>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top: 1.5rem; text-align: center;">
+            <button onclick="switchTab('checklist')" class="copy-btn" style="display: inline-flex; margin: 0 auto;">
+              Open Full Checklist
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── TAB: PHOTOGRAPHY TIPS ──────────────────────────────────────── -->
+      <section class="tab-content" id="tipsTab">
+        <h1 class="section-title">Photography Tips & Best Practices</h1>
+        <p style="margin-bottom: 2rem;">Taking clean product photos doesn't require expensive DSLR cameras or studio lighting. Just follow this easy setup to make your phone photos look premium and consistent.</p>
+        
+        <h2 style="font-size: 1.25rem; margin-bottom: 1.25rem;">The Setup (5 Minutes, Costs Nothing)</h2>
+        <div class="tips-grid">
+          
+          <!-- Tip 1 -->
+          <div class="tip-box">
+            <div class="tip-header">
+              <span class="tip-num">1</span>
+              <h3 class="tip-box-title">Find a Window</h3>
+            </div>
+            <p class="tip-desc">Natural light is your best friend. Choose a window with **indirect sunlight** (not direct bright sun) for soft, even lighting. Morning or overcast days are best.</p>
+            <div class="diagram-container">
+              <!-- Inline SVG Diagram for Window light -->
+              <svg viewBox="0 0 200 120" style="width: 100%; height: 100%;">
+                <rect x="0" y="0" width="200" height="120" fill="var(--bg-secondary)"></rect>
+                <!-- Sun -->
+                <circle cx="20" cy="20" r="10" fill="#f59e0b" opacity="0.3"></circle>
+                <!-- Window -->
+                <rect x="50" y="20" width="10" height="80" fill="#3b82f6" rx="2"></rect>
+                <path d="M55 20 L55 100 M50 50 L60 50 M50 70 L60 70" stroke="var(--bg-primary)" stroke-width="1.5"></path>
+                <!-- Light Rays -->
+                <path d="M65 30 L110 50 M65 50 L120 70 M65 75 L130 90" stroke="#fef08a" stroke-width="2" stroke-dasharray="4,2"></path>
+                <!-- Table & Product -->
+                <line x1="100" y1="90" x2="180" y2="90" stroke="var(--text-primary)" stroke-width="4"></line>
+                <line x1="110" y1="90" x2="110" y2="110" stroke="var(--text-primary)" stroke-width="2"></line>
+                <line x1="170" y1="90" x2="170" y2="110" stroke="var(--text-primary)" stroke-width="2"></line>
+                <!-- Product -->
+                <rect x="130" y="70" width="20" height="20" fill="var(--brand-blue)" rx="4"></rect>
+                <text x="133" y="83" font-family="sans-serif" font-size="8" fill="#ffffff" font-weight="bold">ZYN</text>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Tip 2 -->
+          <div class="tip-box">
+            <div class="tip-header">
+              <span class="tip-num">2</span>
+              <h3 class="tip-box-title">Make a Backdrop</h3>
+            </div>
+            <p class="tip-desc">Tape a piece of white poster board to a wall and curve it down onto a table to create a **seamless, edge-free background**.</p>
+            <div class="diagram-container">
+              <!-- Inline SVG Backdrop Diagram -->
+              <svg viewBox="0 0 200 120" style="width: 100%; height: 100%;">
+                <rect x="0" y="0" width="200" height="120" fill="var(--bg-secondary)"></rect>
+                <!-- Wall & Table lines -->
+                <line x1="40" y1="10" x2="40" y2="90" stroke="var(--text-tertiary)" stroke-width="1"></line>
+                <line x1="40" y1="90" x2="180" y2="90" stroke="var(--text-tertiary)" stroke-width="1"></line>
+                <!-- Seamless Backdrop Curve -->
+                <path d="M50 15 Q50 80 160 80" fill="none" stroke="var(--text-primary)" stroke-width="3" stroke-linecap="round"></path>
+                <!-- Tape -->
+                <rect x="46" y="15" width="8" height="6" fill="#fef08a" transform="rotate(-15, 50, 15)"></rect>
+                <!-- Product -->
+                <ellipse cx="105" cy="72" rx="10" ry="7" fill="var(--brand-blue)"></ellipse>
+                <!-- Camera Phone -->
+                <rect x="145" y="45" width="25" height="14" fill="#374151" rx="2" transform="rotate(-20, 157, 52)"></rect>
+                <circle cx="149" cy="50" r="2" fill="#000000" transform="rotate(-20, 157, 52)"></circle>
+                <line x1="145" y1="52" x2="115" y2="68" stroke="var(--brand-blue)" stroke-width="1" stroke-dasharray="3,3"></line>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Tip 3 -->
+          <div class="tip-box">
+            <div class="tip-header">
+              <span class="tip-num">3</span>
+              <h3 class="tip-box-title">Camera Settings</h3>
+            </div>
+            <p class="tip-desc">Turn **OFF** the flash. Turn **ON** portrait mode (slightly blurs background). If your phone has a **2x optical zoom**, use it and step back to prevent distortion.</p>
+            <div class="diagram-container">
+              <!-- Inline SVG Camera Settings -->
+              <svg viewBox="0 0 200 120" style="width: 100%; height: 100%;">
+                <rect x="0" y="0" width="200" height="120" fill="var(--bg-secondary)"></rect>
+                <!-- Phone Screen Mockup -->
+                <rect x="60" y="15" width="80" height="90" fill="#1f2937" rx="8" stroke="var(--text-primary)" stroke-width="2"></rect>
+                <!-- Camera view -->
+                <rect x="65" y="25" width="70" height="60" fill="#111827" rx="4"></rect>
+                <circle cx="100" cy="55" r="18" fill="none" stroke="var(--brand-blue)" stroke-dasharray="3,3" stroke-width="1.5"></circle>
+                <ellipse cx="100" cy="55" rx="12" ry="7" fill="var(--brand-blue)" opacity="0.8"></ellipse>
+                <!-- 2x indicator -->
+                <rect x="90" y="90" width="20" height="10" fill="var(--brand-blue)" rx="3"></rect>
+                <text x="94" y="98" font-family="sans-serif" font-weight="bold" font-size="7" fill="#ffffff">2x</text>
+                <!-- Flash crossed out -->
+                <path d="M72 15 L82 15" stroke="none"></path>
+                <path d="M125 10 L135 22" stroke="#ef4444" stroke-width="2"></path>
+                <!-- Flash symbol -->
+                <path d="M130 9 L126 14 L129 14 L127 19 L132 13 L129 13 Z" fill="#9ca3af"></path>
+              </svg>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">
+            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+            Taking the Shot: Angle Checklist
+          </h3>
+          <ul style="padding-left: 1.25rem; margin-bottom: 0; color: var(--text-secondary); line-height: 1.6;">
+            <li style="margin-bottom: 0.5rem;">**Fill the frame:** The product should occupy **60-80%** of the space. Don't leave huge empty margins.</li>
+            <li style="margin-bottom: 0.5rem;">**Keep angles clean:** Shoot straight-on or at a slight downward angle (30-45°). Avoid extreme top-down or bottom-up angles.</li>
+            <li style="margin-bottom: 0.5rem;">**Provide variety:** Take **3-5 photos per product** (Front hero shot, 45-degree angle, close-up details showing engravings, and showing it in context, like a keychain on car keys).</li>
+            <li style="margin-bottom: 0.5rem;">**Keep backdrop clean:** Clean the poster board regularly. Wipe away dust or fingerprints on Zyn tins before taking photos.</li>
+            <li style="margin-bottom: 0.5rem;">**Scale reference:** For small keychains or accessories, hold them in your hand for one shot to show the real size.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">
+            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+            Quick Editing & Website Specs
+          </h3>
+          <p>You can use your phone's built-in editor to make two fast tweaks: increase **brightness** (so gray backgrounds become crisp white) and **crop** to center the item. Do not use creative filters or borders.</p>
+          <table class="specs-table">
+            <thead>
+              <tr>
+                <th>Requirement</th>
+                <th>Spec Value</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>File Format</strong></td>
+                <td>JPG or PNG</td>
+                <td>Your phone's default is perfect</td>
+              </tr>
+              <tr>
+                <td><strong>Resolution</strong></td>
+                <td>Min. 1000 x 1000 pixels</td>
+                <td>Modern phones shoot far higher than this</td>
+              </tr>
+              <tr>
+                <td><strong>Crop Ratio</strong></td>
+                <td>Square (1:1 ratio)</td>
+                <td>Ideal for product grids; we can crop later if needed</td>
+              </tr>
+              <tr>
+                <td><strong>File Size</strong></td>
+                <td>Under 5MB per image</td>
+                <td>Standard mobile shots run between 2-4MB</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ─── TAB: INTERACTIVE CHECKLIST ────────────────────────────────── -->
+      <section class="tab-content" id="checklistTab">
+        <h1 class="section-title">Image Checklist</h1>
+        <p>Mark items complete as you photograph them. Progress is saved automatically. Click any row to expand details and view recommended filenames.</p>
+        
+        <div class="checklist-controls">
+          <div class="filter-tabs">
+            <button class="filter-btn active" data-filter="all">All Items</button>
+            <button class="filter-btn" data-filter="high">🔴 High Priority</button>
+            <button class="filter-btn" data-filter="medium">🟡 Medium Priority</button>
+            <button class="filter-btn" data-filter="low">🟢 Low Priority</button>
+            <button class="filter-btn" data-filter="pending">Pending</button>
+            <button class="filter-btn" data-filter="completed">Completed</button>
+          </div>
+          
+          <div class="search-wrapper">
+            <svg class="search-icon" viewBox="0 0 24 24" stroke="currentColor"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" class="search-input" id="checklistSearch" placeholder="Search items...">
+          </div>
+        </div>
+
+        <div class="checklist-list" id="checklistContainer">
+          <!-- Items will be injected by JavaScript -->
+        </div>
+
+        <div class="empty-state" id="checklistEmpty">
+          <h3>No items found</h3>
+          <p>Try adjusting your search query or category filters.</p>
+        </div>
+
+        <!-- Reset Button -->
+        <div class="reset-bar">
+          <button id="exportProgressBtn" class="btn-secondary">
+            <svg viewBox="0 0 24 24" stroke="currentColor"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+            Export Progress List
+          </button>
+          <button id="resetProgressBtn" class="btn-secondary" style="color: #ef4444; border-color: rgba(239, 68, 68, 0.2);">
+            <svg viewBox="0 0 24 24" stroke="currentColor"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+            Reset All Checklist Progress
+          </button>
+        </div>
+      </section>
+
+      <!-- ─── TAB: NAMING TOOL ─────────────────────────────────────────── -->
+      <section class="tab-content" id="generatorTab">
+        <h1 class="section-title">Filename Generator Tool</h1>
+        <p style="margin-bottom: 2rem;">Consistent, descriptive file names help Josh match photos to products instantly and upload them directly. Use this tool to generate the exact filenames you need.</p>
+        
+        <div class="card">
+          <div class="generator-grid">
+            <div>
+              <div class="form-group">
+                <label class="form-label" for="genCategory">1. Select Category</label>
+                <select class="form-select" id="genCategory">
+                  <option value="zyn-tin">Custom Zyn Tin</option>
+                  <option value="keychain">Laser Engraved Keychain</option>
+                  <option value="automotive">Custom Automotive Part</option>
+                  <option value="personalized-gift">Personalized Gift</option>
+                  <option value="event">Event / Vendor Item</option>
+                  <option value="3d-print">3D Printed Part</option>
+                  <option value="community">Community/Showcase Photo</option>
+                  <option value="service">Service Process Photo</option>
+                  <option value="about">About / Brand Photo</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="genDesign">2. Product Name / Color / Design</label>
+                <input type="text" class="form-input" id="genDesign" placeholder="e.g. red, blue-mountain-engraving, engine-bracket" value="red">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="genAngle">3. Angle / Context</label>
+                <select class="form-select" id="genAngle">
+                  <option value="front">Front / Hero Shot</option>
+                  <option value="angle">Angled View (30-45 degrees)</option>
+                  <option value="detail">Close-up / Engraving Detail</option>
+                  <option value="lifestyle">Lifestyle / In-hand</option>
+                  <option value="installed">Installed (on car / keys / dashboard)</option>
+                  <option value="in-progress">In-Progress / Machine Engraving</option>
+                  <option value="before-after">Before & After comparison</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="genFormat">4. Image Format</label>
+                <select class="form-select" id="genFormat">
+                  <option value="jpg">.jpg (Recommended)</option>
+                  <option value="png">.png</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="output-card">
+              <span class="output-title">Your Generated Filename</span>
+              <div class="output-filename" id="generatedFilename">zyn-tin-red-front.jpg</div>
+              <button class="copy-btn" id="copyFilenameBtn">
+                <svg viewBox="0 0 24 24" stroke="currentColor"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy Filename
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">
+            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            Filename Rules Quick Reference
+          </h3>
+          <ul style="padding-left: 1.25rem; color: var(--text-secondary); line-height: 1.6;">
+            <li>Always use **all lowercase letters**.</li>
+            <li>Replace spaces or underscores with **hyphens (-)**.</li>
+            <li>Strip out special symbols (like `#`, `&`, `@`, `!`, `"`).</li>
+            <li>Keep names clean. Example: `zyn-tin-red-front.jpg` is far better than `IMG_94382.JPG` or `Red Zyn Tin!.jpg`.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ─── TAB: HOW TO SEND ─────────────────────────────────────────── -->
+      <section class="tab-content" id="sendTab">
+        <h1 class="section-title">How to Send Photos to Josh</h1>
+        <p style="margin-bottom: 2rem;">Once you have taken and sorted your photos, please choose one of these options to send them over.</p>
+        
+        <div class="delivery-options">
+          <!-- Option A -->
+          <div class="delivery-card">
+            <div class="delivery-icon">
+              <svg viewBox="0 0 24 24" stroke="currentColor"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+            </div>
+            <h3 class="delivery-title">Option A: Google Drive</h3>
+            <p class="delivery-desc">Create a folder called <strong>"RC Website Photos"</strong> on Google Drive. Upload files into structured category subfolders, and share the link with Josh.</p>
+            <span style="font-size: 0.8rem; color: var(--brand-blue); font-weight: 600; margin-top: auto;">⭐ RECOMMENDED / EASIEST</span>
+          </div>
+
+          <!-- Option B -->
+          <div class="delivery-card">
+            <div class="delivery-icon">
+              <svg viewBox="0 0 24 24" stroke="currentColor"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            </div>
+            <h3 class="delivery-title">Option B: Email in Batches</h3>
+            <p class="delivery-desc">Email images directly to Josh. Keep batches under **25MB total** (around 5-8 photos per email) to ensure they are received.</p>
+          </div>
+
+          <!-- Option C -->
+          <div class="delivery-card">
+            <div class="delivery-icon">
+              <svg viewBox="0 0 24 24" stroke="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"></path><path d="M12 6v6l4 2"></path></svg>
+            </div>
+            <h3 class="delivery-title">Option C: Direct Share</h3>
+            <p class="delivery-desc">If meeting in person, AirDrop is fastest. You can also send them via messaging apps (Telegram/Signal/etc.) if files are sent as uncompressed documents.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">
+            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path><line x1="12" y1="11" x2="12" y2="17"></line><line x1="9" y1="14" x2="15" y2="14"></line></svg>
+            Recommended Google Drive Folder Structure
+          </h3>
+          <p>Organizing folders makes matching products much smoother. Consider making folders like this:</p>
+          <pre class="code-block">
+RC Website Photos/
+├── 01-zyn-tins/
+│   ├── zyn-tin-red-front.jpg
+│   ├── zyn-tin-blue-front.jpg
+│   └── zyn-tin-red-distressed-angle.jpg
+├── 02-keychains/
+│   ├── keychain-mountain-on-keys.jpg
+│   └── keychain-classic-logo-detail.jpg
+├── 03-automotive/
+│   ├── automotive-bracket-installed.jpg
+│   └── automotive-cover-raw-vs-finished.jpg
+└── 04-services/
+    ├── service-laser-engraver-action.jpg
+    └── service-3d-printer-printing.jpg</pre>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ─── TOAST NOTIFICATION ──────────────────────────────────────────── -->
+  <div class="copy-toast" id="copyToast">Filename copied to clipboard!</div>
+
+  <!-- ─── JAVASCRIPT LOGIC ────────────────────────────────────────────── -->
+  <script>
+    // ─── CHECKLIST DATA DEFINITION ────────────────────────────────────
+    const checklistData = [
+      // HIGH PRIORITY
+      {
+        id: "zyn-9-colors",
+        category: "Custom Zyn Tins",
+        title: "All 9 Zyn Tin Colors",
+        priority: "high",
+        qty: "9 photos",
+        notes: "One clean shot per color, closed tin. Shoot all at the exact same lighting & camera angle for website consistency.",
+        folder: "01-zyn-tins",
+        template: "zyn-tin-[color-name]-front.jpg"
+      },
+      {
+        id: "zyn-designs",
+        category: "Custom Zyn Tins",
+        title: "Engraved Design Examples",
+        priority: "high",
+        qty: "10-20 photos",
+        notes: "Showcase the best-selling or most impressive designs (10-20 to start). Emphasize engraving clarity.",
+        folder: "01-zyn-tins",
+        template: "zyn-tin-[design-name]-[color]-detail.jpg"
+      },
+      {
+        id: "zyn-lifestyle",
+        category: "Custom Zyn Tins",
+        title: "Zyn Tin Lifestyle Shot",
+        priority: "high",
+        qty: "1-2 photos",
+        notes: "Someone holding the tin in their hand, or sitting on a car dashboard. Gives size and quality context.",
+        folder: "01-zyn-tins",
+        template: "zyn-tin-[variant]-lifestyle.jpg"
+      },
+      {
+        id: "keychains-engraved",
+        category: "Keychains",
+        title: "Laser Engraved Keychains",
+        priority: "high",
+        qty: "3-5 photos",
+        notes: "Show 3-5 different design styles. Take one detail close-up and one showing it attached to a set of keys.",
+        folder: "02-keychains",
+        template: "keychain-[design-name]-on-keys.jpg"
+      },
+      {
+        id: "automotive-parts",
+        category: "Automotive Parts",
+        title: "Custom Automotive Parts",
+        priority: "high",
+        qty: "6-9 photos",
+        notes: "2-3 parts total (2-3 photos each). Focus on metal texture. Before/after or installed-on-car photos are extremely valuable.",
+        folder: "03-automotive",
+        template: "automotive-[part-name]-installed.jpg"
+      },
+      {
+        id: "gifts-personalized",
+        category: "Personalized Gifts",
+        title: "Personalized Gift Items",
+        priority: "high",
+        qty: "4-6 photos",
+        notes: "2-3 gift items (2-3 photos each). Clearly display the personalization details.",
+        folder: "04-gifts",
+        template: "gift-[item-name]-personalized.jpg"
+      },
+      {
+        id: "event-vendor-items",
+        category: "Event & Vendor",
+        title: "Event & Vendor Items",
+        priority: "high",
+        qty: "2-3 photos",
+        notes: "Show specialized products customized for events or booths (e.g., custom badge holders, show plates).",
+        folder: "05-events",
+        template: "event-[item-name]-front.jpg"
+      },
+      {
+        id: "3d-printed-parts",
+        category: "3D Printed Parts",
+        title: "3D Printed Components",
+        priority: "high",
+        qty: "4-6 photos",
+        notes: "2-3 printed parts (2-3 photos each). Highlight print layers, durability, custom filaments, and close-up detail.",
+        folder: "06-3d-print",
+        template: "3d-print-[part-name]-detail.jpg"
+      },
+      
+      // COLOR SWATCHES
+      {
+        id: "color-swatches-all",
+        category: "Zyn Tin Swatches",
+        title: "9 Color Selector Swatches",
+        priority: "high",
+        qty: "9 photos",
+        notes: "Isolated zoom-in shots of each tin color, matching exactly. Useful for swatches on the customization page.",
+        folder: "01-zyn-tins/swatches",
+        template: "swatch-[color-name].jpg"
+      },
+
+      // MEDIUM PRIORITY
+      {
+        id: "customer-projects",
+        category: "Community Projects",
+        title: "Customer Project Showcases",
+        priority: "medium",
+        qty: "4-8 photos",
+        notes: "Engraved items in use, custom parts installed, or vehicle builds. Ask previous customers for high-res submissions.",
+        folder: "07-community",
+        template: "community-customer-[vehicle-or-owner]-installed.jpg"
+      },
+      {
+        id: "event-booth",
+        category: "Community Events",
+        title: "Show Booth Setup",
+        priority: "medium",
+        qty: "2-4 photos",
+        notes: "Photos of your setup at car meets, swap meets, or craft fairs. Shows brand authenticity.",
+        folder: "07-community",
+        template: "community-event-booth-[location].jpg"
+      },
+      {
+        id: "car-club-highlights",
+        category: "Community Highlights",
+        title: "Club & Meet Highlights",
+        priority: "medium",
+        qty: "2-4 photos",
+        notes: "Local car club groups, meets, or events you support or participate in.",
+        folder: "07-community",
+        template: "community-meet-[event-name].jpg"
+      },
+      {
+        id: "laser-process",
+        category: "Service Process",
+        title: "Laser Engraving in Action",
+        priority: "medium",
+        qty: "1-2 photos",
+        notes: "Action shot showing the laser engraving machine active or mid-pass. Sparks/lasers look very cool.",
+        folder: "08-services",
+        template: "service-laser-engraver-action.jpg"
+      },
+      {
+        id: "printer-process",
+        category: "Service Process",
+        title: "3D Printer Printing",
+        priority: "medium",
+        qty: "1-2 photos",
+        notes: "A clean print in progress, highlighting the print head and structural model build up.",
+        folder: "08-services",
+        template: "service-3d-printer-printing.jpg"
+      },
+      {
+        id: "cnc-process",
+        category: "Service Process",
+        title: "CNC Machine Carving",
+        priority: "medium",
+        qty: "1-2 photos",
+        notes: "The cutting head spinning, chips flying, or a finished carve sitting inside the workbed.",
+        folder: "08-services",
+        template: "service-cnc-carving-action.jpg"
+      },
+      {
+        id: "raw-vs-finished",
+        category: "Service Process",
+        title: "Raw vs. Finished Material Comparison",
+        priority: "medium",
+        qty: "1-2 photos",
+        notes: "Before and after comparison of a part. Displays machining, polish, or engraving value.",
+        folder: "08-services",
+        template: "service-[part-name]-before-after.jpg"
+      },
+
+      // LOW PRIORITY
+      {
+        id: "workshop-photos",
+        category: "About Page",
+        title: "Workshop & Machinery",
+        priority: "low",
+        qty: "3-5 photos",
+        notes: "A peek inside the workspace. Show organizational layout, machines lined up, and workspace character.",
+        folder: "09-about",
+        template: "about-workshop-equipment.jpg"
+      },
+      {
+        id: "portrait-hailie",
+        category: "About Page",
+        title: "Portrait of Hailie",
+        priority: "low",
+        qty: "1 photo",
+        notes: "For the 'Our Story' page. Natural, informal picture in the workshop working on something is best.",
+        folder: "09-about",
+        template: "about-founder-hailie.jpg"
+      },
+      {
+        id: "team-photo",
+        category: "About Page",
+        title: "Team & Collaboration",
+        priority: "low",
+        qty: "1 photo",
+        notes: "If anyone else helps with fabricating, laser running, or logistics, capture a combined work shot.",
+        folder: "09-about",
+        template: "about-team-workshop.jpg"
+      },
+      {
+        id: "hero-bg",
+        category: "Hero Banner",
+        title: "Main Site Hero Image",
+        priority: "low",
+        qty: "1 photo",
+        notes: "A landscape layout, premium flat-lay containing multiple products or a detailed part close-up for the homepage header.",
+        folder: "10-banners",
+        template: "banner-homepage-hero.jpg"
+      },
+      {
+        id: "category-banners",
+        category: "Category Banners",
+        title: "6 Shop Category Banners",
+        priority: "low",
+        qty: "6 photos",
+        notes: "One outstanding hero image representing each category (Zyn Tins, Keychains, Automotive, Gifts, Events, 3D Prints).",
+        folder: "10-banners",
+        template: "banner-category-[category-name].jpg"
+      }
+    ];
+
+    // ─── STATE MANAGEMENT ─────────────────────────────────────────────
+    let completedItems = JSON.parse(localStorage.getItem('rc_photo_checklist')) || [];
+    let activeFilter = 'all';
+    let searchQuery = '';
+
+    // Save completed checklist array to localstorage
+    function saveState() {
+      localStorage.setItem('rc_photo_checklist', JSON.stringify(completedItems));
+      updateProgressUI();
+    }
+
+    // Toggle item completion
+    function toggleItem(itemId) {
+      const index = completedItems.indexOf(itemId);
+      if (index > -1) {
+        completedItems.splice(index, 1);
+      } else {
+        completedItems.push(itemId);
+      }
+      saveState();
+      renderChecklist();
+    }
+
+    // ─── UI CONTROLS & EVENT LISTENERS ────────────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize Sidebar Navigation Tabs
+      const navButtons = document.querySelectorAll('.nav-item');
+      navButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const tabName = btn.getAttribute('data-tab');
+          switchTab(tabName);
+        });
+      });
+
+      // Initialize Theme Toggle
+      const themeToggleBtn = document.getElementById('themeToggleBtn');
+      themeToggleBtn.addEventListener('click', toggleTheme);
+      
+      // Load saved theme
+      const savedTheme = localStorage.getItem('rc_theme') || 'light';
+      document.body.setAttribute('data-theme', savedTheme);
+      updateThemeTogglerUI(savedTheme);
+
+      // Checklist Search
+      const searchInput = document.getElementById('checklistSearch');
+      searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value.toLowerCase();
+        renderChecklist();
+      });
+
+      // Filter Buttons
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          activeFilter = btn.getAttribute('data-filter');
+          renderChecklist();
+        });
+      });
+
+      // Filename Generator Inputs
+      const genCategory = document.getElementById('genCategory');
+      const genDesign = document.getElementById('genDesign');
+      const genAngle = document.getElementById('genAngle');
+      const genFormat = document.getElementById('genFormat');
+      
+      [genCategory, genDesign, genAngle, genFormat].forEach(element => {
+        element.addEventListener('change', generateFilename);
+        element.addEventListener('input', generateFilename);
+      });
+
+      // Copy Filename Button
+      document.getElementById('copyFilenameBtn').addEventListener('click', () => {
+        const fn = document.getElementById('generatedFilename').innerText;
+        copyTextToClipboard(fn);
+      });
+
+      // Reset Checklist Button
+      document.getElementById('resetProgressBtn').addEventListener('click', resetProgress);
+
+      // Export Progress Button
+      document.getElementById('exportProgressBtn').addEventListener('click', exportProgress);
+
+      // Initial Render & Progress Update
+      renderChecklist();
+      updateProgressUI();
+      generateFilename();
+    });
+
+    // Switch active navigation tab
+    function switchTab(tabId) {
+      // Update Tab Sidebar UI
+      document.querySelectorAll('.nav-item').forEach(item => {
+        if (item.getAttribute('data-tab') === tabId) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+
+      // Update Active Tab Content Panel
+      document.querySelectorAll('.tab-content').forEach(panel => {
+        if (panel.id === `${tabId}Tab`) {
+          panel.classList.add('active');
+        } else {
+          panel.classList.remove('active');
+        }
+      });
+      
+      // Auto scroll to top of content
+      window.scrollTo(0, 0);
+    }
+
+    // Toggle Dark/Light Theme
+    function toggleTheme() {
+      const currentTheme = document.body.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.body.setAttribute('data-theme', newTheme);
+      localStorage.setItem('rc_theme', newTheme);
+      updateThemeTogglerUI(newTheme);
+    }
+
+    function updateThemeTogglerUI(theme) {
+      const sunIcon = document.getElementById('sunIcon');
+      const moonIcon = document.getElementById('moonIcon');
+      if (theme === 'dark') {
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+      } else {
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+      }
+    }
+
+    // ─── RENDER CHECKLIST ─────────────────────────────────────────────
+    function renderChecklist() {
+      const container = document.getElementById('checklistContainer');
+      const emptyState = document.getElementById('checklistEmpty');
+      container.innerHTML = '';
+      
+      // Filter list data
+      const filtered = checklistData.filter(item => {
+        const matchesSearch = item.title.toLowerCase().includes(searchQuery) || 
+                              item.category.toLowerCase().includes(searchQuery) || 
+                              item.notes.toLowerCase().includes(searchQuery);
+        
+        const isCompleted = completedItems.includes(item.id);
+        
+        let matchesFilter = true;
+        if (activeFilter === 'high') matchesFilter = item.priority === 'high';
+        else if (activeFilter === 'medium') matchesFilter = item.priority === 'medium';
+        else if (activeFilter === 'low') matchesFilter = item.priority === 'low';
+        else if (activeFilter === 'pending') matchesFilter = !isCompleted;
+        else if (activeFilter === 'completed') matchesFilter = isCompleted;
+
+        return matchesSearch && matchesFilter;
+      });
+
+      if (filtered.length === 0) {
+        emptyState.style.display = 'block';
+        return;
+      }
+      emptyState.style.display = 'none';
+
+      filtered.forEach(item => {
+        const isChecked = completedItems.includes(item.id);
+        const row = document.createElement('div');
+        row.className = `checklist-row ${isChecked ? 'completed' : ''}`;
+        row.id = `row-${item.id}`;
+        
+        row.innerHTML = `
+          <!-- Checkbox -->
+          <div class="checkbox-container">
+            <div class="custom-checkbox ${isChecked ? 'checked' : ''}" onclick="toggleItem('${item.id}')">
+              <svg viewBox="0 0 24 24" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+          </div>
+          
+          <!-- Title & notes -->
+          <div class="item-info">
+            <h4 class="item-title">${item.title}</h4>
+            <span style="font-size:0.75rem; color: var(--text-tertiary); font-weight:500;">${item.category}</span>
+          </div>
+
+          <!-- Priority -->
+          <div class="item-priority">
+            <span class="priority-tag ${item.priority}">${item.priority}</span>
+          </div>
+
+          <!-- Quantity Target -->
+          <div class="item-qty">
+            <svg viewBox="0 0 24 24" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+            <span>${item.qty}</span>
+          </div>
+
+          <!-- Expand button -->
+          <button class="row-expand-btn" id="btn-exp-${item.id}" onclick="toggleExpandRow('${item.id}')" aria-label="Expand Details">
+            <svg viewBox="0 0 24 24" stroke="currentColor"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+
+          <!-- Expandable row detail container -->
+          <div class="row-details" id="detail-${item.id}">
+            <div class="details-grid">
+              <div>
+                <div class="details-col-title">Guidelines & Notes</div>
+                <p style="margin: 0; font-size: 0.85rem;">${item.notes}</p>
+              </div>
+              <div>
+                <div class="details-col-title">Suggested File naming</div>
+                <p style="font-size: 0.8rem; margin-bottom: 0.5rem; color: var(--text-tertiary);">Folder: <strong style="color:var(--text-secondary); font-family: monospace;">${item.folder}/</strong></p>
+                <div class="details-naming-block">
+                  <span>${item.template}</span>
+                  <button class="details-copy-btn" onclick="copyTextToClipboard('${item.template}')" title="Copy template">
+                    <svg viewBox="0 0 24 24" stroke="currentColor"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        container.appendChild(row);
+      });
+    }
+
+    // Toggle expand row
+    function toggleExpandRow(itemId) {
+      const detailEl = document.getElementById(`detail-${itemId}`);
+      const btnEl = document.getElementById(`btn-exp-${itemId}`);
+      
+      if (detailEl.classList.contains('active')) {
+        detailEl.classList.remove('active');
+        btnEl.classList.remove('expanded');
+      } else {
+        detailEl.classList.add('active');
+        btnEl.classList.add('expanded');
+      }
+    }
+
+    // ─── UPDATE PROGRESS STATS ────────────────────────────────────────
+    function updateProgressUI() {
+      const totalCount = checklistData.length;
+      const checkedCount = completedItems.length;
+      const percent = totalCount > 0 ? Math.round((checkedCount / totalCount) * 100) : 0;
+      
+      // Calculate high priority progress
+      const highPriorityItems = checklistData.filter(i => i.priority === 'high');
+      const highTotalCount = highPriorityItems.length;
+      const highCheckedCount = highPriorityItems.filter(i => completedItems.includes(i.id)).length;
+      const highPercent = highTotalCount > 0 ? Math.round((highCheckedCount / highTotalCount) * 100) : 0;
+
+      // Update Sidebar Widget
+      document.getElementById('sidebarPercent').innerText = `${percent}%`;
+      document.getElementById('sidebarBarFill').style.width = `${percent}%`;
+      document.getElementById('sidebarCheckedCount').innerText = `${checkedCount} completed`;
+      document.getElementById('sidebarTotalCount').innerText = `${totalCount} total`;
+
+      // Update Dashboard Stats
+      document.getElementById('dashPercent').innerText = `${percent}%`;
+      document.getElementById('dashHighPercent').innerText = `${highPercent}%`;
+      document.getElementById('dashHighCount').innerText = `${highCheckedCount} / ${highTotalCount} completed`;
+      document.getElementById('dashTotalChecked').innerText = checkedCount;
+      document.getElementById('dashTotalCountText').innerText = `out of ${totalCount} items`;
+    }
+
+    // ─── FILENAME GENERATOR LOGIC ─────────────────────────────────────
+    function generateFilename() {
+      const category = document.getElementById('genCategory').value;
+      let design = document.getElementById('genDesign').value;
+      const angle = document.getElementById('genAngle').value;
+      const format = document.getElementById('genFormat').value;
+
+      // Format design text: lowercase, trim, replace spaces & special chars with hyphens
+      design = design.toLowerCase().trim()
+        .replace(/[^a-z0-9\s-]/g, '') // remove special characters
+        .replace(/[\s_]+/g, '-')      // replace spaces and underscores with hyphens
+        .replace(/-+/g, '-');          // collapse multiple hyphens
+
+      if (!design) {
+        design = 'unnamed';
+      }
+
+      const filename = `${category}-${design}-${angle}.${format}`;
+      document.getElementById('generatedFilename').innerText = filename;
+    }
+
+    // Copy Utility
+    function copyTextToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast();
+      }).catch(err => {
+        console.error('Could not copy text: ', err);
+      });
+    }
+
+    // Show toast notification
+    function showToast() {
+      const toast = document.getElementById('copyToast');
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2000);
+    }
+
+    // Reset progress
+    function resetProgress() {
+      if (confirm('Are you sure you want to reset all checklist progress? This cannot be undone.')) {
+        completedItems = [];
+        saveState();
+        renderChecklist();
+        alert('Checklist has been reset.');
+      }
+    }
+
+    // Export progress as text summary
+    function exportProgress() {
+      const highItems = checklistData.filter(i => i.priority === 'high');
+      const medItems = checklistData.filter(i => i.priority === 'medium');
+      const lowItems = checklistData.filter(i => i.priority === 'low');
+      
+      let text = `RETROFIT CREATIONS PHOTOSHOOT PROGRESS SUMMARY\n`;
+      text += `Generated on: ${new Date().toLocaleDateString()}\n`;
+      text += `Overall completion: ${completedItems.length} / ${checklistData.length} items (${Math.round((completedItems.length / checklistData.length) * 100)}%)\n`;
+      text += `==========================================\n\n`;
+
+      const formatSection = (title, items) => {
+        let sect = `--- ${title} ---\n`;
+        items.forEach(item => {
+          const done = completedItems.includes(item.id) ? '[x]' : '[ ]';
+          sect += `${done} ${item.title} (${item.qty}) - Template: ${item.template}\n`;
+        });
+        return sect + '\n';
+      };
+
+      text += formatSection('HIGH PRIORITY', highItems);
+      text += formatSection('MEDIUM PRIORITY', medItems);
+      text += formatSection('LOW PRIORITY', lowItems);
+
+      // Create downloadable file
+      const blob = new Blob([text], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `retrofit-photoshoot-progress-${new Date().toISOString().slice(0, 10)}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>

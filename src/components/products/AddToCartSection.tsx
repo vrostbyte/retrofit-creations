@@ -12,6 +12,10 @@ import Button from "@/components/ui/Button";
 
 interface AddToCartSectionProps {
   isCustomizable: boolean;
+  // Reserved for Phase 2B cart wiring
+  productId?: string;
+  productName?: string;
+  productPrice?: number;
 }
 
 export default function AddToCartSection({ isCustomizable }: AddToCartSectionProps) {

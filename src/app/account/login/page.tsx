@@ -1,21 +1,46 @@
 /*
-  Login page — light-body theme (PRD v1.2.0).
-  White card on white background — defined with a border and subtle shadow.
+  Login page — wired to Supabase Auth (Phase 2A).
+  Light-body theme (PRD v1.2.0).
 */
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
+import { createClient } from "@/lib/supabase/client";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Auth will be wired in Phase 2. Form captured: " + email);
+    setLoading(true);
+    setError("");
+
+    const supabase = createClient();
+    const { error: authError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (authError) {
+      setError(
+        authError.message === "Invalid login credentials"
+          ? "Incorrect email or password. Please try again."
+          : authError.message
+      );
+      setLoading(false);
+    } else {
+      // Refresh the page so the server-side session is picked up
+      router.push("/account");
+      router.refresh();
+    }
   };
 
   return (
@@ -29,15 +54,56 @@ export default function LoginPage() {
             Welcome back to Retrofit Creations
           </p>
 
+          {/* Show login error if credentials are wrong */}
+          {error && (
+            <div className="mb-5 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm font-body">
+              {error}
+            </div>
+          )}
+
+          {/* Show success after email confirmation redirect */}
+          {typeof window !== "undefined" &&
+            new URLSearchParams(window.location.search).get("confirmed") && (
+              <div className="mb-5 p-3 bg-green-50 border border-green-200 rounded-lg text-green-700 text-sm font-body">
+                Email confirmed! You can now sign in.
+              </div>
+            )}
+
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-            <Input label="Email Address" name="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" required />
+            <Input
+              label="Email Address"
+              name="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@example.com"
+              required
+            />
             <div className="flex flex-col gap-1.5">
-              <Input label="Password" name="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" required />
-              <Link href="/account/forgot-password" className="text-xs text-brand-blue hover:underline text-right font-body">
+              <Input
+                label="Password"
+                name="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                required
+              />
+              <Link
+                href="/account/forgot-password"
+                className="text-xs text-brand-blue hover:underline text-right font-body"
+              >
                 Forgot password?
               </Link>
             </div>
-            <Button type="submit" variant="primary" size="lg">Sign In</Button>
+            <Button
+              type="submit"
+              variant="primary"
+              size="lg"
+              disabled={loading}
+            >
+              {loading ? "Signing in…" : "Sign In"}
+            </Button>
           </form>
 
           <div className="relative my-6">
@@ -65,7 +131,12 @@ export default function LoginPage() {
 
           <p className="text-center text-sm text-gray-500 font-body mt-6">
             Don&apos;t have an account?{" "}
-            <Link href="/account/signup" className="text-brand-blue hover:underline font-semibold">Create one</Link>
+            <Link
+              href="/account/signup"
+              className="text-brand-blue hover:underline font-semibold"
+            >
+              Create one
+            </Link>
           </p>
         </div>
       </div>

@@ -1,183 +1,198 @@
 /*
-  Products page — light-body theme (PRD v1.2.0).
-  White background, dark text, light gray cards, gray borders.
+  Products page — Phase 2A: data loaded from Supabase.
+  Converted from client-side useState filtering to URL-param-based
+  server-side filtering. ProductFilters handles the interactive UI.
+  Light-body theme (PRD v1.2.0).
 */
-"use client";
-
-import { useState, useMemo } from "react";
+import { Suspense } from "react";
+import Link from "next/link";
 import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
 import SectionHeading from "@/components/ui/SectionHeading";
 import StarRating from "@/components/ui/StarRating";
+import ProductFilters from "@/components/products/ProductFilters";
+import { createClient } from "@/lib/supabase/server";
+import type { ProductWithDetails } from "@/types/database";
 
-const CATEGORIES = [
-  { slug: "all", label: "All Products" },
-  { slug: "zyn-tins", label: "Custom Zyn Tins" },
-  { slug: "laser-engraved", label: "Laser Engraved" },
-  { slug: "automotive-parts", label: "Automotive Parts" },
-  { slug: "event-vendor", label: "Event / Vendor" },
-  { slug: "personalized-gifts", label: "Personalized Gifts" },
-  { slug: "3d-printed", label: "3D Printed Parts" },
-];
+interface PageProps {
+  searchParams: Promise<{
+    category?: string;
+    search?: string;
+    sort?: string;
+  }>;
+}
 
-type SortKey = "popular" | "newest" | "price-asc" | "price-desc" | "name-az";
+export const metadata = {
+  title: "Products — Retrofit Creations",
+  description: "Shop custom 3D printed parts, laser engraved items, Zyn tins, and more.",
+};
 
-const SORT_OPTIONS: { value: SortKey; label: string }[] = [
-  { value: "popular", label: "Most Popular" },
-  { value: "newest", label: "Newest" },
-  { value: "price-asc", label: "Price: Low → High" },
-  { value: "price-desc", label: "Price: High → Low" },
-  { value: "name-az", label: "Name: A → Z" },
-];
+async function fetchProducts(params: {
+  category?: string;
+  search?: string;
+  sort?: string;
+}) {
+  const supabase = await createClient();
 
-const PRODUCTS = [
-  { slug: "custom-dash-bracket-69-camaro", name: "Custom 3D Printed Dash Bracket — '69 Camaro", price: 48.00, category: "automotive-parts", rating: 5, reviews: 12, isCustomizable: false },
-  { slug: "laser-engraved-keychain-v8", name: "Laser Engraved Keychain — V8 Engine Block", price: 18.00, category: "laser-engraved", rating: 5, reviews: 34, isCustomizable: true },
-  { slug: "custom-zyn-tin-car-club", name: "Custom Zyn Tin — Car Club Logo", price: 24.00, category: "zyn-tins", rating: 5, reviews: 22, isCustomizable: true },
-  { slug: "3d-printed-cup-holder-insert-bronco", name: "3D Printed Cup Holder Insert — Ford Bronco", price: 35.00, category: "3d-printed", rating: 4, reviews: 8, isCustomizable: false },
-  { slug: "laser-engraved-wallet-card", name: "Laser Engraved Wallet Card — Custom Text", price: 15.00, category: "personalized-gifts", rating: 5, reviews: 41, isCustomizable: true },
-  { slug: "car-show-vendor-display-stand", name: "3D Printed Car Show Display Stand", price: 65.00, category: "event-vendor", rating: 4, reviews: 7, isCustomizable: false },
-  { slug: "custom-emblem-muscle-car", name: "Custom 3D Printed Emblem — Muscle Car Style", price: 42.00, category: "automotive-parts", rating: 5, reviews: 19, isCustomizable: true },
-  { slug: "laser-engraved-wood-keychain", name: "Laser Engraved Wood Keychain — Custom Name", price: 14.00, category: "laser-engraved", rating: 5, reviews: 56, isCustomizable: true },
-  { slug: "zyn-tin-custom-design", name: "Custom Zyn Tin — Personalized Design", price: 22.00, category: "zyn-tins", rating: 4, reviews: 15, isCustomizable: true },
-  { slug: "3d-printed-phone-mount-dash", name: "3D Printed Dash Phone Mount — Universal Fit", price: 28.00, category: "3d-printed", rating: 4, reviews: 11, isCustomizable: false },
-  { slug: "acrylic-laser-engraved-sign", name: "Laser Engraved Acrylic Sign — Custom Text", price: 38.00, category: "personalized-gifts", rating: 5, reviews: 29, isCustomizable: true },
-  { slug: "vendor-badge-holder-event", name: "3D Printed Vendor Badge Holder — Event Ready", price: 18.00, category: "event-vendor", rating: 4, reviews: 6, isCustomizable: false },
-];
+  // Build the query — select product + category name + images
+  let query = supabase
+    .from("products")
+    .select("*, product_categories(*), product_images(*)")
+    .eq("is_active", true);
 
-export default function ProductsPage() {
-  const [activeCategory, setActiveCategory] = useState("all");
-  const [search, setSearch] = useState("");
-  const [sort, setSort] = useState<SortKey>("popular");
+  // Filter by category if one is selected
+  if (params.category && params.category !== "all") {
+    const { data: cat } = await supabase
+      .from("product_categories")
+      .select("id")
+      .eq("slug", params.category)
+      .single();
+    if (cat) query = query.eq("category_id", cat.id);
+  }
 
-  const filtered = useMemo(() => {
-    let list = [...PRODUCTS];
-    if (activeCategory !== "all") list = list.filter((p) => p.category === activeCategory);
-    if (search.trim()) {
-      const q = search.toLowerCase();
-      list = list.filter((p) => p.name.toLowerCase().includes(q));
-    }
-    switch (sort) {
-      case "price-asc":  list.sort((a, b) => a.price - b.price); break;
-      case "price-desc": list.sort((a, b) => b.price - a.price); break;
-      case "name-az":    list.sort((a, b) => a.name.localeCompare(b.name)); break;
-      case "newest":     list.reverse(); break;
-      default:           list.sort((a, b) => b.reviews - a.reviews);
-    }
-    return list;
-  }, [activeCategory, search, sort]);
+  // Full-text search across name and description
+  if (params.search?.trim()) {
+    query = query.or(
+      `name.ilike.%${params.search}%,description.ilike.%${params.search}%`
+    );
+  }
+
+  // Sort order
+  switch (params.sort) {
+    case "price-asc":
+      query = query.order("price", { ascending: true });
+      break;
+    case "price-desc":
+      query = query.order("price", { ascending: false });
+      break;
+    case "name-az":
+      query = query.order("name", { ascending: true });
+      break;
+    default:
+      // "newest" — most recently added first
+      query = query.order("created_at", { ascending: false });
+  }
+
+  const { data, error } = await query;
+  if (error) {
+    console.error("Products fetch error:", error.message);
+    return [];
+  }
+  return (data ?? []) as ProductWithDetails[];
+}
+
+export default async function ProductsPage({ searchParams }: PageProps) {
+  const params = await searchParams;
+  const supabase = await createClient();
+
+  // Fetch categories and products in parallel
+  const [categoriesResult, products] = await Promise.all([
+    supabase.from("product_categories").select("*").order("display_order"),
+    fetchProducts(params),
+  ]);
+
+  const categories = categoriesResult.data ?? [];
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <SectionHeading
-        title="Products"
-        subtitle="Custom fabricated pieces for enthusiasts who demand the best."
+        title="Our Products"
+        subtitle="Precision crafted custom parts, engraved items, and personalized goods — all made to order."
         className="mb-10"
       />
 
-      {/* Category chips */}
-      <div className="flex flex-wrap gap-2 mb-4">
-        {CATEGORIES.map((cat) => (
-          <button
-            key={cat.slug}
-            onClick={() => setActiveCategory(cat.slug)}
-            className={`px-4 py-2 rounded-full text-sm font-heading font-semibold uppercase tracking-wider transition-all duration-200 border
-              ${activeCategory === cat.slug
-                ? "bg-brand-blue text-white border-brand-blue"
-                : "bg-white text-gray-600 border-[#E8E8E8] hover:border-brand-blue/40 hover:text-brand-blue"
-              }`}
-          >
-            {cat.label}
-          </button>
-        ))}
-      </div>
+      {/*
+        ProductFilters uses useSearchParams() which needs a Suspense boundary.
+        The fallback shows a skeleton while the client component hydrates.
+      */}
+      <Suspense fallback={<div className="h-28 animate-pulse bg-[#F8F8F8] rounded-lg mb-8" />}>
+        <ProductFilters categories={categories} totalCount={products.length} />
+      </Suspense>
 
-      {/* Search + Sort */}
-      <div className="flex flex-col sm:flex-row gap-3 mb-6">
-        <div className="relative flex-1">
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search products..."
-            aria-label="Search products"
-            className="w-full bg-white text-black border border-[#E8E8E8] rounded-md px-4 py-2.5 pl-10
-              placeholder-gray-400 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-colors text-sm"
-          />
-          <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
-        </div>
-        <select
-          value={sort}
-          onChange={(e) => setSort(e.target.value as SortKey)}
-          aria-label="Sort products"
-          className="bg-white text-black border border-[#E8E8E8] rounded-md px-4 py-2.5 text-sm
-            focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-colors appearance-none cursor-pointer min-w-[180px]"
-        >
-          {SORT_OPTIONS.map((opt) => (
-            <option key={opt.value} value={opt.value}>{opt.label}</option>
-          ))}
-        </select>
-      </div>
-
-      <p className="text-gray-500 text-sm mb-6 font-body">
-        {filtered.length} product{filtered.length !== 1 ? "s" : ""}
-        {activeCategory !== "all" && ` in ${CATEGORIES.find(c => c.slug === activeCategory)?.label}`}
-      </p>
-
-      {/* Product Grid */}
-      {filtered.length === 0 ? (
-        <div className="text-center py-20 text-gray-500">
-          <p className="font-heading uppercase tracking-widest text-lg mb-2">No products found</p>
-          <p className="text-sm">Try a different category or search term.</p>
+      {/* Product grid */}
+      {products.length === 0 ? (
+        <div className="text-center py-20">
+          <p className="text-gray-500 font-body text-lg mb-4">No products found.</p>
+          <Button variant="secondary" href="/products">Clear filters</Button>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filtered.map((product) => {
-            const categoryLabel = CATEGORIES.find(c => c.slug === product.category)?.label ?? product.category;
+          {products.map((product) => {
+            const primaryImage =
+              product.product_images?.find((img) => img.is_primary) ??
+              product.product_images?.[0];
+
             return (
-              <Card key={product.slug} className="flex flex-col overflow-hidden">
+              <Card key={product.id} className="group flex flex-col">
                 {/* Product image placeholder */}
-                <div className="w-full h-48 bg-gray-100 flex items-center justify-center border-b border-[#E8E8E8] relative">
-                  <div className="text-center">
-                    <div className="w-12 h-12 border border-gray-200 rounded-full flex items-center justify-center mx-auto mb-2">
-                      <svg className="w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                    </div>
-                    <span className="text-[10px] text-gray-400 font-heading uppercase tracking-wider">Photo Coming Soon</span>
-                  </div>
-                  {product.isCustomizable && (
-                    <span className="absolute top-2 left-2 text-[10px] bg-brand-blue/10 text-brand-blue border border-brand-blue/20 px-2 py-0.5 rounded font-heading uppercase tracking-wider">
-                      Customizable
-                    </span>
+                <div className="aspect-square bg-[#F8F8F8] rounded-lg mb-4 flex items-center justify-center overflow-hidden border border-[#E8E8E8]">
+                  {primaryImage ? (
+                    <img
+                      src={primaryImage.url}
+                      alt={primaryImage.alt_text ?? product.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  ) : (
+                    <svg
+                      className="w-16 h-16 text-gray-300"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={1}
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                    </svg>
                   )}
                 </div>
 
-                <div className="p-4 flex flex-col flex-1 gap-2">
-                  <Badge variant="outline">{categoryLabel}</Badge>
-                  <h3 className="font-heading font-semibold uppercase tracking-wide text-black text-sm leading-snug flex-1">
+                {/* Info */}
+                <div className="flex flex-col flex-1">
+                  {product.product_categories && (
+                    <Badge variant="outline" className="self-start mb-2 text-xs">
+                      {product.product_categories.name}
+                    </Badge>
+                  )}
+
+                  <h3 className="font-heading font-semibold text-black text-sm leading-snug mb-1 line-clamp-2">
                     {product.name}
                   </h3>
-                  <div className="flex items-center gap-2">
-                    <StarRating rating={product.rating} size="sm" />
-                    <span className="text-gray-500 text-xs">({product.reviews})</span>
+
+                  {product.short_description && (
+                    <p className="text-xs text-gray-500 font-body mb-3 line-clamp-2">
+                      {product.short_description}
+                    </p>
+                  )}
+
+                  <div className="flex items-center gap-1 mb-3">
+                    <StarRating rating={5} size="sm" />
                   </div>
-                  <div className="flex items-center justify-between mt-1">
-                    <span className="font-heading font-bold text-lg text-black">
-                      ${product.price.toFixed(2)}
-                    </span>
+
+                  <div className="flex items-center justify-between mt-auto pt-3 border-t border-[#E8E8E8]">
+                    <div>
+                      <span className="font-heading font-bold text-black text-lg">
+                        ${product.price.toFixed(2)}
+                      </span>
+                      {product.compare_at_price && (
+                        <span className="text-xs text-gray-400 line-through ml-2 font-body">
+                          ${product.compare_at_price.toFixed(2)}
+                        </span>
+                      )}
+                    </div>
+                    {product.is_customizable && (
+                      <Badge variant="default" className="text-xs">Custom</Badge>
+                    )}
                   </div>
-                  <div className="flex gap-2 mt-2">
-                    <Button variant="secondary" size="sm" href={`/products/${product.slug}`} className="flex-1 text-xs">
-                      View
-                    </Button>
-                    <Button variant="primary" size="sm" className="flex-1 text-xs">
-                      Add to Cart
-                    </Button>
-                  </div>
+                </div>
+
+                {/* Actions */}
+                <div className="mt-4">
+                  <Link
+                    href={`/products/${product.slug}`}
+                    className="block w-full text-center py-2 px-3 bg-brand-blue text-white rounded-md text-sm font-heading font-semibold uppercase tracking-wide hover:opacity-90 transition-opacity"
+                  >
+                    View Details
+                  </Link>
                 </div>
               </Card>
             );

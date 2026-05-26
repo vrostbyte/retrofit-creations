@@ -23,6 +23,7 @@ interface TextInputProps extends BaseProps {
   multiple?: boolean;
   min?: string | number;
   max?: string | number;
+  step?: string | number;
 }
 
 interface TextareaProps extends BaseProps {
@@ -131,6 +132,7 @@ export default function Input(props: InputProps) {
         required={required}
         min={props.min}
         max={props.max}
+        step={props.step}
         className={fieldClasses}
         aria-invalid={!!error}
         aria-describedby={error ? `${name}-error` : undefined}
