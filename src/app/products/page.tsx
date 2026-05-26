@@ -12,6 +12,7 @@ import Button from "@/components/ui/Button";
 import SectionHeading from "@/components/ui/SectionHeading";
 import StarRating from "@/components/ui/StarRating";
 import ProductFilters from "@/components/products/ProductFilters";
+import AddToCartButton from "@/components/products/AddToCartButton";
 import { createClient } from "@/lib/supabase/server";
 import type { ProductWithDetails } from "@/types/database";
 
@@ -186,13 +187,20 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                 </div>
 
                 {/* Actions */}
-                <div className="mt-4">
+                <div className="flex gap-2 mt-4">
                   <Link
                     href={`/products/${product.slug}`}
-                    className="block w-full text-center py-2 px-3 bg-brand-blue text-white rounded-md text-sm font-heading font-semibold uppercase tracking-wide hover:opacity-90 transition-opacity"
+                    className="flex-1 text-center py-2 px-3 border border-[#E8E8E8] rounded-md text-sm font-heading font-semibold uppercase tracking-wide text-gray-700 hover:border-brand-blue/40 hover:text-brand-blue transition-colors"
                   >
-                    View Details
+                    Details
                   </Link>
+                  <AddToCartButton
+                    productId={product.id}
+                    productName={product.name}
+                    productPrice={Number(product.price)}
+                    slug={product.slug}
+                    imageUrl={primaryImage?.url}
+                  />
                 </div>
               </Card>
             );

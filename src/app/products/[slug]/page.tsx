@@ -195,8 +195,10 @@ export default async function ProductDetailPage({ params }: PageProps) {
           <AddToCartSection
             productId={p.id}
             productName={p.name}
-            productPrice={p.price}
+            productPrice={Number(p.price)}
             isCustomizable={p.is_customizable}
+            slug={p.slug}
+            imageUrl={sortedImages[0]?.url}
           />
 
           {/* Custom work CTA */}

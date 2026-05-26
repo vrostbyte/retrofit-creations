@@ -1,11 +1,9 @@
 /*
-  Header — sticky top navigation bar with live auth state.
+  Header — sticky top navigation bar with live auth + cart state.
 
-  Phase 2A changes:
-    - Shows user's initials/name when logged in
-    - Shows "Sign In" link when logged out
-    - Shows "Admin" nav link for admin users
-    - Logout button in user dropdown
+  Phase 2B changes:
+    - Cart badge shows real item count from CartContext
+    - Cart icon click opens CartDrawer (via context)
 */
 "use client";
 
@@ -15,6 +13,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import MobileMenu from "./MobileMenu";
 import { createClient } from "@/lib/supabase/client";
+import { useCart } from "@/lib/cart/CartContext";
 import type { User } from "@supabase/supabase-js";
 
 const navLinks = [
@@ -37,20 +36,18 @@ export default function Header() {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
 
+  // Get cart state from context
+  const { getCartCount, setCartOpen } = useCart();
+  const cartCount = getCartCount();
+
   // Subscribe to auth state changes
   useEffect(() => {
     const supabase = createClient();
-
-    // Get initial session
     supabase.auth.getUser().then(({ data: { user } }) => {
       setUser(user);
       if (user) checkAdminRole(user.id);
     });
-
-    // Listen for login/logout events
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       const currentUser = session?.user ?? null;
       setUser(currentUser);
       if (currentUser) {
@@ -59,7 +56,6 @@ export default function Header() {
         setIsAdmin(false);
       }
     });
-
     return () => subscription.unsubscribe();
   }, []);
 
@@ -76,10 +72,7 @@ export default function Header() {
   // Close user menu when clicking outside
   useEffect(() => {
     const handler = (e: MouseEvent) => {
-      if (
-        userMenuRef.current &&
-        !userMenuRef.current.contains(e.target as Node)
-      ) {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
         setUserMenuOpen(false);
       }
     };
@@ -102,14 +95,8 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Get user initials for the avatar button
   const userInitials = user?.user_metadata?.full_name
-    ? user.user_metadata.full_name
-        .split(" ")
-        .map((n: string) => n[0])
-        .join("")
-        .toUpperCase()
-        .slice(0, 2)
+    ? user.user_metadata.full_name.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2)
     : user?.email?.slice(0, 2).toUpperCase() ?? "??";
 
   return (
@@ -142,42 +129,31 @@ export default function Header() {
                     key={href}
                     href={href}
                     className={`px-3 py-2 font-heading font-semibold text-sm uppercase tracking-widest rounded transition-colors duration-200
-                      ${isActive
-                        ? "text-brand-blue"
-                        : "text-zinc-300 hover:text-brand-blue"
-                      }`}
+                      ${isActive ? "text-brand-blue" : "text-zinc-300 hover:text-brand-blue"}`}
                   >
                     {label}
-                    {isActive && (
-                      <span className="block h-0.5 bg-brand-blue mt-0.5 rounded-full" />
-                    )}
+                    {isActive && <span className="block h-0.5 bg-brand-blue mt-0.5 rounded-full" />}
                   </Link>
                 );
               })}
-              {/* Admin link — only visible to admin users */}
               {isAdmin && (
                 <Link
                   href="/admin"
                   className={`px-3 py-2 font-heading font-semibold text-sm uppercase tracking-widest rounded transition-colors duration-200
-                    ${pathname.startsWith("/admin")
-                      ? "text-brand-blue"
-                      : "text-zinc-300 hover:text-brand-blue"
-                    }`}
+                    ${pathname.startsWith("/admin") ? "text-brand-blue" : "text-zinc-300 hover:text-brand-blue"}`}
                 >
                   Admin
-                  {pathname.startsWith("/admin") && (
-                    <span className="block h-0.5 bg-brand-blue mt-0.5 rounded-full" />
-                  )}
+                  {pathname.startsWith("/admin") && <span className="block h-0.5 bg-brand-blue mt-0.5 rounded-full" />}
                 </Link>
               )}
             </nav>
 
             {/* ── Right Controls ───────────────────────────────── */}
             <div className="flex items-center gap-2">
-              {/* Cart */}
-              <Link
-                href="/cart"
-                aria-label="Shopping cart"
+              {/* Cart icon — opens CartDrawer, badge shows real item count */}
+              <button
+                onClick={() => setCartOpen(true)}
+                aria-label={`Shopping cart — ${cartCount} ${cartCount === 1 ? "item" : "items"}`}
                 className="relative p-2 text-zinc-300 hover:text-brand-blue transition-colors rounded"
               >
                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -185,10 +161,15 @@ export default function Header() {
                     d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
                   />
                 </svg>
-                <span className="absolute -top-1 -right-1 w-4 h-4 bg-brand-blue text-white text-[10px] font-bold rounded-full flex items-center justify-center leading-none">
-                  0
+                {/* Cart count badge — only show when there are items */}
+                <span
+                  className={`absolute -top-1 -right-1 w-4 h-4 bg-brand-blue text-white text-[10px] font-bold rounded-full flex items-center justify-center leading-none transition-all
+                    ${cartCount > 0 ? "opacity-100 scale-100" : "opacity-0 scale-0"}`}
+                  aria-hidden="true"
+                >
+                  {cartCount > 9 ? "9+" : cartCount}
                 </span>
-              </Link>
+              </button>
 
               {/* Auth: user menu (logged in) or sign in link (logged out) */}
               {user ? (
@@ -201,49 +182,30 @@ export default function Header() {
                   >
                     {userInitials}
                   </button>
-
-                  {/* Dropdown */}
                   {userMenuOpen && (
                     <div className="absolute right-0 mt-2 w-48 bg-white border border-[#E8E8E8] rounded-lg shadow-lg py-1 z-50">
                       <div className="px-3 py-2 border-b border-[#E8E8E8]">
                         <p className="text-xs text-gray-400 font-body">Signed in as</p>
                         <p className="text-sm font-semibold text-black font-body truncate">{user.email}</p>
                       </div>
-                      <Link
-                        href="/account"
-                        className="block px-3 py-2 text-sm text-gray-700 hover:text-brand-blue hover:bg-[#F8F8F8] font-body transition-colors"
-                        onClick={() => setUserMenuOpen(false)}
-                      >
+                      <Link href="/account" className="block px-3 py-2 text-sm text-gray-700 hover:text-brand-blue hover:bg-[#F8F8F8] font-body transition-colors" onClick={() => setUserMenuOpen(false)}>
                         My Account
                       </Link>
                       {isAdmin && (
-                        <Link
-                          href="/admin"
-                          className="block px-3 py-2 text-sm text-gray-700 hover:text-brand-blue hover:bg-[#F8F8F8] font-body transition-colors"
-                          onClick={() => setUserMenuOpen(false)}
-                        >
+                        <Link href="/admin" className="block px-3 py-2 text-sm text-gray-700 hover:text-brand-blue hover:bg-[#F8F8F8] font-body transition-colors" onClick={() => setUserMenuOpen(false)}>
                           Admin Panel
                         </Link>
                       )}
-                      <button
-                        onClick={handleLogout}
-                        className="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50 font-body transition-colors"
-                      >
+                      <button onClick={handleLogout} className="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50 font-body transition-colors">
                         Sign Out
                       </button>
                     </div>
                   )}
                 </div>
               ) : (
-                <Link
-                  href="/account/login"
-                  aria-label="Sign in"
-                  className="p-2 text-zinc-300 hover:text-brand-blue transition-colors rounded"
-                >
+                <Link href="/account/login" aria-label="Sign in" className="p-2 text-zinc-300 hover:text-brand-blue transition-colors rounded">
                   <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round"
-                      d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-                    />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                   </svg>
                 </Link>
               )}
@@ -260,7 +222,6 @@ export default function Header() {
                 </svg>
               </button>
             </div>
-
           </div>
         </div>
       </header>

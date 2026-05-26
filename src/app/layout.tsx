@@ -11,6 +11,8 @@ import { Oswald, Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { CartProvider } from "@/lib/cart/CartContext";
+import CartDrawer from "@/components/checkout/CartDrawer";
 
 /* Oswald — condensed industrial feel for all headings */
 const oswald = Oswald({
@@ -80,10 +82,17 @@ export default function RootLayout({
     >
       {/* Light body theme (PRD v1.2.0) — header/footer are the only black elements */}
       <body className="min-h-screen flex flex-col bg-white text-black font-body antialiased">
-        <Header />
-        {/* Pages render here — flex-1 makes the content fill available space */}
-        <main className="flex-1">{children}</main>
-        <Footer />
+        {/*
+          CartProvider wraps everything so any component can call useCart().
+          CartDrawer is rendered here (at the root) so it can overlay any page.
+        */}
+        <CartProvider>
+          <Header />
+          <CartDrawer />
+          {/* Pages render here — flex-1 makes the content fill available space */}
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </CartProvider>
       </body>
     </html>
   );
