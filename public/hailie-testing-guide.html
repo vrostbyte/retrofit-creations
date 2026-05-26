@@ -356,37 +356,98 @@
 
 <div class="container">
 
-  <!-- ACCESS REQUIREMENTS — TOP PRIORITY -->
-  <div style="background:#000;color:#fff;border-radius:16px;padding:28px;margin-bottom:24px;">
-    <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#0062FF;margin-bottom:10px;">Step 1 — Before Anything Else</p>
-    <h2 style="font-family:'Oswald','Impact',sans-serif;font-size:20px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px;">How to Access the Site</h2>
+  <!-- STEP 0 — DO THIS FIRST -->
+  <div style="background:#000;color:#fff;border-radius:16px;padding:28px;margin-bottom:24px;border:2px solid #0062FF;">
 
-    <div style="background:#111;border-radius:10px;padding:16px;margin-bottom:14px;">
-      <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#9CA3AF;margin-bottom:6px;">Primary URL (use this one)</p>
-      <a href="https://retrofitcreations.com" target="_blank"
-         style="font-size:18px;font-weight:700;color:#0062FF;text-decoration:none;letter-spacing:0.02em;word-break:break-all;">
-        https://retrofitcreations.com
-      </a>
-      <p style="font-size:12px;color:#6B7280;margin-top:6px;">⏱ If this still shows a Squarespace page, DNS is still propagating — wait 15–30 minutes and try again. This is normal.</p>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+      <div style="background:#0062FF;color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;flex-shrink:0;">!</div>
+      <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#0062FF;">Do This Before Anything Else</p>
     </div>
 
-    <div style="background:#111;border-radius:10px;padding:16px;margin-bottom:14px;">
-      <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#9CA3AF;margin-bottom:6px;">Backup URL (works right now, always)</p>
+    <h2 style="font-family:'Oswald','Impact',sans-serif;font-size:22px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;">Point the Domain to the New Site</h2>
+    <p style="font-size:13px;color:#9CA3AF;margin-bottom:22px;">The website is built and ready. Right now <strong style="color:#fff;">retrofitcreations.com</strong> still shows your old Squarespace page. You need to update two DNS records in Cloudflare to connect it to the new site. This takes about 5 minutes, then up to 30 minutes to go live.</p>
+
+    <!-- Step 1 -->
+    <div style="background:#111;border-radius:12px;padding:18px;margin-bottom:12px;">
+      <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#0062FF;margin-bottom:10px;">Step 1 — Log into Cloudflare</p>
+      <ol style="list-style:none;display:flex;flex-direction:column;gap:8px;">
+        <li style="font-size:13px;color:#E5E7EB;display:flex;gap:10px;">
+          <span style="background:#0062FF;color:#fff;width:20px;height:20px;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">1</span>
+          Go to <a href="https://dash.cloudflare.com" target="_blank" style="color:#60a5fa;text-decoration:none;font-weight:600;">dash.cloudflare.com</a> and log in with the Retrofit Creations account
+        </li>
+        <li style="font-size:13px;color:#E5E7EB;display:flex;gap:10px;">
+          <span style="background:#0062FF;color:#fff;width:20px;height:20px;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">2</span>
+          Click on <strong style="color:#fff;">retrofitcreations.com</strong> from your list of domains
+        </li>
+        <li style="font-size:13px;color:#E5E7EB;display:flex;gap:10px;">
+          <span style="background:#0062FF;color:#fff;width:20px;height:20px;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">3</span>
+          In the left sidebar, click <strong style="color:#fff;">DNS</strong> → then <strong style="color:#fff;">Records</strong>
+        </li>
+      </ol>
+    </div>
+
+    <!-- Step 2 -->
+    <div style="background:#111;border-radius:12px;padding:18px;margin-bottom:12px;">
+      <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#0062FF;margin-bottom:10px;">Step 2 — Add or Update These Two Records</p>
+      <p style="font-size:12px;color:#9CA3AF;margin-bottom:12px;">Look for existing <strong style="color:#fff;">CNAME</strong> or <strong style="color:#fff;">A</strong> records for <code style="background:#1f2937;padding:2px 6px;border-radius:4px;font-size:12px;">@</code> and <code style="background:#1f2937;padding:2px 6px;border-radius:4px;font-size:12px;">www</code>. If they exist, edit them. If not, click <strong style="color:#fff;">Add record</strong>.</p>
+
+      <!-- Record 1 -->
+      <div style="background:#0a0a0a;border:1px solid #374151;border-radius:10px;padding:14px;margin-bottom:10px;">
+        <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#9CA3AF;margin-bottom:10px;">Record 1 of 2 — the main domain</p>
+        <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 16px;align-items:center;">
+          <span style="font-size:11px;color:#6B7280;text-transform:uppercase;font-weight:700;letter-spacing:0.08em;">Type</span>
+          <span style="font-size:14px;color:#fff;font-weight:700;font-family:monospace;">CNAME</span>
+          <span style="font-size:11px;color:#6B7280;text-transform:uppercase;font-weight:700;letter-spacing:0.08em;">Name</span>
+          <span style="font-size:14px;color:#fff;font-weight:700;font-family:monospace;">@</span>
+          <span style="font-size:11px;color:#6B7280;text-transform:uppercase;font-weight:700;letter-spacing:0.08em;">Target</span>
+          <span style="font-size:12px;color:#60a5fa;font-weight:700;font-family:monospace;word-break:break-all;">e98a967ce375ebf8.vercel-dns-017.com</span>
+          <span style="font-size:11px;color:#6B7280;text-transform:uppercase;font-weight:700;letter-spacing:0.08em;">Proxy</span>
+          <span style="font-size:13px;font-weight:700;color:#F59E0B;">⚠️ OFF — make sure the orange cloud is GRAY (click it to toggle off)</span>
+        </div>
+      </div>
+
+      <!-- Record 2 -->
+      <div style="background:#0a0a0a;border:1px solid #374151;border-radius:10px;padding:14px;">
+        <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#9CA3AF;margin-bottom:10px;">Record 2 of 2 — the www version</p>
+        <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 16px;align-items:center;">
+          <span style="font-size:11px;color:#6B7280;text-transform:uppercase;font-weight:700;letter-spacing:0.08em;">Type</span>
+          <span style="font-size:14px;color:#fff;font-weight:700;font-family:monospace;">CNAME</span>
+          <span style="font-size:11px;color:#6B7280;text-transform:uppercase;font-weight:700;letter-spacing:0.08em;">Name</span>
+          <span style="font-size:14px;color:#fff;font-weight:700;font-family:monospace;">www</span>
+          <span style="font-size:11px;color:#6B7280;text-transform:uppercase;font-weight:700;letter-spacing:0.08em;">Target</span>
+          <span style="font-size:12px;color:#60a5fa;font-weight:700;font-family:monospace;word-break:break-all;">e98a967ce375ebf8.vercel-dns-017.com</span>
+          <span style="font-size:11px;color:#6B7280;text-transform:uppercase;font-weight:700;letter-spacing:0.08em;">Proxy</span>
+          <span style="font-size:13px;font-weight:700;color:#F59E0B;">⚠️ OFF — make sure the orange cloud is GRAY</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div style="background:#111;border-radius:12px;padding:18px;margin-bottom:12px;">
+      <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#0062FF;margin-bottom:10px;">Step 3 — Save &amp; Wait</p>
+      <ol style="list-style:none;display:flex;flex-direction:column;gap:8px;">
+        <li style="font-size:13px;color:#E5E7EB;display:flex;gap:10px;">
+          <span style="background:#0062FF;color:#fff;width:20px;height:20px;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">1</span>
+          Click <strong style="color:#fff;">Save</strong> on each record
+        </li>
+        <li style="font-size:13px;color:#E5E7EB;display:flex;gap:10px;">
+          <span style="background:#0062FF;color:#fff;width:20px;height:20px;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">2</span>
+          Wait <strong style="color:#fff;">15–30 minutes</strong> for the change to take effect worldwide (sometimes faster, sometimes up to an hour)
+        </li>
+        <li style="font-size:13px;color:#E5E7EB;display:flex;gap:10px;">
+          <span style="background:#0062FF;color:#fff;width:20px;height:20px;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">3</span>
+          Visit <a href="https://retrofitcreations.com" target="_blank" style="color:#60a5fa;text-decoration:none;font-weight:600;">retrofitcreations.com</a> — when it shows the new Retrofit Creations site (not Squarespace), you're good to go!
+        </li>
+      </ol>
+    </div>
+
+    <!-- Backup URL -->
+    <div style="background:#111;border-radius:12px;padding:16px;">
+      <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#9CA3AF;margin-bottom:6px;">Can't wait? Use this backup URL right now — it's the same site:</p>
       <a href="https://retrofit-creations-git-main-vrostbyte-projects.vercel.app" target="_blank"
-         style="font-size:13px;font-weight:700;color:#0062FF;text-decoration:none;word-break:break-all;">
+         style="font-size:12px;font-weight:700;color:#60a5fa;text-decoration:none;word-break:break-all;">
         https://retrofit-creations-git-main-vrostbyte-projects.vercel.app
       </a>
-      <p style="font-size:12px;color:#6B7280;margin-top:6px;">Use this if the main URL isn't working yet. It's the exact same site.</p>
-    </div>
-
-    <div style="background:#111;border-radius:10px;padding:16px;">
-      <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#9CA3AF;margin-bottom:8px;">What Josh already set up for you</p>
-      <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;">
-        <li style="font-size:13px;color:#D1FAE5;display:flex;gap:8px;"><span style="color:#16a34a;">✓</span> Domain pointed from Cloudflare to Vercel</li>
-        <li style="font-size:13px;color:#D1FAE5;display:flex;gap:8px;"><span style="color:#16a34a;">✓</span> www.retrofitcreations.com → redirects to main domain</li>
-        <li style="font-size:13px;color:#D1FAE5;display:flex;gap:8px;"><span style="color:#16a34a;">✓</span> All database, payment, and server credentials configured</li>
-        <li style="font-size:13px;color:#D1FAE5;display:flex;gap:8px;"><span style="color:#16a34a;">✓</span> Site fully deployed — no action needed from you to access it</li>
-      </ul>
     </div>
   </div>
 
