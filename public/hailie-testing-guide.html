@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Testing Guide — Retrofit Creations</title>
+  <style>
+    :root {
+      --blue: #0062FF;
+      --black: #000000;
+      --white: #FFFFFF;
+      --gray-50: #F8F8F8;
+      --gray-100: #E8E8E8;
+      --gray-400: #9CA3AF;
+      --gray-600: #4B5563;
+      --green: #16a34a;
+      --green-bg: #f0fdf4;
+      --green-border: #bbf7d0;
+      --red: #dc2626;
+      --red-bg: #fef2f2;
+      --red-border: #fecaca;
+      --yellow-bg: #fffbeb;
+      --yellow-border: #fde68a;
+      --yellow: #b45309;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+      background: var(--gray-50);
+      color: var(--black);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    /* ── Header ── */
+    .site-header {
+      background: var(--black);
+      color: var(--white);
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .site-header .logo-text {
+      font-family: "Oswald", "Impact", sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+    .site-header .badge {
+      margin-left: auto;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--blue);
+      border: 1px solid var(--blue);
+      border-radius: 20px;
+      padding: 3px 10px;
+      white-space: nowrap;
+    }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 32px 16px 80px;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      background: var(--white);
+      border: 1px solid var(--gray-100);
+      border-radius: 16px;
+      padding: 32px 28px;
+      margin-bottom: 28px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-family: "Oswald", "Impact", sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+    .hero h1 span { color: var(--blue); }
+    .hero p {
+      color: var(--gray-600);
+      font-size: 14px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* ── Alert boxes ── */
+    .alert {
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    .alert-yellow {
+      background: var(--yellow-bg);
+      border: 1px solid var(--yellow-border);
+      color: var(--yellow);
+    }
+    .alert-blue {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1d4ed8;
+    }
+    .alert strong { font-weight: 700; display: block; margin-bottom: 4px; }
+    .alert ul { padding-left: 18px; margin-top: 8px; }
+    .alert li { margin-bottom: 4px; }
+
+    /* ── Section card ── */
+    .section {
+      background: var(--white);
+      border: 1px solid var(--gray-100);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .section-header {
+      background: var(--black);
+      color: var(--white);
+      padding: 14px 22px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-number {
+      background: var(--blue);
+      color: var(--white);
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .section-title {
+      font-family: "Oswald", "Impact", sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .section-body { padding: 22px; }
+
+    /* ── Steps ── */
+    .steps { list-style: none; }
+    .steps li {
+      display: flex;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--gray-50);
+      font-size: 14px;
+    }
+    .steps li:last-child { border-bottom: none; }
+    .step-num {
+      width: 22px;
+      height: 22px;
+      min-width: 22px;
+      background: var(--blue);
+      color: var(--white);
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+    .step-text { flex: 1; color: #374151; }
+    .step-text strong { color: var(--black); }
+    .step-text code {
+      font-family: "Courier New", monospace;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-100);
+      border-radius: 4px;
+      padding: 1px 6px;
+      font-size: 13px;
+      color: var(--blue);
+      white-space: nowrap;
+    }
+
+    /* ── Result boxes ── */
+    .result-box {
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-top: 14px;
+      font-size: 13px;
+    }
+    .result-green {
+      background: var(--green-bg);
+      border: 1px solid var(--green-border);
+      color: var(--green);
+    }
+    .result-red {
+      background: var(--red-bg);
+      border: 1px solid var(--red-border);
+      color: var(--red);
+    }
+    .result-box::before {
+      font-weight: 700;
+      margin-right: 6px;
+    }
+    .result-green::before { content: "✓ "; }
+    .result-red::before { content: "✗ "; }
+
+    /* ── Card info box ── */
+    .card-box {
+      background: #0062FF;
+      color: white;
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin: 14px 0;
+      font-family: "Courier New", monospace;
+    }
+    .card-box .card-label {
+      font-family: -apple-system, sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      opacity: 0.7;
+      margin-bottom: 2px;
+    }
+    .card-box .card-val {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+    }
+    .card-box .card-fields {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .card-box .card-field .card-label { margin-bottom: 1px; }
+    .card-box .card-field .card-val { font-size: 14px; margin-bottom: 0; }
+
+    .decline-card {
+      background: #4B5563;
+      color: white;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 13px;
+      margin-top: 10px;
+    }
+    .decline-card code {
+      font-family: "Courier New", monospace;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    /* ── Table ── */
+    .check-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+    .check-table th {
+      text-align: left;
+      padding: 8px 10px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-100);
+      font-weight: 700;
+      color: var(--gray-600);
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+    }
+    .check-table td {
+      padding: 8px 10px;
+      border: 1px solid var(--gray-100);
+      color: #374151;
+    }
+    .check-table tr:nth-child(even) td { background: var(--gray-50); }
+
+    /* ── Not wired yet ── */
+    .not-yet {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--yellow-bg);
+      border: 1px solid var(--yellow-border);
+      color: var(--yellow);
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 2px 8px;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      text-align: center;
+      padding: 24px;
+      font-size: 13px;
+      color: var(--gray-400);
+    }
+    .footer strong { color: var(--gray-600); }
+
+    /* ── Progress dots ── */
+    .progress {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .dot {
+      height: 6px;
+      border-radius: 3px;
+      flex: 1;
+      min-width: 30px;
+    }
+    .dot.done { background: var(--blue); }
+    .dot.pending { background: var(--gray-100); }
+
+    /* ── Mobile tweaks ── */
+    @media (max-width: 480px) {
+      .site-header { padding: 14px 16px; }
+      .hero { padding: 24px 18px; }
+      .section-body { padding: 16px; }
+      .hero h1 { font-size: 22px; }
+      .card-box .card-val { font-size: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="site-header">
+  <div style="width:28px;height:28px;background:#0062FF;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+    </svg>
+  </div>
+  <span class="logo-text">Retrofit Creations</span>
+  <span class="badge">Testing Guide</span>
+</header>
+
+<div class="container">
+
+  <!-- Hero -->
+  <div class="hero">
+    <h1>Hey Hailie! <span>Let's Test the Site.</span></h1>
+    <p>This guide walks you through everything to check before we go live with real customers. Use it on your phone and your laptop. Nothing here costs real money — we're using test mode.</p>
+  </div>
+
+  <!-- Important notice -->
+  <div class="alert alert-yellow">
+    <strong>⚠️ Before You Start</strong>
+    This guide assumes Josh has already added the environment variables to Vercel and the site has redeployed. If things look broken or blank, let Josh know so he can check the server settings first.
+  </div>
+
+  <div class="alert alert-blue">
+    <strong>💳 Test Credit Card (Bookmark This!)</strong>
+    Use this fake card for ALL payment tests. It does NOT charge real money.
+    <ul>
+      <li>Number: <strong>4532 0123 4567 8901</strong></li>
+      <li>Expiry: any future date (e.g., 12/29)</li>
+      <li>CVV: 111 &nbsp;|&nbsp; ZIP: 12345</li>
+    </ul>
+  </div>
+
+  <!-- Phase progress -->
+  <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#6B7280;margin-bottom:8px;">Build Progress</p>
+  <div class="progress">
+    <div class="dot done" title="Phase 1 — Static site"></div>
+    <div class="dot done" title="Phase 2A — Database + Admin"></div>
+    <div class="dot done" title="Phase 2B — Cart + Checkout"></div>
+    <div class="dot pending" title="Phase 2C — Emails (coming soon)"></div>
+    <div class="dot pending" title="Phase 3 — User dashboard, SEO"></div>
+  </div>
+  <p style="font-size:12px;color:#9CA3AF;margin-bottom:28px;">Blue = done &nbsp;·&nbsp; Gray = coming soon</p>
+
+
+  <!-- SECTION 1 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-number">1</span>
+      <span class="section-title">Browse the Store</span>
+    </div>
+    <div class="section-body">
+      <ol class="steps">
+        <li>
+          <span class="step-num">1</span>
+          <span class="step-text">Open the site. The <strong>homepage</strong> should load with your logo, the big headline "Built Different. Made to Stand Out." and three matching blue buttons.</span>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <span class="step-text">Scroll the homepage. You should see <strong>category cards, services overview, a community showcase, and customer reviews</strong> — all loaded from the database (not faked).</span>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <span class="step-text">Click <strong>Products</strong> in the nav. You should see <strong>12 products</strong> in a grid with photos or placeholder icons.</span>
+        </li>
+        <li>
+          <span class="step-num">4</span>
+          <span class="step-text">Click each <strong>category filter chip</strong> at the top (Zyn Tins, Automotive Parts, etc.) — the grid should filter to show only that category. Click "All Products" to reset.</span>
+        </li>
+        <li>
+          <span class="step-num">5</span>
+          <span class="step-text">Type <code>keychain</code> in the search box — only keychain products should appear. Clear it to show all products again.</span>
+        </li>
+        <li>
+          <span class="step-num">6</span>
+          <span class="step-text">Use the <strong>Sort dropdown</strong> to try "Price: Low → High" — products should reorder.</span>
+        </li>
+        <li>
+          <span class="step-num">7</span>
+          <span class="step-text">Click <strong>"View Details"</strong> on any product card — you should land on a product detail page with the name, price, description, and an "Add to Cart" button.</span>
+        </li>
+        <li>
+          <span class="step-num">8</span>
+          <span class="step-text">At the bottom of the detail page, check for <strong>"You Might Also Like"</strong> — it should show other products from the same category.</span>
+        </li>
+      </ol>
+      <div class="result-green">Products load, filters work, sort works, detail page loads with correct info.</div>
+      <div class="result-red">Blank/empty grid, "error" messages, page crashes, or products from wrong categories show up after filtering.</div>
+    </div>
+  </div>
+
+
+  <!-- SECTION 2 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-number">2</span>
+      <span class="section-title">Shopping Cart</span>
+    </div>
+    <div class="section-body">
+      <ol class="steps">
+        <li>
+          <span class="step-num">1</span>
+          <span class="step-text">On the Products page, click <strong>"Add to Cart"</strong> on any product. A <strong>cart drawer should slide in from the right</strong> showing that item.</span>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <span class="step-text">The <strong>shopping cart icon</strong> in the top-right corner should now show a blue circle with <code>1</code> on it.</span>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <span class="step-text">Add 2 more products from different categories. The badge should update to <code>3</code>.</span>
+        </li>
+        <li>
+          <span class="step-num">4</span>
+          <span class="step-text">In the cart drawer, click the <strong>+ button</strong> on any item — the quantity should go up and the total at the bottom should update.</span>
+        </li>
+        <li>
+          <span class="step-num">5</span>
+          <span class="step-text">Click the <strong>− button</strong> to reduce quantity. When quantity is 1, the − button should be grayed out (can't go below 1).</span>
+        </li>
+        <li>
+          <span class="step-num">6</span>
+          <span class="step-text">Click the <strong>× (remove) button</strong> on one item — it should disappear from the cart and the total should update.</span>
+        </li>
+        <li>
+          <span class="step-num">7</span>
+          <span class="step-text"><strong>Refresh the page.</strong> Click the cart icon again. Your remaining items should still be there — the cart saves in your browser automatically.</span>
+        </li>
+        <li>
+          <span class="step-num">8</span>
+          <span class="step-text">Press <strong>Escape</strong> on your keyboard (or click "Continue Shopping" or the backdrop) — the drawer should close smoothly.</span>
+        </li>
+        <li>
+          <span class="step-num">9</span>
+          <span class="step-text">Click <strong>"Checkout"</strong> at the bottom of the drawer — you should navigate to <code>/checkout</code>.</span>
+        </li>
+      </ol>
+      <div class="result-green">Cart drawer opens, quantities update, totals are correct, cart survives page refresh, drawer closes cleanly.</div>
+      <div class="result-red">Cart is always empty after adding items, badge stays at 0, drawer doesn't open, items disappear after refresh.</div>
+    </div>
+  </div>
+
+
+  <!-- SECTION 3 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-number">3</span>
+      <span class="section-title">Checkout &amp; Payment (Fake Money!)</span>
+    </div>
+    <div class="section-body">
+      <p style="font-size:13px;color:#6B7280;margin-bottom:14px;">Make sure you have at least 1 item in your cart before starting this section.</p>
+
+      <!-- Test card -->
+      <div class="card-box">
+        <div class="card-label">Test Card — NO REAL CHARGES</div>
+        <div class="card-val">4532 0123 4567 8901</div>
+        <div class="card-fields">
+          <div class="card-field">
+            <div class="card-label">Expiry</div>
+            <div class="card-val">12/29</div>
+          </div>
+          <div class="card-field">
+            <div class="card-label">CVV</div>
+            <div class="card-val">111</div>
+          </div>
+          <div class="card-field">
+            <div class="card-label">ZIP</div>
+            <div class="card-val">12345</div>
+          </div>
+        </div>
+      </div>
+
+      <ol class="steps">
+        <li>
+          <span class="step-num">1</span>
+          <span class="step-text">Go to the checkout page. You should see an <strong>order summary on the left</strong> (your cart items + total) and a <strong>shipping form on the right</strong>.</span>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <span class="step-text">Fill in the <strong>shipping form</strong> with your real info (or test info — use your real email so you can see confirmations once emails are wired up in Phase 2C).</span>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <span class="step-text">You should see a <strong>card input form</strong> below the shipping section (it loads in a small embedded frame from Square). Enter the test card number above.</span>
+        </li>
+        <li>
+          <span class="step-num">4</span>
+          <span class="step-text">Click the <strong>"Place Order"</strong> button (it shows your total, e.g., "Place Order — $48.00").</span>
+        </li>
+        <li>
+          <span class="step-num">5</span>
+          <span class="step-text">A loading spinner should appear briefly. Then you should be taken to a <strong>"Order Received!"</strong> confirmation page with an order number like <code>RC-2026-0001</code>.</span>
+        </li>
+        <li>
+          <span class="step-num">6</span>
+          <span class="step-text"><strong>Check that your cart is now empty</strong> — open the cart drawer. It should say "Your cart is empty."</span>
+        </li>
+        <li>
+          <span class="step-num">7</span>
+          <span class="step-text">In the Supabase Dashboard, look at the <strong>orders table</strong> — a new row should appear with your email, the total, and a status of "received".</span>
+        </li>
+      </ol>
+
+      <p style="font-size:13px;font-weight:700;margin:18px 0 8px;color:#111;">Test a Declined Card</p>
+      <div class="decline-card">
+        Try card <code>4000 0000 0000 0002</code> — it is set up to always decline.
+        After clicking Place Order you should see "Your card was declined. Please try a different card."
+        You should NOT be redirected away. Try again with the good card above.
+      </div>
+
+      <div class="result-green">Good card → confirmation page → cart empties → order appears in Supabase. Declined card → friendly error message only.</div>
+      <div class="result-red">Good card shows an error, cart doesn't empty after success, page crashes, declined card somehow "succeeds".</div>
+    </div>
+  </div>
+
+
+  <!-- SECTION 4 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-number">4</span>
+      <span class="section-title">Account Registration &amp; Login</span>
+    </div>
+    <div class="section-body">
+      <ol class="steps">
+        <li>
+          <span class="step-num">1</span>
+          <span class="step-text">Click the <strong>person icon</strong> in the top-right corner (or go to <code>/account/login</code>).</span>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <span class="step-text">Click <strong>"Create one"</strong> at the bottom. Create a test account with a NEW email you haven't used before. Fill in: full name, email, password (8+ characters).</span>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <span class="step-text">Click <strong>"Create Account"</strong> — you should see a <strong>"Check Your Email"</strong> screen telling you to confirm your address.</span>
+        </li>
+        <li>
+          <span class="step-num">4</span>
+          <span class="step-text">Open that email inbox. Find the confirmation email and <strong>click the confirmation link</strong>. You should be brought back to the site.</span>
+        </li>
+        <li>
+          <span class="step-num">5</span>
+          <span class="step-text"><strong>Log in</strong> with the new account. After logging in, the <strong>person icon should be replaced with your initials</strong> in a blue circle (e.g., "HB" for Hailie B.).</span>
+        </li>
+        <li>
+          <span class="step-num">6</span>
+          <span class="step-text">Click your initials — a dropdown should appear with: <strong>"My Account"</strong> and <strong>"Sign Out"</strong>.</span>
+        </li>
+        <li>
+          <span class="step-num">7</span>
+          <span class="step-text">Click <strong>"Sign Out"</strong> — you should be taken to the homepage. The initials should disappear and the person icon returns.</span>
+        </li>
+      </ol>
+
+      <p style="font-size:13px;font-weight:700;margin:18px 0 8px;color:#111;">Test Your Admin Account</p>
+      <ol class="steps">
+        <li>
+          <span class="step-num">1</span>
+          <span class="step-text">Log in as <code>retrofitcreationsllc@gmail.com</code>.</span>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <span class="step-text">The desktop navigation should show an extra <strong>"Admin"</strong> link that doesn't appear for regular accounts.</span>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <span class="step-text">Your initials dropdown should include <strong>"Admin Panel"</strong> as a link.</span>
+        </li>
+      </ol>
+      <div class="result-green">Registration flow works, initials appear in nav after login, admin link only shows for admin account, logout clears everything.</div>
+      <div class="result-red">Registration shows "email already in use" (use a different email), login doesn't update the header, admin link shows for regular accounts.</div>
+    </div>
+  </div>
+
+
+  <!-- SECTION 5 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-number">5</span>
+      <span class="section-title">Admin Panel</span>
+    </div>
+    <div class="section-body">
+      <p style="font-size:13px;color:#6B7280;margin-bottom:14px;">Log in as your admin account first, then go to <code>/admin</code>.</p>
+
+      <p style="font-size:13px;font-weight:700;margin-bottom:10px;color:#111;">Dashboard</p>
+      <ol class="steps">
+        <li>
+          <span class="step-num">1</span>
+          <span class="step-text">The dashboard should show <strong>stat cards</strong>: Active Products, New Quotes, New Orders, Pending Reviews — with correct numbers.</span>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <span class="step-text">The test order you placed in Part 3 should appear in the <strong>"Recent Orders"</strong> panel.</span>
+        </li>
+      </ol>
+
+      <p style="font-size:13px;font-weight:700;margin:16px 0 10px;color:#111;">Products</p>
+      <ol class="steps">
+        <li>
+          <span class="step-num">1</span>
+          <span class="step-text">Go to <strong>Admin → Products</strong>. All 12 products should be listed in a table.</span>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <span class="step-text">Click the <strong>green toggle</strong> next to any product to deactivate it (turns gray). Open <code>/products</code> in a new tab — that product should be gone.</span>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <span class="step-text">Toggle it <strong>back on</strong>. Refresh the products page — it should reappear.</span>
+        </li>
+        <li>
+          <span class="step-num">4</span>
+          <span class="step-text">Click the <strong>★ star</strong> to mark a product as "Featured". Refresh the homepage — it should appear in the community/product sections.</span>
+        </li>
+        <li>
+          <span class="step-num">5</span>
+          <span class="step-text">Click <strong>"Edit"</strong> on any product. Change the price by $1 and click <strong>"Save Changes"</strong>. Verify the new price shows on the product page.</span>
+        </li>
+        <li>
+          <span class="step-num">6</span>
+          <span class="step-text">Click <strong>"Add Product"</strong>. Fill in: name, price, category. Click Create. The new product should appear in the table and on the store.</span>
+        </li>
+      </ol>
+
+      <p style="font-size:13px;font-weight:700;margin:16px 0 10px;color:#111;">Orders</p>
+      <ol class="steps">
+        <li>
+          <span class="step-num">1</span>
+          <span class="step-text">Go to <strong>Admin → Orders</strong>. Your test order should appear with status "received".</span>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <span class="step-text">Change the status to <strong>"Processing"</strong> and click Save. The status label should update.</span>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <span class="step-text">Change status to <strong>"Shipped"</strong>, enter a fake tracking number, and save. Verify it saves.</span>
+        </li>
+      </ol>
+
+      <p style="font-size:13px;font-weight:700;margin:16px 0 10px;color:#111;">Testimonials &amp; Community</p>
+      <ol class="steps">
+        <li>
+          <span class="step-num">1</span>
+          <span class="step-text">Go to <strong>Admin → Testimonials</strong>. You should see 8 pre-loaded approved reviews. Click <strong>"Delete"</strong> on one — it should disappear from <code>/testimonials</code>.</span>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <span class="step-text">Go to <strong>Admin → Community</strong>. You should see 6 pre-loaded posts. Click <strong>"Mark Featured"</strong> on one — it should show ★ Featured.</span>
+        </li>
+      </ol>
+
+      <div class="result-green">All changes save correctly and immediately reflect on the public-facing pages.</div>
+      <div class="result-red">Save shows an error, changes don't appear on the public site, page crashes after saving.</div>
+    </div>
+  </div>
+
+
+  <!-- SECTION 6 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-number">6</span>
+      <span class="section-title">Public Pages Spot-Check</span>
+    </div>
+    <div class="section-body">
+      <table class="check-table">
+        <thead>
+          <tr>
+            <th>Page</th>
+            <th>What to look for</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>/</code> Homepage</td>
+            <td>Logo, hero, categories, reviews from database</td>
+          </tr>
+          <tr>
+            <td><code>/products</code></td>
+            <td>12 products, filters, sort, search all work</td>
+          </tr>
+          <tr>
+            <td><code>/services</code></td>
+            <td>Service cards load, "Request a Quote" buttons present</td>
+          </tr>
+          <tr>
+            <td><code>/testimonials</code></td>
+            <td>Reviews show, filter tabs work</td>
+          </tr>
+          <tr>
+            <td><code>/community</code></td>
+            <td>Community posts show, filter tabs work</td>
+          </tr>
+          <tr>
+            <td><code>/about</code></td>
+            <td>About page loads, no blank sections</td>
+          </tr>
+          <tr>
+            <td><code>/contact</code></td>
+            <td>Form is visible <span class="not-yet">Not wired yet</span></td>
+          </tr>
+          <tr>
+            <td><code>/shipping-returns</code></td>
+            <td>Policy page loads</td>
+          </tr>
+          <tr>
+            <td><code>/terms</code></td>
+            <td>Terms page loads</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- SECTION 7 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-number">7</span>
+      <span class="section-title">Mobile Check (Do on Your Phone!)</span>
+    </div>
+    <div class="section-body">
+      <ol class="steps">
+        <li>
+          <span class="step-num">1</span>
+          <span class="step-text">The <strong>hamburger menu</strong> (≡) should appear in the top-right on mobile. Tap it — the mobile nav should slide in. Tap links and verify they navigate correctly.</span>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <span class="step-text">The <strong>product grid</strong> should show 1-2 columns, not 4 columns squeezed onto a small screen.</span>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <span class="step-text">The <strong>cart drawer</strong> should fill most of the screen width on mobile and be easy to scroll.</span>
+        </li>
+        <li>
+          <span class="step-num">4</span>
+          <span class="step-text">The <strong>checkout form</strong> fields should be big enough to tap easily and the keyboard shouldn't obscure the active field.</span>
+        </li>
+        <li>
+          <span class="step-num">5</span>
+          <span class="step-text"><strong>All text is readable</strong> without needing to zoom in. Dark text on light backgrounds everywhere except the header and footer.</span>
+        </li>
+        <li>
+          <span class="step-num">6</span>
+          <span class="step-text">The <strong>admin panel sidebar</strong> should be readable and usable on mobile (it may stack differently on small screens).</span>
+        </li>
+      </ol>
+      <div class="result-green">Everything is touchable, readable, and scrollable without zooming or horizontal scrolling.</div>
+      <div class="result-red">Text too small to read, buttons too small to tap, horizontal scroll bar appears, content gets cut off.</div>
+    </div>
+  </div>
+
+
+  <!-- SECTION 8 — Coming Soon -->
+  <div class="section">
+    <div class="section-header" style="background:#4B5563;">
+      <span class="section-number" style="background:#6B7280;">~</span>
+      <span class="section-title">What's Not Working Yet — Coming in Phase 2C</span>
+    </div>
+    <div class="section-body">
+      <p style="font-size:14px;color:#6B7280;margin-bottom:14px;">These features are built but not wired up yet. They will be finished in the next session:</p>
+      <table class="check-table">
+        <tbody>
+          <tr>
+            <td><strong>Contact / Quote form</strong></td>
+            <td>Form is visible but submitting doesn't save yet</td>
+          </tr>
+          <tr>
+            <td><strong>Email confirmations</strong></td>
+            <td>No emails send yet for orders or quotes</td>
+          </tr>
+          <tr>
+            <td><strong>"Leave a Review" button</strong></td>
+            <td>Testimonials form not wired to database yet</td>
+          </tr>
+          <tr>
+            <td><strong>"Share Your Build" button</strong></td>
+            <td>Community submission form not wired yet</td>
+          </tr>
+          <tr>
+            <td><strong>Welcome email</strong></td>
+            <td>No welcome email on new account creation yet</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- SECTION 9 — If something breaks -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-number">!</span>
+      <span class="section-title">If Something Breaks — What to Tell Josh</span>
+    </div>
+    <div class="section-body">
+      <ol class="steps">
+        <li>
+          <span class="step-num">1</span>
+          <span class="step-text"><strong>What page were you on?</strong> Copy the URL from the address bar (e.g., <code>https://retrofitcreations.com/products</code>).</span>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <span class="step-text"><strong>What did you click or do?</strong> (e.g., "I clicked Add to Cart on the Zyn tin")</span>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <span class="step-text"><strong>What did you see?</strong> (e.g., "The cart drawer opened but showed $0 total" or "The page went blank")</span>
+        </li>
+        <li>
+          <span class="step-num">4</span>
+          <span class="step-text"><strong>What device?</strong> Phone or laptop? Which browser (Chrome, Safari, etc.)?</span>
+        </li>
+        <li>
+          <span class="step-num">5</span>
+          <span class="step-text">A <strong>screenshot</strong> is worth a thousand words — especially for layout issues on mobile.</span>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <strong>Retrofit Creations LLC</strong> — San Diego, CA<br>
+  This page is for internal testing only. It is not linked from the public site.
+</div>
+
+</body>
+</html>
